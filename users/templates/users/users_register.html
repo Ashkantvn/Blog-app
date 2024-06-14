@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Login
+{% endblock title %}
+
+
+
+{% block content %}
+<h2>
+    Registration
+</h2>
+<form action="/users/login" method="post" class='form form-with-validation' >
+    {% csrf_token %}
+    
+    {{form}}
+
+    {% if request.GET.next %}
+        <input type='hidden' name='next' value='{{request.GET.next}}'/>
+    {% endif %}
+    
+    <button type="submit" class="btn btn-success form-submit">
+        Register
+    </button>
+    
+</form>
+
+
+<span> 
+    Already have account? <a href="{% url 'users:login' %}"> Login </a> 
+</span>
+
+{% endblock content %}
