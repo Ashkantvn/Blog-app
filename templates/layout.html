@@ -28,25 +28,28 @@
         <h1 class="navbar-brand text-light">Blog app</h1>
 
         <!-- menu button from bootstrap -->
-            <button
-              class="bg-light navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarNavAltMarkup"
-              aria-controls="navbarNavAltMarkup"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <nav class="navbar-nav justify-content-lg-end  collapse navbar-collapse" id="navbarNavAltMarkup">
-              <a class="text-light nav-item nav-link" href="/"> HOME </a>
-            </nav>
+        <button
+          class="bg-light navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+          
+        <nav class="navbar-nav justify-content-lg-end  collapse navbar-collapse" id="navbarNavAltMarkup">
+          <a class="text-light nav-item nav-link" href="/"> HOME </a>
+          <a class="text-light nav-item nav-link" href="/about"> ABOUT </a>
+        </nav>
       </div>
     </header>
     <main class="container mt-3">
-      {% block content %} Content {% endblock content %}
+      {% block content %} 
+        Content 
+      {% endblock content %}
     </main>
   </body>
 </html>

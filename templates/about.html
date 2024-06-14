@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    About blog app
+{% endblock title %}
+
+
+
+{% block content %}
+    <h2>About us</h2>
+    <article>
+            {% lorem 3 p random %}
+    </article>
+{% endblock content %}
