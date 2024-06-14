@@ -7,19 +7,21 @@
 
 
 {% block content %}
-    <article>
-            <section>
-                <h2>Blog app</h2>
-                <p>write your blogs and share it</p>
-            </section>
-            <section>
-                <h3>See the latest blogs</h3>
-            </section>
-            <section>
-                <h3>Your favorite blogs</h3>
-            </section>
-    </article>
-    <aside>
-        <h4>People comments</h4>
+    <aside class='text-center my-5'>
+        <h2>Blog app</h2>
+        <p>write your blogs and share it</p>
     </aside>
+    <div class="d-flex flex-wrap justify-content-between">
+        <article>
+                <section>
+                    <h3>Latest blogs</h3>
+                </section>
+                <section>
+                    <h3>Favorite blogs</h3>
+                </section>
+        </article>
+        <aside>
+            <h4>People comments</h4>
+        </aside>
+    </div>
 {% endblock content %}
