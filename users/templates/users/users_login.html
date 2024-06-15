@@ -11,7 +11,7 @@
 <h2>
     Login
 </h2>
-<form action="/users/login" method="post" class='form form-with-validation' >
+<form action="/users/login/" method="post" class='form form-with-validation' >
     {% csrf_token %}
     
     {{form}}
@@ -20,7 +20,7 @@
         <input type='hidden' name='next' value='{{request.GET.next}}'/>
     {% endif %}
     
-    <button type="submit" class="btn btn-success form-submit">
+    <button type="submit" class="btn btn-success form-submit my-3">
         Login
     </button>
 

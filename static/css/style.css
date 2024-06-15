@@ -1,3 +1,9 @@
 main{
     margin-bottom: 9em;
 }
+
+
+label{
+    font-weight: bold;
+    margin-top: 2em;
+}

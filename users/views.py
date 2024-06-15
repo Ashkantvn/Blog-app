@@ -1,14 +1,39 @@
 from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login,logout
+
+
 
 def users_login_view(request):
-    form = AuthenticationForm()
+    if request.method == "POST":
+        form = AuthenticationForm(data = request.POST)
+        if  form.is_valid():
+            login(request, form.get_user())
+            return redirect("users:info")
+    else:
+        form = AuthenticationForm
     return render(request,"users/users_login.html",{"form":form})
 
 def users_register_view(request):
-    form = UserCreationForm()
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            login(request,form.save())
+            return redirect("users:info")
+    else:
+        form = UserCreationForm()
     return render(request,"users/users_register.html",{"form" : form})
 
 
 def users_logout_view(request):
-    pass
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect("users:login")
+
+
+
+
+@login_required(login_url="/users/login")
+def users_view(request):
+    return render(request,"users/users_info.html")
