@@ -43,6 +43,13 @@
         <nav class="navbar-nav justify-content-lg-end  collapse navbar-collapse" id="navbarNavAltMarkup">
           <a class="text-light nav-item nav-link" href="/"> HOME </a>
           <a class="text-light nav-item nav-link" href="/about"> ABOUT </a>
+          {% if user.is_authenticated %}
+            <a class="text-light nav-item nav-link" href="{% url 'users:info' %}"> {{ user.username }} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:logout' %}"> SIGN-OUT </a>
+          {% else %}
+            <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> SIGN-IN </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> SIGN-UP </a>
+          {% endif %}
         </nav>
       </div>
     </header>
