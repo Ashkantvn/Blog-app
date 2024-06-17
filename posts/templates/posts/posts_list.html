@@ -23,5 +23,30 @@
     </section>
     {% endfor %}
 </article>
+<footer>
+    {% if posts.has_other_pages %}
+        <ul>
+            {% if posts.has_previous %}
+            <li><a href="?page={{posts.previous_page_number}}">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+
+            {% for page_number in posts.paginator.page_range %}
+                {% if posts.number == page_number %}
+                <li class="active"><span>{{page_number}}</span></li>
+                {% else %}
+                <li><a href="?page={{page_number}}">{{page_number}}</a></li>
+                {% endif %}
+            {% endfor %}
+            
+            {% if posts.has_next %}
+            <li><a href="?page={{posts.next_page_number}}">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+</footer>
 {% endblock content %}
 
