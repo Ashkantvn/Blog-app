@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Blogs
+{% endblock title %}
+
+
+
+{% block content %}
+<h2>
+    Blogs list
+</h2>
+<article>
+    {% for post in posts %}
+    <section>
+        <img src="{{post.banner.url}}" alt="{{post.title}}">
+        <h3>
+            {{post.title}}
+        </h3>
+        <address> Created by {{post.author}} </address>
+        <a href="{{post.get_absolute_url}}">More</a>
+    </section>
+    {% endfor %}
+</article>
+{% endblock content %}
+
