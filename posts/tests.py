@@ -26,10 +26,7 @@ class PostsUrlTests(SimpleTestCase):
     def test_delete_url_is_resolve(self):
         url = reverse("posts:delete")
         self.assertEqual(resolve(url).func,views.posts_delete_view)
-
-
-
-
+        
 class PostsModelsTest(TestCase):
     def setUp(self):
         self.client  = Client()
@@ -45,3 +42,24 @@ class PostsModelsTest(TestCase):
 
     def test_created_object_is_correct(self):
         self.assertEqual(self.testPost.title , "test post")
+
+class TestLoggedInViews(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.client.force_login(User.objects.update_or_create(username = "testuser")[0])
+        self.test_post = models.Post.objects.create(
+            title = "test post",
+            content = 'testcontent',
+            author = auth.get_user(self.client)
+        )
+
+    def test_posts_list_view_GET(self):
+        response = self.client.get(reverse("posts:list"))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"posts/posts_list.html")
+    
+    def test_posts_details_view_GET(self):
+        response = self.client.get(reverse("posts:details",kwargs={"pk" : self.test_post.pk}))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"posts/posts_details.html")
