@@ -1,6 +1,6 @@
 from django.test import TestCase , SimpleTestCase,Client
 from django.urls import reverse,resolve
-from . import views,models
+from . import views,models,forms
 from django.contrib.auth.models import User
 from django.contrib import auth
 
@@ -27,7 +27,7 @@ class PostsUrlTests(SimpleTestCase):
         url = reverse("posts:delete")
         self.assertEqual(resolve(url).func,views.posts_delete_view)
         
-class PostsModelsTest(TestCase):
+class PostsModelsTests(TestCase):
     def setUp(self):
         self.client  = Client()
         self.client.force_login(User.objects.get_or_create(username="testuser")[0])
@@ -43,7 +43,7 @@ class PostsModelsTest(TestCase):
     def test_created_object_is_correct(self):
         self.assertEqual(self.testPost.title , "test post")
 
-class TestLoggedInViews(TestCase):
+class PostsLoggedInViewsTests(TestCase):
 
     def setUp(self):
         self.client = Client()
@@ -63,3 +63,21 @@ class TestLoggedInViews(TestCase):
         response = self.client.get(reverse("posts:details",kwargs={"pk" : self.test_post.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"posts/posts_details.html")
+        
+class PostsFormsTest(SimpleTestCase):
+
+    def test_add_post_form_valid(self):
+        form = forms.AddPostForm(
+            data={
+                "title": "testpost",
+                "content":"testcontent",
+            }
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_add_post_form_invalid(self):
+        form = forms.AddPostForm(
+            data={}
+        )
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors),2)
