@@ -63,7 +63,34 @@ class PostsLoggedInViewsTests(TestCase):
         response = self.client.get(reverse("posts:details",kwargs={"pk" : self.test_post.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"posts/posts_details.html")
-        
+    
+    def test_posts_add_view_GET(self):
+        response = self.client.get(reverse("posts:add"))
+        self.assertEqual(response.status_code , 200)
+        self.assertTemplateUsed(response,"posts/posts_add.html")
+
+    def test_posts_add_view_POST(self):
+        response = self.client.post(
+            reverse("posts:add"),
+            data= {
+                "title" : "test post",
+                'content' : 'testcontent',
+                'author' : auth.get_user(self.client)
+            }
+        )
+        self.assertRedirects(response,reverse("users:info"))
+
+class PostsLoggedOutViewsTests(SimpleTestCase):
+
+    def setUp(self):
+        self.client = Client()
+
+    def test_logged_out_posts_add_view_GET(self):
+        response = self.client.get(reverse("posts:add"))
+        self.assertEqual(response.status_code,302)
+        self.assertRedirects(response,"/users/login?next=/posts/add/",target_status_code=301)
+
+
 class PostsFormsTest(SimpleTestCase):
 
     def test_add_post_form_valid(self):
