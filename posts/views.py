@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
-from . import models
+from . import models,forms
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def posts_list_view(request):
@@ -22,8 +23,19 @@ def posts_details_view(request , pk):
     context = {"post" : post}
     return render(request,"posts/posts_details.html",context)
 
+@login_required(login_url="/users/login")
 def posts_add_view(request):
-    return HttpResponse("add page")
+    if request.method == "POST":
+        form = forms.AddPostForm(request.POST , request.FILES)
+        if form.is_valid():
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+            return redirect("users:info")
+    else :
+        form = forms.AddPostForm()
+    context = {"form":form}
+    return render(request,"posts/posts_add.html",context)
 
 def posts_edit_view(request):
     return HttpResponse("edit page")
