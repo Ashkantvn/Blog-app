@@ -26,14 +26,14 @@ def posts_details_view(request , pk):
 @login_required(login_url="/users/login")
 def posts_add_view(request):
     if request.method == "POST":
-        form = forms.AddPostForm(request.POST , request.FILES)
+        form = forms.PostForm(request.POST , request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
             return redirect("users:info")
     else :
-        form = forms.AddPostForm()
+        form = forms.PostForm()
     context = {"form":form}
     return render(request,"posts/posts_add.html",context)
 
