@@ -37,6 +37,8 @@ def posts_add_view(request):
     context = {"form":form}
     return render(request,"posts/posts_add.html",context)
 
+
+@login_required(login_url="/users/login")
 def posts_edit_view(request):
     return HttpResponse("edit page")
 

@@ -90,6 +90,11 @@ class PostsLoggedOutViewsTests(SimpleTestCase):
         self.assertEqual(response.status_code,302)
         self.assertRedirects(response,"/users/login?next=/posts/add/",target_status_code=301)
 
+    def test_logged_out_posts_edit_view_GET(self):
+        response = self.client.get(reverse("posts:edit"))
+        self.assertEqual(response.status_code,302)
+        self.assertRedirects(response,"/users/login?next=/posts/edit/",target_status_code=301)
+
 
 class PostsFormsTest(SimpleTestCase):
 
@@ -103,22 +108,6 @@ class PostsFormsTest(SimpleTestCase):
         self.assertTrue(form.is_valid())
 
     def test_add_post_form_invalid(self):
-        form = forms.PostForm(
-            data={}
-        )
-        self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors),2)
-
-    def test_edit_post_form_valid(self):
-        form = forms.PostForm(
-            data={
-                "title": "testpost",
-                "content":"testcontent",
-            }
-        )
-        self.assertTrue(form.is_valid())
-
-    def test_edit_post_form_invalid(self):
         form = forms.PostForm(
             data={}
         )
