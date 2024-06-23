@@ -40,7 +40,13 @@ def posts_add_view(request):
 
 @login_required(login_url="/users/login")
 def posts_edit_view(request):
-    return HttpResponse("edit page")
+    posts = models.Post.objects.filter(author = request.user)
+    form = forms.PostForm()
+    context = {
+        "posts":posts,
+        "form":form
+    }
+    return render(request,"posts/posts_edit.html",context)
 
 def posts_delete_view(request):
     return HttpResponse ("delete page")

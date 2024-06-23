@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    edit posts post
+{% endblock title %}
+
+
+
+{% block content %}
+<section>
+    <form action="{% url "posts:edit" %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input type="hidden" name="_method" value="PUT">
+        {{form.slug}}
+        <button disabled type="submit">Submit</button>
+    </form>
+</section>
+<section>
+    {% if not posts %}
+        You do not have any blog 
+        <a href={% url "posts:add" %}>
+            Create one
+        </a>
+    {% else %}
+        {% for post in posts %}
+        <h2>
+            {{post.title}}
+        </h2>
+        <p class="pre-white-space">
+{{post.content}}
+        </p>
+        <a href = "#">edit</a>
+    {% endfor %}
+    {% endif %}
+</section>
+{% endblock content %}
