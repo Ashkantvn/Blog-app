@@ -80,6 +80,11 @@ class PostsLoggedInViewsTests(TestCase):
         )
         self.assertRedirects(response,reverse("users:info"))
 
+    def test_posts_edit_view_GET(self):
+        response = self.client.get(reverse("posts:edit"))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"posts/posts_edit.html")
+
 class PostsLoggedOutViewsTests(SimpleTestCase):
 
     def setUp(self):
