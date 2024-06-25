@@ -101,6 +101,14 @@ class PostsLoggedInViewsTests(TestCase):
         response = self.client.get(reverse("posts:delete",kwargs={"pk" : self.test_post.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response , "posts/posts_delete.html")
+    
+    def test_posts_delete_POST(self):
+        response = self.client.post(
+            reverse("posts:delete",kwargs={"pk" : self.test_post.pk}),
+            data={"_method":"DELETE",},
+            )
+        self.assertEqual(response.status_code,302)
+        self.assertRedirects(response,reverse("users:info"))
 
 
 class PostsLoggedOutViewsTests(SimpleTestCase):
