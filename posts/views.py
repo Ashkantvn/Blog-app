@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from . import models,forms
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -40,8 +41,17 @@ def posts_add_view(request):
 
 @login_required(login_url="/users/login")
 def posts_edit_view(request):
+    if request.GET.get('target'):#set form values
+        target_post = models.Post.objects.get(pk = request.GET.get('target'))
+        form = forms.PostForm(request.POST or None, request.FILES or None, instance=target_post)
+    else:
+        form = forms.PostForm()
+    if request.method == "POST" and request.POST.get('_method')=="PUT" and target_post:# check mehtod is PUT and target is exist
+        if request.user == target_post.author and form.is_valid():
+            form.save()
+            return redirect(reverse("posts:details",kwargs={"pk" : request.POST.get("target")}))
+
     posts = models.Post.objects.filter(author = request.user)
-    form = forms.PostForm()
     context = {
         "posts":posts,
         "form":form
