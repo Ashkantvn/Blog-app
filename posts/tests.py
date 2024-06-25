@@ -85,6 +85,19 @@ class PostsLoggedInViewsTests(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"posts/posts_edit.html")
 
+    def test_posts_edit_view_POST(self):
+        response = self.client.post(
+            reverse("posts:add"),
+            data= {
+                "title" : "test post",
+                'content' : 'testcontent',
+                'target' : self.test_post.pk,
+                '_method':"PUT"
+            }
+        )
+        self.assertRedirects(response,reverse("users:info"))
+
+
 class PostsLoggedOutViewsTests(SimpleTestCase):
 
     def setUp(self):
