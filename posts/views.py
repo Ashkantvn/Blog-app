@@ -58,5 +58,10 @@ def posts_edit_view(request):
     }
     return render(request,"posts/posts_edit.html",context)
 
-def posts_delete_view(request):
-    return HttpResponse ("delete page")
+@login_required(login_url="/users/login")
+def posts_delete_view(request,pk):
+    target_post = models.Post.objects.get(pk=pk)
+    context = {
+        "post": target_post
+    }
+    return render(request,"posts/posts_delete.html",context)
