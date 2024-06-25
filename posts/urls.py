@@ -8,5 +8,5 @@ urlpatterns = [
     path("<int:pk>",views.posts_details_view,name="details"),
     path("edit/",views.posts_edit_view,name="edit"),
     path("add/",views.posts_add_view,name="add"),
-    path("delete/",views.posts_delete_view,name="delete"),
+    path("<int:pk>/delete",views.posts_delete_view,name="delete"),
 ]

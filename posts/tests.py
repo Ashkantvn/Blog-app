@@ -24,7 +24,7 @@ class PostsUrlTests(SimpleTestCase):
         self.assertEqual(resolve(url).func,views.posts_edit_view)
 
     def test_delete_url_is_resolve(self):
-        url = reverse("posts:delete")
+        url = reverse("posts:delete",kwargs={"pk":1})
         self.assertEqual(resolve(url).func,views.posts_delete_view)
         
 class PostsModelsTests(TestCase):
