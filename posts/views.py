@@ -61,6 +61,10 @@ def posts_edit_view(request):
 @login_required(login_url="/users/login")
 def posts_delete_view(request,pk):
     target_post = models.Post.objects.get(pk=pk)
+    if request.method == "POST" and request.POST.get('_method') == "DELETE":
+        if request.user == target_post.author and target_post:
+            target_post.delete()
+            return redirect(reverse("users:info"))
     context = {
         "post": target_post
     }
