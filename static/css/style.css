@@ -1,14 +1,28 @@
-main{
-    margin-bottom: 9em;
+main {
+  margin-bottom: 9em;
+}
+
+input:not([type="file"]),
+textarea {
+  border: 1px solid #232323 !important;
+  width: 100%;
+  padding: 10px;
+  color: #232323;
+  outline: none;
+  background: transparent;
 }
 
 
-label{
-    font-weight: bold;
-    margin-top: 2em;
+label {
+  font-weight: bold;
+  margin-top: 2em;
+  display: block !important;
 }
 
-.pre-white-space{
-    white-space: pre;
-    letter-spacing: 0;
+address {
+  font-style: italic !important;
+}
+.pre-white-space {
+  white-space: pre-wrap;
+  letter-spacing: 0;
 }
