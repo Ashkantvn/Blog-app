@@ -8,20 +8,17 @@
 
 
 {% block content %}
-<h2>
-   {{post.title}}
-</h2>
 <article>
+    <h2  class="text-center">
+    {{post.title}}
+    </h2>
     <section>
-        <img src="{{post.banner.url}}" alt="{{post.title}}">
-        <h3>
-            {{post.title}}
-        </h3>
+        <img src="{{post.banner.url}}" alt="{{post.title}}" class='img-fluid'>
         <p class="pre-white-space">
-{{post.content}}
+            {{post.content}}
         </p>
-        <address> Created at {{post.date_created}} by {{post.author}} </address>
-        <h4> {{post.slug}} </h4>
+        <address class="text-secondary"> Created at {{post.date_created}} by {{post.author}} </address>
+        <h4 class="text-secondary h6"> {{post.slug}} </h4>
     </section>
 </article>
 {% endblock content %}

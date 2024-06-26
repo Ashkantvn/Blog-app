@@ -8,18 +8,20 @@
 
 
 {% block content %}
-<h2>
+<h2 class="text-center my-5">
     Blogs list
 </h2>
-<article>
+<article class="d-flex flex-column gap-3">
     {% for post in posts %}
-    <section>
-        <img src="{{post.banner.url}}" alt="{{post.title}}">
-        <h3>
-            {{post.title}}
-        </h3>
-        <address> Created by {{post.author}} </address>
-        <a href="{{post.get_absolute_url}}">More</a>
+    <section class="card">
+        <img src="{{post.banner.url}}" alt="{{post.title}}" class="card-img-top">
+        <div class="card-body text-center">
+            <h3 class="card-title">
+                {{post.title}}
+            </h3>
+            <address> Created by {{post.author}} </address>
+            <a href="{{post.get_absolute_url}}">More</a>
+        </div>
     </section>
     {% endfor %}
 </article>

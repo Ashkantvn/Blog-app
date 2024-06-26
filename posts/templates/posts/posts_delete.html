@@ -10,15 +10,17 @@
 {% block content %}
 <form action="{% url "posts:delete" pk=post.pk %}" method="post">
     {% csrf_token %}
-    <h2>
+    <h2 class="my-5">
         are you sure about delete {{post.title}} blog ?
     </h2>
     <input type="hidden" name="_method" value="DELETE">
-    <a href="posts:list">
-        Cancel
-    </a>
-    <button type="submit">
-        Accept
-    </button>
+    <div class="d-flex justify-content-evenly">
+        <a href="{% url 'posts:list' %}" class="btn btn-primary">
+            Cancel
+        </a>
+        <button type="submit" class="btn btn-danger">
+            Accept
+        </button>
+    </div>
 </form>
 {% endblock content %}
