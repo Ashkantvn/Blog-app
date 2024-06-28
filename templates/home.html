@@ -11,17 +11,25 @@
         <h2>Blog app</h2>
         <p>write your blogs and share it</p>
     </aside>
-    <div class="d-flex flex-wrap justify-content-between">
-        <article>
-                <section>
-                    <h3>Latest blogs</h3>
-                </section>
-                <section>
-                    <h3>Favorite blogs</h3>
-                </section>
-        </article>
-        <aside>
-            <h4>People comments</h4>
-        </aside>
-    </div>
+    <article class="">
+            <section class="my-5">
+                <h3>Latest blogs</h3>
+                <div class="d-flex flex-column flex-wrap gap-3">
+                    {% for post in latest_posts %}
+                    <div class="d-flex align-items-center rounded border justify-content-between">
+                        <img class = "rounded-start" width="174px" height="155px" src="{{post.banner.url}}" alt="{{post.title}}"/>
+                        <div class="text-center w-25">
+                            <h3 class="card-title">{{post.title}}</h3>
+                            <address> Created by {{post.author}} </address>
+                            <a href="{{post.get_absolute_url}}">More</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <a href="{% url "posts:list" %}">More Blogs</a>
+            </section>
+            <section>
+                <h3>Favorite blogs</h3>
+            </section>
+    </article>
 {% endblock content %}
