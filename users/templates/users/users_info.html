@@ -17,5 +17,30 @@
         <a href="{% url 'users:logout'%}">
             Exit from your account
         </a>
+        <h3 class="my-5"> Your blogs </h3>
+        {% if not user_posts %}{% comment %}  check if user has posts or not (if user had it , will render posts) {% endcomment %}
+        You do not have any blog 
+        <a href={% url "posts:add" %}>
+            Create one
+        </a>
+        {% else %}
+            {% for post in user_posts %}
+            <div class="card">
+                <div class="card-body ">
+                    <h2 class="card-title text-center">
+                        {{post.title}}
+                    </h2>
+                    <p class="pre-white-space">
+                        {{post.content}}
+                    </p>
+                    <div class="text-center">
+                        <a href = "{% url "posts:edit" %}?target={{post.pk}}">Edit</a>
+                        <a href = "{% url "posts:details" pk=post.pk %}" class="mx-3 link-success">Details</a>
+                        <a href = "{% url "posts:delete" pk=post.pk %}" class="link-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% endif %}
     </div>
 {% endblock content %}
