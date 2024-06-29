@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
+from posts import models as posts_model
 
 
 
@@ -36,4 +37,6 @@ def users_logout_view(request):
 
 @login_required(login_url="/users/login")
 def users_view(request):
-    return render(request,"users/users_info.html")
+    users_posts = posts_model.Post.objects.filter(author = request.user)
+    context = {"user_posts":users_posts}
+    return render(request,"users/users_info.html",context)
