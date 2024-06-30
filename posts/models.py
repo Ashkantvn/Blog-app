@@ -24,4 +24,14 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("posts:details", kwargs={"pk": self.pk})
     
+
+class Comment(models.Model):
+    content = models.TextField()
+    comment_for = models.ForeignKey(Post,default=None,on_delete=models.CASCADE)
+    author = models.ForeignKey(User , default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.content
+    
+    
     
