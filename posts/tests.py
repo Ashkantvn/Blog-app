@@ -36,12 +36,20 @@ class PostsModelsTests(TestCase):
             content = 'testcontent',
             author = auth.get_user(self.client)
         )
+        self.test_comment = models.Comment.objects.create(
+            content = "testComment",
+            comment_for = self.testPost,
+            author = auth.get_user(self.client)
+        )
 
     def test_create_slug(self):
         self.assertEqual(self.testPost.slug , "test-post")
 
     def test_created_object_is_correct(self):
         self.assertEqual(self.testPost.title , "test post")
+
+    def test_comment_created_object_is_correct(self):
+        self.assertEqual(self.test_comment.content , "testComment")
 
 class PostsLoggedInViewsTests(TestCase):
 
