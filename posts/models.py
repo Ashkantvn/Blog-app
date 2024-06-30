@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils import timezone
 
 # Create your models here.
 class Post(models.Model):
@@ -29,9 +30,7 @@ class Comment(models.Model):
     content = models.TextField()
     comment_for = models.ForeignKey(Post,default=None,on_delete=models.CASCADE)
     author = models.ForeignKey(User , default=None, on_delete=models.CASCADE)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.content
-    
-    
-    
+        return f"comment by {self.author} on {self.created_date}"
