@@ -142,7 +142,7 @@ class PostsLoggedOutViewsTests(SimpleTestCase):
 
 class PostsFormsTest(SimpleTestCase):
 
-    def test_add_post_form_valid(self):
+    def test_post_form_with_valid_data(self):
         form = forms.PostForm(
             data={
                 "title": "testpost",
@@ -151,9 +151,25 @@ class PostsFormsTest(SimpleTestCase):
         )
         self.assertTrue(form.is_valid())
 
-    def test_add_post_form_invalid(self):
+    def test_post_form_with_invalid_data(self):
         form = forms.PostForm(
             data={}
         )
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors),2)
+
+    def test_comment_form_with_invalid_data(self):
+        form = forms.CommentsForm(
+            data={
+                "content":"testComment",
+            }
+        )
+        self.assertTrue(form.is_valid())
+
+
+    def test_comment_form_with_invalid_data(self):
+        form = forms.CommentsForm(
+            data={}
+        )
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors),1)
