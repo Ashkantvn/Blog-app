@@ -21,11 +21,15 @@ def posts_list_view(request):
 
 def posts_details_view(request , pk):
     post = models.Post.objects.get(pk = pk)
+    form = forms.CommentsForm(request.POST or None)
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect(reverse("users:login"))
 
-    context = {"post" : post}
+    context = {
+        "post" : post,
+        "form" : form,
+    }
     return render(request,"posts/posts_details.html",context)
 
 @login_required(login_url="/users/login")
@@ -45,17 +49,16 @@ def posts_add_view(request):
 
 @login_required(login_url="/users/login")
 def posts_edit_view(request):
+    posts = models.Post.objects.filter(author = request.user)
+    target_post = posts.first()
     if request.GET.get('target'):#set form values
         target_post = models.Post.objects.get(pk = request.GET.get('target'))
-        form = forms.PostForm(request.POST or None, request.FILES or None, instance=target_post)
-    else:
-        form = forms.PostForm()
+    form = forms.PostForm(request.POST or None, request.FILES or None, instance=target_post)
     if request.method == "POST" and request.POST.get('_method')=="PUT" and target_post:# check mehtod is PUT and target is exist
         if request.user == target_post.author and form.is_valid():
             form.save()
-            return redirect(reverse("posts:details",kwargs={"pk" : request.POST.get("target")}))
+            return redirect(reverse("posts:edit"))
 
-    posts = models.Post.objects.filter(author = request.user)
     context = {
         "posts":posts,
         "form":form
