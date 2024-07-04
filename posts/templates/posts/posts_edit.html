@@ -8,6 +8,7 @@
 
 
 {% block content %}
+{% if user.is_authenticated %}
 <section>
     <h2>
         Edit blogs
@@ -25,10 +26,10 @@
 </h3>
 <section class="d-flex flex-column gap-3">
     {% if not posts %}
-        You do not have any blog 
-        <a href={% url "posts:add" %}>
-            Create one
-        </a>
+    <h3>You do not have any blog</h3> 
+    <a href={% url "posts:add" %}>
+        Create one
+    </a>
     {% else %}
         {% for post in posts %}
         <div class="card">
@@ -45,7 +46,8 @@
                 </div>
             </div>
         </div>
-    {% endfor %}
+        {% endfor %}
     {% endif %}
 </section>
+{% endif %}
 {% endblock content %}
