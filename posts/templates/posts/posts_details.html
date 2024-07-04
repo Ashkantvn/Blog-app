@@ -21,4 +21,16 @@
         <h4 class="text-secondary h6"> {{post.slug}} </h4>
     </section>
 </article>
+<aside>
+    {% if user.is_authenticated %}
+    <div>
+        <h3> Add comment </h3>
+        <form action="{{post.get_absolute_url}}" method="post">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit"> Submit </button>
+        </form>
+    </div>
+    {% endif %}
+</aside>
 {% endblock content %}
