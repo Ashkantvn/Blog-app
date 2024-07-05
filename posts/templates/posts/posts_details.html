@@ -23,14 +23,28 @@
 </article>
 <aside>
     {% if user.is_authenticated %}
-    <div>
-        <h3> Add comment </h3>
-        <form action="{{post.get_absolute_url}}" method="post">
-            {% csrf_token %}
-            {{form}}
-            <button type="submit"> Submit </button>
-        </form>
-    </div>
+        <div>
+            <h3> Add comment </h3>
+            <form action="{{post.get_absolute_url}}" method="post">
+                {% csrf_token %}
+                {{form}}
+                <button type="submit"> Submit </button>
+            </form>
+        </div>
+        <h3> Comments </h3>
+        {% if comment %}
+            {% for comment  in comments %}
+            <div>
+                <h5>
+                    <p>
+                        {{comment.content}}
+                    </p>
+                    <address class="text-secondary"> Created at {{comment.created_date}} by {{comment.author}} </address>
+                </div>
+            {% endfor %}
+        {% else %}
+            <h4>There is no Comments for this post</h4>
+        {% endif %}
     {% endif %}
 </aside>
 {% endblock content %}

@@ -22,13 +22,21 @@ def posts_list_view(request):
 def posts_details_view(request , pk):
     post = models.Post.objects.get(pk = pk)
     form = forms.CommentsForm(request.POST or None)
+    comments = models.Comment.objects.filter(comment_for = post)
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect(reverse("users:login"))
+        else:
+            if form.is_valid():
+                new_comment = form.save(commit=False)
+                new_comment.author = request.user
+                new_comment.comment_for = post
+                new_comment.save()
 
     context = {
         "post" : post,
         "form" : form,
+        "comments":comments
     }
     return render(request,"posts/posts_details.html",context)
 
