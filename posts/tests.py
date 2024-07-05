@@ -72,6 +72,18 @@ class PostsLoggedInViewsTests(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"posts/posts_details.html")
     
+    def test_posts_details_view_POST(self):
+        response = self.client.post(
+            reverse("posts:details",kwargs={"pk":self.test_post.pk}),
+                data={
+                    "content":"testComment",
+                    "comment_for":self.test_post,
+                    "author":auth.get_user(self.client)
+                }
+            )
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"posts/posts_details.html")
+    
     def test_posts_add_view_GET(self):
         response = self.client.get(reverse("posts:add"))
         self.assertEqual(response.status_code , 200)
