@@ -14,7 +14,7 @@
     <article class="">
             <section class="my-5">
                 <h3>Latest blogs</h3>
-                <div class="d-flex flex-column flex-wrap gap-3">
+                <div class="d-flex flex-column gap-3">
                     {% for post in latest_posts %}
                     <div class="d-flex align-items-center rounded border justify-content-between">
                         <img class = "rounded-start" width="174px" height="155px" src="{{post.banner.url}}" alt="{{post.title}}"/>
@@ -34,5 +34,19 @@
     </article>
     <aside>
         <h3>Recent comments</h3>
+        <div class="d-flex flex-column gap-3">
+            {% if comments %}
+            {% for comment in comments %}
+            <section class="card p-3">
+                <h4>
+                    comment for <a href ="{{comment.comment_for.get_absolute_url}}"> {{comment.comment_for.title}}</a>
+                </h4>
+                <p>
+                    {{comment.content}}
+                </p>
+            </section>
+            {% endfor %}
+            {% endif %}
+        </div>
     </aside>
 {% endblock content %}
