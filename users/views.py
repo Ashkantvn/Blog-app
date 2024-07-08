@@ -38,5 +38,9 @@ def users_logout_view(request):
 @login_required(login_url="/users/login")
 def users_view(request):
     users_posts = posts_model.Post.objects.filter(author = request.user)
-    context = {"user_posts":users_posts}
+    uesrs_comments = posts_model.Comment.objects.filter(author = request.user)
+    context = {
+        "user_posts":users_posts,
+        "user_comments":uesrs_comments
+        }
     return render(request,"users/users_info.html",context)

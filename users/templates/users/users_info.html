@@ -40,7 +40,24 @@
                     </div>
                 </div>
             </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
+        <h3 class="my-5"> Your comments </h3>
+        {% if not user_comments %}{% comment %}  check if user has comments or not (if user had it , will render comments) {% endcomment %}
+        You do not have any comments 
+        {% else %}
+            {% for comment in user_comments %}
+            <div class="card">
+                <div class="card-body ">
+                    <a href="{{comment.comment_for.get_absolute_url}}" class="card-title text-center">
+                        comment for {{comment.comment_for}}
+                    </a>
+                    <p class="my-5">
+                        {{comment.content}}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock content %}
