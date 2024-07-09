@@ -43,4 +43,7 @@ def users_view(request):
         "user_posts":users_posts,
         "user_comments":uesrs_comments
         }
+    if request.method == "POST" and request.POST.get("_method") == "DELETE":
+        target_post = posts_model.Comment.objects.get(pk = request.POST.get("comment"))
+        target_post.delete()
     return render(request,"users/users_info.html",context)
