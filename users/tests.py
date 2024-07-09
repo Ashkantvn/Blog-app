@@ -3,6 +3,7 @@ from django.urls import reverse,resolve
 from .views import users_login_view,users_logout_view,users_register_view,users_view
 from django.contrib.auth.models import User
 from django.contrib import auth
+from posts import models as post_models
 
 # Create your tests here.
 
@@ -34,6 +35,16 @@ class UsersTestViews(TestCase):
     def setUp(self):
         self.client = Client()
         self.client.force_login(User.objects.get_or_create(username='testuser')[0])
+        self.test_post = post_models.Post.objects.create(
+            title = "test post",
+            content = 'testcontent',
+            author = auth.get_user(self.client)
+        )
+        self.test_comment = post_models.Comment.objects.create(
+            content = "test comment",
+            comment_for = self.test_post,
+            author = auth.get_user(self.client)
+        )
 
     def test_login_GET(self):
         response = self.client.get(reverse("users:login"))
@@ -45,6 +56,19 @@ class UsersTestViews(TestCase):
         self.assertEqual(response.status_code,200)
         user = auth.get_user(self.client)
         self.assertTrue(user.is_authenticated)
+    
+    def test_info_POST(self):
+        response = self.client.post(
+            reverse("users:info"),
+            data={
+                "_method" : "DELETE",
+                "comment": self.test_comment.pk,
+            }    
+        )
+        self.assertNotIn(self.test_comment,post_models.Comment.objects.all())
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"users/users_info.html")
+
     
     def test_register_GET(self):
         response = self.client.get(reverse("users:register"))
