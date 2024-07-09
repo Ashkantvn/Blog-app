@@ -59,7 +59,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="_method" value="DELETE"/>
                         <input type="hidden" name="comment" value="{{comment.pk}}"/>
-                        <button type="submit">
+                        <button type="submit" class="btn">
                             <a class="link-danger">
                                 Delete
                             </a>
