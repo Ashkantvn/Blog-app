@@ -55,6 +55,16 @@
                     <p class="my-5">
                         {{comment.content}}
                     </p>
+                    <form action="{% url "users:info" %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="DELETE"/>
+                        <input type="hidden" name="comment" value="{{comment.pk}}"/>
+                        <button type="submit">
+                            <a class="link-danger">
+                                Delete
+                            </a>
+                        </button>
+                    </form>
                 </div>
             </div>
             {% endfor %}
