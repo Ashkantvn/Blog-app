@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 
 # Create your tests here.
+# urls test
 class PostsUrlTests(SimpleTestCase):
 
     def test_post_list_url_is_resolve(self):
@@ -26,7 +27,8 @@ class PostsUrlTests(SimpleTestCase):
     def test_delete_url_is_resolve(self):
         url = reverse("posts:delete",kwargs={"pk":1})
         self.assertEqual(resolve(url).func,views.posts_delete_view)
-        
+
+#models test   
 class PostsModelsTests(TestCase):
     def setUp(self):
         self.client  = Client()
@@ -51,6 +53,7 @@ class PostsModelsTests(TestCase):
     def test_comment_created_object_is_correct(self):
         self.assertEqual(self.test_comment.content , "testComment")
 
+# views tests
 class PostsLoggedInViewsTests(TestCase):
 
     def setUp(self):
@@ -163,7 +166,7 @@ class PostsLoggedOutViewsTests(TestCase):
         self.assertEqual(response.status_code,302)
         self.assertRedirects(response,reverse("users:login"))
 
-
+# forms test
 class PostsFormsTest(SimpleTestCase):
 
     def test_post_form_with_valid_data(self):
@@ -182,7 +185,7 @@ class PostsFormsTest(SimpleTestCase):
         self.assertFalse(form.is_valid())
         self.assertEqual(len(form.errors),2)
 
-    def test_comment_form_with_invalid_data(self):
+    def test_comment_form_with_valid_data(self):
         form = forms.CommentsForm(
             data={
                 "content":"testComment",
