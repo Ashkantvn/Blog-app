@@ -44,6 +44,7 @@ class PostsModelsTests(TestCase):
             author = auth.get_user(self.client)
         )
 
+
     def test_create_slug(self):
         self.assertEqual(self.testPost.slug , "test-post")
 
@@ -52,6 +53,8 @@ class PostsModelsTests(TestCase):
 
     def test_comment_created_object_is_correct(self):
         self.assertEqual(self.test_comment.content , "testComment")
+    
+
 
 # views tests
 class PostsLoggedInViewsTests(TestCase):
