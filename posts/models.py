@@ -34,3 +34,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"comment by {self.author} on {self.created_date}"
+
+class FavoritePost(models.Model):
+    pass
