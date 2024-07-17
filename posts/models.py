@@ -34,3 +34,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"comment by {self.author} on {self.created_date}"
+
+class FavoritePost(models.Model):
+    post = models.ForeignKey(Post,default=None,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,default=None,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Favorite post of {self.user}"
