@@ -29,7 +29,7 @@
         <h3>There is no blog</h3>
     {% endif %}
 </article>
-<footer>
+<footer>{% comment %} paginator {% endcomment %}
     {% if posts.has_other_pages %}
         <ul class="d-flex list-unstyled my-5 justify-content-center gap-5">
             {% if posts.has_previous %}
