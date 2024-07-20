@@ -26,6 +26,14 @@ def posts_details_view(request , pk):
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect(reverse("users:login"))
+        elif request.POST.get("favorite_post"):
+            if not models.FavoritePost.objects.filter(post = post,user=request.user):
+                favorite_post = models.FavoritePost.objects.create(
+                    post = post,
+                    user = request.user
+                )
+                favorite_post.save()
+            return redirect(reverse("users:info"))
         else:
             if form.is_valid():
                 new_comment = form.save(commit=False)
