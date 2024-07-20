@@ -23,6 +23,11 @@
 </article>
 <aside>
     {% if user.is_authenticated %}
+        <form action="{{post.get_absolute_url}}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="favorite_post" value="True"/>
+            <button type="submit">Add to favorite post</button>
+        </form>
         <div class="my-5">
             <h3> Add comment </h3>
             <form action="{{post.get_absolute_url}}" method="post">
