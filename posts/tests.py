@@ -94,7 +94,7 @@ class PostsLoggedInViewsTests(TestCase):
         response = self.client.post(
             reverse("posts:details",kwargs={"pk":self.test_post.pk}),
                 data={
-                    "subject":"favorite-post",
+                    "favorite_post":"True",
                     "post":self.test_post,
                     "user":auth.get_user(self.client)
                 }
