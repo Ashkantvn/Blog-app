@@ -39,9 +39,11 @@ def users_logout_view(request):
 def users_view(request):
     users_posts = posts_model.Post.objects.filter(author = request.user)
     uesrs_comments = posts_model.Comment.objects.filter(author = request.user)
+    users_favorite_posts = posts_model.FavoritePost.objects.filter(user = request.user)
     context = {
         "user_posts":users_posts,
-        "user_comments":uesrs_comments
+        "user_comments":uesrs_comments,
+        "user_favorite_posts":users_favorite_posts
         }
     if request.method == "POST" and request.POST.get("_method") == "DELETE":
         target_post = posts_model.Comment.objects.get(pk = request.POST.get("comment"))
