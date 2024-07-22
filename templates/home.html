@@ -28,8 +28,20 @@
                 </div>
                 <a href="{% url "posts:list" %}">More Blogs</a>
             </section>
-            <section>
+            <section class="my-5">
                 <h3>Favorite blogs</h3>
+                {% if favorite_posts %}
+                    {% for favorite_post in favorite_posts %}
+                    <div class="d-flex align-items-center rounded border justify-content-between">
+                        <img class = "rounded-start" width="174px" height="155px" src="{{favorite_post.post.banner.url}}" alt="{{favorite_post.post.title}}"/>
+                        <div class="text-center w-25">
+                            <h3 class="card-title">{{favorite_post.post.title}}</h3>
+                            <address> Created by {{favorite_post.post.author}} </address>
+                            <a href="{{favorite_post.post.get_absolute_url}}">More</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </section>
     </article>
     <aside>
