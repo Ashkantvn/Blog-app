@@ -8,3 +8,4 @@ This is a simple blog application built with Django. It allows users to create, 
 - User authentication (login/logout)
 - Post creation, editing, and deletion
 - Comments creation, and deletion
+- Adding favorite post
