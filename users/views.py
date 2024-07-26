@@ -26,10 +26,9 @@ def users_register_view(request):
         form = UserCreationForm()
     return render(request,"users/users_register.html",{"form" : form})
 
-
+@login_required(login_url="/users/login")
 def users_logout_view(request):
-    if request.user.is_authenticated:
-        logout(request)
+    logout(request)
     return redirect("users:login")
 
 
@@ -49,3 +48,7 @@ def users_view(request):
         target_post = posts_model.Comment.objects.get(pk = request.POST.get("comment"))
         target_post.delete()
     return render(request,"users/users_info.html",context)
+
+@login_required(login_url="/users/login")
+def users_change_pass_view(request):
+    pass
