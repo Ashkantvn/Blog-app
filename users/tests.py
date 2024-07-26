@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase , TestCase, Client
 from django.urls import reverse,resolve
-from .views import users_login_view,users_logout_view,users_register_view,users_view
+from .views import users_login_view,users_logout_view,users_register_view,users_view,users_change_pass_view
 from django.contrib.auth.models import User
 from django.contrib import auth
 from posts import models as post_models
@@ -26,6 +26,10 @@ class UsersTestUrls(SimpleTestCase):
     def test_user_logout_url_is_resolve(self):
         url = reverse("users:logout")
         self.assertEqual(resolve(url).func,users_logout_view)
+
+    def test_user_chagnge_password_is_resolve(self):
+        url = reverse("users:change-pass")
+        self.assertEqual(resolve(url).func,users_change_pass_view)
 
 
 

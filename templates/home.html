@@ -29,8 +29,8 @@
                 <a href="{% url "posts:list" %}">More Blogs</a>
             </section>
             <section class="my-5">
-                <h3>Favorite blogs</h3>
-                {% if favorite_posts %}
+                {% if favorite_posts and user.is_authenticated %}
+                    <h3>Favorite blogs</h3>
                     {% for favorite_post in favorite_posts %}
                     <div class="d-flex align-items-center rounded border justify-content-between">
                         <img class = "rounded-start" width="174px" height="155px" src="{{favorite_post.post.banner.url}}" alt="{{favorite_post.post.title}}"/>
