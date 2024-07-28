@@ -13,7 +13,7 @@ def users_login_view(request):
             login(request, form.get_user())
             return redirect("users:info")
     else:
-        form = AuthenticationForm
+        form = AuthenticationForm()
     return render(request,"users/users_login.html",{"form":form})
 
 def users_register_view(request):
@@ -51,4 +51,4 @@ def users_view(request):
 
 @login_required(login_url="/users/login")
 def users_change_pass_view(request):
-    pass
+    return render(request,"users/users_change_pass.html")
