@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm,PasswordChangeForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout
@@ -51,4 +51,7 @@ def users_view(request):
 
 @login_required(login_url="/users/login")
 def users_change_pass_view(request):
-    return render(request,"users/users_change_pass.html")
+    context = {
+        "change_pass_form":PasswordChangeForm(request.user or None)
+    }
+    return render(request,"users/users_change_pass.html",context)

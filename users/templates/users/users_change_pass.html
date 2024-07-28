@@ -9,4 +9,11 @@
 <h2>
     Change password
 </h2>
+<form action="{% url "users:change-pass" %}" method="post">
+    {% csrf_token %}
+    {{change_pass_form}}
+    <button type="submit">
+        Change
+    </button>
+</form>
 {% endblock content %}
