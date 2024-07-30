@@ -1,8 +1,9 @@
-from django.contrib.auth.forms import AuthenticationForm,UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm,UserCreationForm,PasswordChangeForm
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login,logout
+from django.contrib.auth import login,logout,update_session_auth_hash
 from posts import models as posts_model
+from django.contrib import messages
 
 
 
@@ -13,7 +14,7 @@ def users_login_view(request):
             login(request, form.get_user())
             return redirect("users:info")
     else:
-        form = AuthenticationForm
+        form = AuthenticationForm()
     return render(request,"users/users_login.html",{"form":form})
 
 def users_register_view(request):
@@ -49,6 +50,18 @@ def users_view(request):
         target_post.delete()
     return render(request,"users/users_info.html",context)
 
+
+
 @login_required(login_url="/users/login")
-def users_change_pass_view(request):
-    pass
+def users_change_pass_view(request): # will update and change user's password
+    pass_change_form = PasswordChangeForm(request.user,request.POST or None)
+    context = {
+        "change_pass_form":pass_change_form
+    }
+    
+    if request.method == "POST" and pass_change_form.is_valid():
+        pass_change_form.save()
+        update_session_auth_hash(request,pass_change_form.user)
+        messages.success(request,"pass changed successfully")
+
+    return render(request,"users/users_change_pass.html",context)

@@ -14,9 +14,14 @@
         <h2>
             hello {{request.user.username}}
         </h2>
-        <a href="{% url 'users:logout'%}">
-            Exit from your account
-        </a>
+        <div class="d-flex flex-column">
+            <a href="{% url 'users:change-pass'%}">
+                Change password
+            </a>
+            <a href="{% url 'users:logout'%}">
+                Exit from your account
+            </a>
+        </div>
         <h3 class="my-5"> Your blogs </h3>
         {% if not user_posts %}{% comment %}  check if user has posts or not (if user had it , will render posts) {% endcomment %}
         You do not have any blog 

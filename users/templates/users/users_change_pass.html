@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Change password
+{% endblock title %}
+
+
+{% block content %}
+<h2>
+    Change password
+</h2>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form action="{% url "users:change-pass" %}" method="post">
+    {% csrf_token %}
+    {{change_pass_form}}
+    <button class="btn btn-success mt-3" type="submit">
+        Change
+    </button>
+</form>
+{% endblock content %}
