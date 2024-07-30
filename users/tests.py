@@ -84,3 +84,8 @@ class UsersTestViews(TestCase):
         self.assertRedirects(response, reverse("users:login"))
         user = auth.get_user(self.client)
         self.assertFalse(user.is_authenticated)
+
+    def test_user_change_pass_GET(self):
+        response = self.client.get(reverse("users:change-pass"))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"users/users_change_pass.html")
