@@ -19,7 +19,7 @@
 <form action="{% url "users:change-pass" %}" method="post">
     {% csrf_token %}
     {{change_pass_form}}
-    <button type="submit">
+    <button class="btn btn-success mt-3" type="submit">
         Change
     </button>
 </form>
