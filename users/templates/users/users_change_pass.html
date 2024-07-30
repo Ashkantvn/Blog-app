@@ -9,6 +9,13 @@
 <h2>
     Change password
 </h2>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 <form action="{% url "users:change-pass" %}" method="post">
     {% csrf_token %}
     {{change_pass_form}}
