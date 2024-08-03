@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from posts import models
+from django.conf import settings
+from django.utils import translation
 
 
 
@@ -21,3 +23,15 @@ def home_view(request):
 
 def about_view(request):
     return render(request,"about.html")
+
+
+
+def change_lang_view(request):
+    if request.method == "POST":
+        user_language = request.POST.get('language')
+        translation.activate(user_language)
+        response = render(request,"setting.html")
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, user_language)
+    else:
+        response = response = render(request,"setting.html")
+    return response

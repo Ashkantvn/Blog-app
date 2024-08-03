@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Change language
+{% endblock title %}
+
+
+
+
+{% block content %}
+<div class ='d-flex justify-content-center'>
+    <form action="{{request.build_absolute_uri}}" method="post">
+    {% csrf_token %}
+        <select name="language" onchange="this.form.submit()">
+          <option value="">language</option>
+          <option value="fa">Persian</option>
+          <option value="en">English</option>
+        </select>
+    </form>
+</div>
+{% endblock content %}
