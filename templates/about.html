@@ -1,14 +1,14 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 {% block title %}
-    About blog app
+    {% trans "About" %} blog app
 {% endblock title %}
 
 
 
 {% block content %}
-    <h2>About us</h2>
+    <h2>{% trans "About us" %}</h2>
     <article>
             {% lorem 3 p random %}
     </article>
