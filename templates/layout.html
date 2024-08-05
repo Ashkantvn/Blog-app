@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 {% load i18n %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{LANGUAGE_CODE}}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,7 +24,7 @@
     ></script>
   </head>
 
-  <body>
+  <body class="{% if LANGUAGE_CODE == 'fa' %}rtl{% endif %}">
     <header class="fixed-bottom sticky-lg-top navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
         <h1 class="navbar-brand text-light">{% trans "Blog app" %}</h1>
