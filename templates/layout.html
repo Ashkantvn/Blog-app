@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+{% load i18n %}
 {% load static %}
-<html lang="en">
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{LANGUAGE_CODE}}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,10 +24,10 @@
     ></script>
   </head>
 
-  <body>
+  <body class="{% if LANGUAGE_CODE == 'fa' %}rtl{% endif %}">
     <header class="fixed-bottom sticky-lg-top navbar navbar-expand-lg bg-dark">
       <div class="container-fluid">
-        <h1 class="navbar-brand text-light">Blog app</h1>
+        <h1 class="navbar-brand text-light">{% trans "Blog app" %}</h1>
 
         <!-- menu button from bootstrap -->
         <button
@@ -41,17 +43,18 @@
         </button>
           
         <nav class="navbar-nav justify-content-lg-end  collapse navbar-collapse" id="navbarNavAltMarkup">
-          <a class="text-light nav-item nav-link" href="/"> HOME </a>
-          <a class="text-light nav-item nav-link" href="/about"> ABOUT </a>
-          <a class="text-light nav-item nav-link" href="{% url "posts:list" %}"> BLOGS </a>
+          <a class="text-light nav-item nav-link" href="/"> {% trans "HOME" %} </a>
+          <a class="text-light nav-item nav-link" href="/about"> {% trans "ABOUT" %} </a>
+          <a class="text-light nav-item nav-link" href="{% url "posts:list" %}"> {% trans "BLOGS" %} </a>
+          <a class="text-light nav-item nav-link" href="/setting"> {% trans "PAGE-SETTING" %} </a>
           {% if user.is_authenticated %}
-            <a class="text-light nav-item nav-link" href="{% url "posts:add" %}"> ADD-BLOGS </a>
-            <a class="text-light nav-item nav-link" href="{% url "posts:edit" %}"> EDIT-BLOGS </a>
-            <a class="text-light nav-item nav-link" href="{% url 'users:info' %}"> {{ user.username }} </a>
-            <a class="text-light nav-item nav-link" href="{% url 'users:logout' %}"> SIGN-OUT </a>
+            <a class="text-light nav-item nav-link" href="{% url "posts:add" %}"> {% trans "ADD-BLOGS" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url "posts:edit" %}"> {% trans "EDIT-BLOGS" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:info' %}"> {% trans "PROFILE" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:logout' %}"> {% trans "SIGN-OUT" %} </a>
           {% else %}
-            <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> SIGN-IN </a>
-            <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> SIGN-UP </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> {% trans "SIGN-IN" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> {% trans "SIGN-UP" %} </a>
           {% endif %}
         </nav>
       </div>

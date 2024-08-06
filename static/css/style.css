@@ -26,3 +26,18 @@ address {
   white-space: pre-wrap;
   letter-spacing: 0;
 }
+
+.rtl{
+  direction: rtl ;
+  text-align: right;
+}
+
+[lang='en']{
+  direction: ltr;
+  text-align: left;
+}
+
+[lang="fa"]{
+  direction: rtl;
+  text-align: right;
+}
