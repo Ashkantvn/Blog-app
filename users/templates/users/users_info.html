@@ -35,7 +35,7 @@
                     <h2 class="card-title text-center">
                         {{post.title}}
                     </h2>
-                    <p class="pre-white-space">
+                    <p class="pre-white-space" lang="{{post.lang}}">
                         {{post.content}}
                     </p>
                     <div class="text-center">
@@ -57,7 +57,7 @@
                     <a href="{{comment.comment_for.get_absolute_url}}" class="card-title text-center">
                         {% trans "Comment for" %} {{comment.comment_for}}
                     </a>
-                    <p class="my-5">
+                    <p class="my-5" lang="{{comment.lang}}">
                         {{comment.content}}
                     </p>
                     <form action="{% url "users:info" %}" method="post">
