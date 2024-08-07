@@ -12,7 +12,7 @@
     <h2>
         Registration
     </h2>
-    <form action="/users/register/" method="post" class='form form-with-validation' >
+    <form action="{% url "users:register" %}" method="post" class='form form-with-validation' >
         {% csrf_token %}
         
         {{form}}
