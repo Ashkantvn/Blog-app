@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 
 {% block title %}
-    User {{request.user.username}} info
+    {% trans "User" %} {{request.user.username}}
 {% endblock title %}
 
 
@@ -12,22 +12,22 @@
 {% block content %}
     <div class="text-center">
         <h2>
-            hello {{request.user.username}}
+            {% trans "hello" %} {{request.user.username}}
         </h2>
         <div class="d-flex flex-column">
             <a href="{% url 'users:change-pass'%}">
-                Change password
+                {% trans "Change password" %}
             </a>
             <a href="{% url 'users:logout'%}">
-                Exit from your account
+                {% trans "Exit from your account" %}
             </a>
         </div>
-        <h3 class="my-5"> Your blogs </h3>
+        <h3 class="my-5"> {% trans "Your blogs" %} </h3>
         {% if not user_posts %}{% comment %}  check if user has posts or not (if user had it , will render posts) {% endcomment %}
-        You do not have any blog 
-        <a href={% url "posts:add" %}>
-            Create one
-        </a>
+            {% trans "You do not have any blog" %} 
+            <a href={% url "posts:add" %}>
+                {% trans "Create one" %}
+            </a>
         {% else %}
             {% for post in user_posts %}
             <div class="card">
@@ -39,23 +39,23 @@
                         {{post.content}}
                     </p>
                     <div class="text-center">
-                        <a href = "{% url "posts:edit" %}?target={{post.pk}}">Edit</a>
-                        <a href = "{% url "posts:details" pk=post.pk %}" class="mx-3 link-success">Details</a>
-                        <a href = "{% url "posts:delete" pk=post.pk %}" class="link-danger">Delete</a>
+                        <a href = "{% url "posts:edit" %}?target={{post.pk}}">{% trans "Edit" %}</a>
+                        <a href = "{% url "posts:details" pk=post.pk %}" class="mx-3 link-success">{% trans "Details" %}</a>
+                        <a href = "{% url "posts:delete" pk=post.pk %}" class="link-danger">{% trans "Delete" %}</a>
                     </div>
                 </div>
             </div>
             {% endfor %}
         {% endif %}
-        <h3 class="my-5"> Your comments </h3>
+        <h3 class="my-5"> {% trans "Your comments" %} </h3>
         {% if not user_comments %}{% comment %}  check if user has comments or not (if user had it , will render comments) {% endcomment %}
-        You do not have any comments 
+            {% trans "You do not have any comments " %}
         {% else %}
             {% for comment in user_comments %}
             <div class="card">
                 <div class="card-body ">
                     <a href="{{comment.comment_for.get_absolute_url}}" class="card-title text-center">
-                        comment for {{comment.comment_for}}
+                        {% trans "Comment for" %} {{comment.comment_for}}
                     </a>
                     <p class="my-5">
                         {{comment.content}}
@@ -66,7 +66,7 @@
                         <input type="hidden" name="comment" value="{{comment.pk}}"/>
                         <button type="submit" class="btn">
                             <a class="link-danger">
-                                Delete
+                                {% trans "Delete" %}
                             </a>
                         </button>
                     </form>
@@ -74,9 +74,9 @@
             </div>
             {% endfor %}
         {% endif %}
-        <h3 class="my-5"> Your favorite posts </h3>
+        <h3 class="my-5"> {% trans "Your favorite posts" %} </h3>
         {% if not user_favorite_posts %}{% comment %}  check if user has favorite post or not (if user had it , will render favorite posts) {% endcomment %}
-        You do not have any favorite posts
+            {% trans "You do not have any favorite posts" %}
         {% else %}
             {% for favorite_post in user_favorite_posts %}
             <div class="card">
