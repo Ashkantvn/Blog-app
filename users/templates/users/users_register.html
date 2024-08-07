@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 {% block title %}
-    Login
+    {% trans "Login" %}
 {% endblock title %}
 
 
@@ -10,7 +10,7 @@
 {% block content %}
 <div>
     <h2>
-        Registration
+        {% trans "Registration" %}
     </h2>
     <form action="{% url "users:register" %}" method="post" class='form form-with-validation' >
         {% csrf_token %}
@@ -19,14 +19,14 @@
     
         
         <button type="submit" class="btn btn-success form-submit my-3">
-            Register
+            {% trans "Register" %}
         </button>
         
     </form>
     
     
     <span> 
-        Already have account? <a href="{% url 'users:login' %}"> Login </a> 
+        {% trans "Already have account" %}{% trans "?" %} <a href="{% url 'users:login' %}"> {% trans "Login" %} </a> 
     </span>
 </div>
 
