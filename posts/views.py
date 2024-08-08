@@ -1,9 +1,9 @@
 from django.shortcuts import render , redirect
-from django.http import HttpResponse
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from . import models,forms
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from lingua import LanguageDetectorBuilder
 
 # Create your views here.
 def posts_list_view(request):
@@ -65,8 +65,12 @@ def posts_add_view(request):
 
 @login_required(login_url="/users/login")
 def posts_edit_view(request):
-    posts = models.Post.objects.filter(author = request.user)
-    target_post = posts.first()
+    user_posts = models.Post.objects.filter(author = request.user)
+    detector = LanguageDetectorBuilder.from_all_languages().build()
+    for post in user_posts:
+        lang = detector.detect_language_of(post.content).iso_code_639_1.name.lower()
+        post.lang = lang
+    target_post = user_posts.first()
     if request.GET.get('target'):#set form values
         target_post = models.Post.objects.get(pk = request.GET.get('target'))
     form = forms.PostForm(request.POST or None, request.FILES or None, instance=target_post)
@@ -76,7 +80,7 @@ def posts_edit_view(request):
             return redirect(reverse("posts:edit"))
 
     context = {
-        "posts":posts,
+        "posts":user_posts,
         "form":form
     }
     return render(request,"posts/posts_edit.html",context)
