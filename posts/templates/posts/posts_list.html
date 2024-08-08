@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 {% block title %}
-    Blogs
+    {% trans "Blogs" %}
 {% endblock title %}
 
 
 
 {% block content %}
 <h2 class="text-center my-5">
-    Blogs list
+    {% trans "Blogs list" %}
 </h2>
 <article class="d-flex flex-column gap-3">
     {% if posts %}
@@ -20,22 +20,22 @@
                 <h3 class="card-title">
                     {{post.title}}
                 </h3>
-                <address> Created by {{post.author}} </address>
-                <a href="{{post.get_absolute_url}}">More</a>
+                <address> {% trans "Created by" %} {{post.author}} </address>
+                <a href="{{post.get_absolute_url}}">{% trans "More" %}</a>
             </div>
         </section>
         {% endfor %}
     {% else %}
-        <h3>There is no blog</h3>
+        <h3>{% trans "There is no blog" %}</h3>
     {% endif %}
 </article>
 <footer>{% comment %} paginator {% endcomment %}
     {% if posts.has_other_pages %}
         <ul class="d-flex list-unstyled my-5 justify-content-center gap-5">
             {% if posts.has_previous %}
-            <li><a href="?page={{posts.previous_page_number}}">Previous</a></li>
+            <li><a href="?page={{posts.previous_page_number}}">{% trans "Previous" %}</a></li>
             {% else %}
-            <li class="disabled"><span>Previous</span></li>
+            <li class="disabled"><span>{% trans "Previous" %}</span></li>
             {% endif %}
 
             {% for page_number in posts.paginator.page_range %}
@@ -47,9 +47,9 @@
             {% endfor %}
             
             {% if posts.has_next %}
-            <li><a href="?page={{posts.next_page_number}}">Next</a></li>
+            <li><a href="?page={{posts.next_page_number}}">{% trans "Next" %}</a></li>
             {% else %}
-            <li class="disabled"><span>Next</span></li>
+            <li class="disabled"><span>{% trans "Next" %}</span></li>
             {% endif %}
         </ul>
     {% endif %}
