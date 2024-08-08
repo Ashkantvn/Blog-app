@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+
+{% block title %}
+    {% trans "PAGE-SETTING" %}
+{% endblock title %}
+
+
+
+
+{% block content %}
+<div class ='d-flex justify-content-center'>
+    <form action="{{request.build_absolute_uri}}" method="post">
+    {% csrf_token %}
+        <select name="language" onchange="this.form.submit()">
+          <option value="">{% trans "language" %}</option>
+          <option value="fa">{% trans "Persian" %}</option>
+          <option value="en">{% trans "English" %}</option>
+        </select>
+    </form>
+</div>
+{% endblock content %}
