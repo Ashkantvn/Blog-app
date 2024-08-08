@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 {% block title %}
-    Change password
+    {% trans "Change password" %}
 {% endblock title %}
 
 
 {% block content %}
 <h2>
-    Change password
+    {% trans "Change password" %}
 </h2>
 {% if messages %}
 <ul class="messages">
@@ -20,7 +21,7 @@
     {% csrf_token %}
     {{change_pass_form}}
     <button class="btn btn-success mt-3" type="submit">
-        Change
+        {% trans "Change" %}
     </button>
 </form>
 {% endblock content %}

@@ -4,8 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login,logout,update_session_auth_hash
 from posts import models as posts_model
 from django.contrib import messages
-
-
+from lingua import LanguageDetectorBuilder
 
 def users_login_view(request):
     if request.method == "POST":
@@ -37,9 +36,16 @@ def users_logout_view(request):
 
 @login_required(login_url="/users/login")
 def users_view(request):
+    detector = LanguageDetectorBuilder.from_all_languages().build()
     users_posts = posts_model.Post.objects.filter(author = request.user)
     uesrs_comments = posts_model.Comment.objects.filter(author = request.user)
     users_favorite_posts = posts_model.FavoritePost.objects.filter(user = request.user)
+    for post in users_posts:
+        lang = detector.detect_language_of(post.content).iso_code_639_1.name.lower()
+        post.lang = lang
+    for comment in uesrs_comments:
+        lang = detector.detect_language_of(comment.content).iso_code_639_1.name.lower()
+        comment.lang = lang
     context = {
         "user_posts":users_posts,
         "user_comments":uesrs_comments,
