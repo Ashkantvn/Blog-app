@@ -41,3 +41,13 @@ address {
   direction: rtl;
   text-align: right;
 }
+
+#banner-clear_id{
+  width: max-content;
+  display: inline;
+}
+
+label[for=banner-clear_id]{
+  margin-top: 0;
+  display: inline !important;
+}
