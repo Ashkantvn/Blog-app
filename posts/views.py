@@ -67,7 +67,7 @@ def posts_add_view(request):
 def posts_edit_view(request):
     user_posts = models.Post.objects.filter(author = request.user)
     detector = LanguageDetectorBuilder.from_all_languages().build()
-    for post in user_posts:
+    for post in user_posts:#language detector
         lang = detector.detect_language_of(post.content).iso_code_639_1.name.lower()
         post.lang = lang
     target_post = user_posts.first()
