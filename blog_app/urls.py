@@ -35,4 +35,5 @@ urlpatterns += i18n_patterns(
     path(_(r"setting"), views.change_lang_view),
     path(_(r"posts/"), include("posts.urls")),
     path(_(r"users/"), include("users.urls")),
+    path(_(r"podcasts/"), include("podcasts.urls")),
 )
