@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
+{% load i18n %}
 
 
 {% block title %}
-    Add new post
+    {% trans "Add new post" %}
 {% endblock title %}
 
 
@@ -10,12 +11,12 @@
 {% block content %}
 {% if user.is_authenticated %}
 <h2>
-   Add new post
+   {% trans "Add new post" %}
 </h2>
 <form action="{% url "posts:add" %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{form}}
-    <button class="btn btn-primary mt-3" type="submit">Add</button>
+    <button class="btn btn-primary mt-3" type="submit">{% trans "Add" %}</button>
 </form>
 {% endif %}
 {% endblock content %}

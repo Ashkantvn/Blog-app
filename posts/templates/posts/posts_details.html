@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 {% block title %}
     {{post.title}}
@@ -17,7 +17,7 @@
         <p class="pre-white-space">
             {{post.content}}
         </p>
-        <address class="text-secondary"> Created at {{post.date_created}} by {{post.author}} </address>
+        <address class="text-secondary"> {% trans "Created at" %} {{post.date_created}} {% trans "by" %} {{post.author}} </address>
         <h4 class="text-secondary h6"> {{post.slug}} </h4>
     </section>
 </article>
@@ -26,28 +26,28 @@
         <form action="{{post.get_absolute_url}}" method="post">
             {% csrf_token %}
             <input type="hidden" name="favorite_post" value="True"/>
-            <button type="submit" class="btn btn-danger my-5">Add to favorite post</button>
+            <button type="submit" class="btn btn-danger my-5">{% trans "Add to favorite post" %}</button>
         </form>
         <div class="my-5">
-            <h3> Add comment </h3>
+            <h3> {% trans "Add comment" %} </h3>
             <form action="{{post.get_absolute_url}}" method="post">
                 {% csrf_token %}
                 {{form}}
-                <button class="btn btn-primary" type="submit"> Submit </button>
+                <button class="btn btn-primary" type="submit"> {% trans "Submit" %} </button>
             </form>
         </div>
-        <h3 class="my-5"> Comments </h3>
+        <h3 class="my-5"> {% trans "Comments" %} </h3>
         {% if comments %}
             {% for comment  in comments %}
             <div class="card p-3">
                     <p>
                         {{comment.content}}
                     </p>
-                    <address class="text-secondary"> Created at {{comment.created_date}} by {{comment.author}} </address>
+                    <address class="text-secondary"> {% trans "Created at" %} {{comment.created_date}} {% trans "by" %} {{comment.author}} </address>
             </div>
             {% endfor %}
         {% else %}
-            <h4>There is no Comments for this post</h4>
+            <h4>{% trans "There is no Comments for this post" %}</h4>
         {% endif %}
     {% endif %}
 </aside>
