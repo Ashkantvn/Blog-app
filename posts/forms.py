@@ -29,7 +29,7 @@ class CommentsForm(forms.ModelForm):
         fields = ["content"]
 
     def __init__(self,*args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
+        super(CommentsForm, self).__init__(*args, **kwargs)
         for field in self.fields.values():
             if translation.get_language() == 'fa':
                 for field in self.fields.values():
