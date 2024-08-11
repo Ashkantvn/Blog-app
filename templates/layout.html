@@ -46,12 +46,13 @@
           <a class="text-light nav-item nav-link" href="/"> {% trans "HOME" %} </a>
           <a class="text-light nav-item nav-link" href="/about"> {% trans "ABOUT" %} </a>
           <a class="text-light nav-item nav-link" href="{% url "posts:list" %}"> {% trans "BLOGS" %} </a>
+          <a class="text-light nav-item nav-link" href="{% url "podcasts:list" %}"> {% trans "PODCASTS" %} </a>
           {% if user.is_authenticated %}
-          <a class="text-light nav-item nav-link" href="{% url 'users:info' %}"> {% trans "PROFILE" %} </a>
-          <a class="text-light nav-item nav-link" href="{% url 'users:logout' %}"> {% trans "SIGN-OUT" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:info' %}"> {% trans "PROFILE" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:logout' %}"> {% trans "SIGN-OUT" %} </a>
           {% else %}
-          <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> {% trans "SIGN-IN" %} </a>
-          <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> {% trans "SIGN-UP" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> {% trans "SIGN-IN" %} </a>
+            <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> {% trans "SIGN-UP" %} </a>
           {% endif %}
           <a class="text-light nav-item nav-link" href="/setting"> {% trans "PAGE-SETTING" %} </a>
         </nav>
