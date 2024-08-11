@@ -3,6 +3,7 @@ from django.urls import reverse,resolve
 from . import views,models,forms
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.utils import translation
 
 # Create your tests here.
 # urls test
@@ -157,18 +158,18 @@ class PostsLoggedOutViewsTests(TestCase):
 
     def test_logged_out_posts_add_view_GET(self):
         response = self.client.get(reverse("posts:add"))
-        self.assertEqual(response.status_code,302)
-        self.assertRedirects(response,"/users/login?next=/posts/add/",target_status_code=301)
+        expected_url = reverse('users:login') + '?next=' + reverse('posts:add')
+        self.assertRedirects(response,expected_url)
 
     def test_logged_out_posts_edit_view_GET(self):
         response = self.client.get(reverse("posts:edit"))
-        self.assertEqual(response.status_code,302)
-        self.assertRedirects(response,"/users/login?next=/posts/edit/",target_status_code=301)
+        expected_url = reverse('users:login') + '?next=' + reverse('posts:edit')
+        self.assertRedirects(response,expected_url)
     
     def test_logged_out_posts_delete_GET(self):
         response = self.client.get(reverse("posts:delete",kwargs={"pk":1}))
-        self.assertEqual(response.status_code,302)
-        self.assertRedirects(response,"/users/login?next=/posts/1/delete",target_status_code=301)
+        expected_url = reverse('users:login') + '?next=' + reverse("posts:delete", kwargs={"pk": 1})
+        self.assertRedirects(response, expected_url )
 
     def test_logged_out_posts_details_POST(self):
         response = self.client.post(
