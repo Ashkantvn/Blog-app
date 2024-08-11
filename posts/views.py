@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from . import models,forms
-from django.urls import reverse
+from django.urls import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from lingua import LanguageDetectorBuilder
 
@@ -48,7 +48,7 @@ def posts_details_view(request , pk):
     }
     return render(request,"posts/posts_details.html",context)
 
-@login_required(login_url="/users/login")
+@login_required(login_url=reverse_lazy("users:login"))
 def posts_add_view(request):
     if request.method == "POST":
         form = forms.PostForm(request.POST , request.FILES)
@@ -63,7 +63,7 @@ def posts_add_view(request):
     return render(request,"posts/posts_add.html",context)
 
 
-@login_required(login_url="/users/login")
+@login_required(login_url=reverse_lazy("users:login"))
 def posts_edit_view(request):
     user_posts = models.Post.objects.filter(author = request.user)
     detector = LanguageDetectorBuilder.from_all_languages().build()
@@ -85,7 +85,7 @@ def posts_edit_view(request):
     }
     return render(request,"posts/posts_edit.html",context)
 
-@login_required(login_url="/users/login")
+@login_required(login_url=reverse_lazy("users:login"))
 def posts_delete_view(request,pk):
     target_post = models.Post.objects.get(pk=pk)
     if request.method == "POST" and request.POST.get('_method') == "DELETE":
