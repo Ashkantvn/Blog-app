@@ -30,5 +30,5 @@ class testPodcastModels(TestCase):
 
     def test_podcast_creation(self):
         self.assertEqual(self.test_podcast.title, "Podcast title")
-        self.assertEqual(self.test_podcast.slug,"Podcast-title")
-        self.assertEqual(self.test_podcast.podcaster, self.user)
+        self.assertEqual(self.test_podcast.slug,"podcast-title")
+        self.assertEqual(self.test_podcast.podcaster, get_user(self.client))
