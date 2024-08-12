@@ -24,7 +24,7 @@ class TestPodcastModels(TestCase):
         self.test_podcast = models.Podcast.objects.create(
             title = "Podcast title",
             description = "Something about podcast",
-            audio = SimpleUploadedFile("test_audio.mp3",b'file_content','audio/mpeg'),
+            audio = SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg'),
             podcaster = get_user(self.client)
         )
 
@@ -37,17 +37,19 @@ class TestPodcastModels(TestCase):
 # form test 
 
 class TestPodcastForms(SimpleTestCase):
-    
+
     def test_podcast_form_with_valid_data(self):
         form = forms.PodcastForm(
             data={
                 'title':'Title podcast',
                 'description':'Podcast description',
-                'audio':SimpleUploadedFile('test_audio.mpe',b'file_content','audio/mpeg'),
+            },
+            files = {
+                'audio':SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg')
             }
         )
         self.assertTrue(form.is_valid())
 
     def test_podcast_form_with_invalid_data(self):
         form = forms.PodcastForm(data={})
-        self.assertTrue(form.is_valid())    
+        self.assertFalse(form.is_valid())    
