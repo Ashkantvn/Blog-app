@@ -1,6 +1,6 @@
 from django.test import TestCase,SimpleTestCase
 from django.urls import reverse,resolve
-from . import views , models
+from . import views , models ,forms
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -8,7 +8,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 # Create your tests here.
 
 # url tests
-class testPodcastURL(SimpleTestCase):
+class TestPodcastURL(SimpleTestCase):
 
     def test_podcast_list_is_resolve(self):
         url = reverse("podcasts:list")
@@ -17,7 +17,7 @@ class testPodcastURL(SimpleTestCase):
 
 # model tests
 
-class testPodcastModels(TestCase):
+class TestPodcastModels(TestCase):
 
     def setUp(self):
         self.client.force_login(User.objects.get_or_create(username="testuser")[0])
@@ -32,3 +32,22 @@ class testPodcastModels(TestCase):
         self.assertEqual(self.test_podcast.title, "Podcast title")
         self.assertEqual(self.test_podcast.slug,"podcast-title")
         self.assertEqual(self.test_podcast.podcaster, get_user(self.client))
+
+
+# form test 
+
+class TestPodcastForms(SimpleTestCase):
+    
+    def test_podcast_form_with_valid_data(self):
+        form = forms.PodcastForm(
+            data={
+                'title':'Title podcast',
+                'description':'Podcast description',
+                'audio':SimpleUploadedFile('test_audio.mpe',b'file_content','audio/mpeg'),
+            }
+        )
+        self.assertTrue(form.is_valid())
+
+    def test_podcast_form_with_invalid_data(self):
+        form = forms.PodcastForm(data={})
+        self.assertTrue(form.is_valid())    
