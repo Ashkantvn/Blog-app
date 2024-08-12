@@ -53,3 +53,15 @@ class TestPodcastForms(SimpleTestCase):
     def test_podcast_form_with_invalid_data(self):
         form = forms.PodcastForm(data={})
         self.assertFalse(form.is_valid())    
+
+
+
+
+#views test (guest user)
+
+class TestPodcastLoggedOutViews(SimpleTestCase):
+
+    def test_logged_out_podcast_list_views(self):
+        response = self.client.get(reverse("podcasts:list"))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/podcasts_list.html')
