@@ -14,6 +14,10 @@ class TestPodcastURL(SimpleTestCase):
         url = reverse("podcasts:list")
         self.assertEqual(resolve(url).func,views.podcast_list)
 
+    def test_podcast_details_is_resolve(self):
+        url=reverse("podcasts:details",kwargs={"pk":1})
+        self.assertEqual(resolve(url).func,views.podcast_details)
+
 
 # model tests
 

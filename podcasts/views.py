@@ -18,3 +18,8 @@ def podcast_list(request):
         "podcasts":paginator_result
     }
     return render(request,'podcasts/podcasts_list.html',context)
+
+
+#podcast details view
+def podcast_details(request):
+    pass
