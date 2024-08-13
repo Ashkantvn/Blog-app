@@ -63,7 +63,7 @@ class TestPodcastForms(SimpleTestCase):
 
 #views test (guest user)
 
-class TestPodcastLoggedOutViews(SimpleTestCase):
+class TestPodcastLoggedOutViews(TestCase):
 
     def test_logged_out_podcast_list_views(self):
         response = self.client.get(reverse("podcasts:list"))
