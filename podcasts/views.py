@@ -21,5 +21,5 @@ def podcast_list(request):
 
 
 #podcast details view
-def podcast_details(request):
-    pass
+def podcast_details(request,pk):
+    return HttpResponse("")

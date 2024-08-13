@@ -65,7 +65,53 @@ class TestPodcastForms(SimpleTestCase):
 
 class TestPodcastLoggedOutViews(TestCase):
 
+
     def test_logged_out_podcast_list_views(self):
         response = self.client.get(reverse("podcasts:list"))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/podcasts_list.html')
+
+    def test_logged_out_podcast_details_view(self):
+        response = self.client.get(reverse("podcasts:details",kwargs={"pk":1}))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
+
+    def test_logged_out_podcast_details_POST_view(self):
+        response = self.client.post(
+            reverse("podcasts:details",kwargs={"pk":1}),
+            data={
+                'comment_content':"test comment",
+                'comment_for':""
+            }
+        )
+        self.assertRedirects(response,reverse('users:login'),target_status_code=302)
+
+
+#views test (logged in user)
+
+class TestPodcastLoggedInViews(TestCase):
+
+    def setUp(self):
+        self.client.force_login(User.objects.get_or_create(username="testuser")[0])
+        self.test_podcast = models.Podcast.objects.create(
+            title = "Podcast title",
+            description = "Something about podcast",
+            audio = SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg'),
+            podcaster = get_user(self.client)
+        )
+
+    def test_logged_out_podcast_details_view(self):
+        response = self.client.get(reverse("podcasts:details",kwargs={"pk":1}))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
+
+    def test_logged_out_podcast_details_POST_view(self):
+        response = self.client.post(
+            reverse("podcasts:details",kwargs={"pk":1}),
+            data={
+                'content':"test comment",
+                'comment_for':self.test_podcast,
+                'auther':get_user(self.client)
+            }
+        )
+        self.assertRedirects(response,reverse('users:login'),target_status_code=302)
