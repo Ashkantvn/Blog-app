@@ -28,4 +28,10 @@ class Podcast(models.Model):
 
 
 class PodcastComment(models.Model):
-    pass
+    content = models.TextField()
+    comment_for = models.ForeignKey(Podcast,default=None,on_delete=models.CASCADE)
+    created_date = models.DateTimeField(default=timezone.now)
+    author = models.ForeignKey(User,default=None,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'comment for {self.comment_for.title}'
