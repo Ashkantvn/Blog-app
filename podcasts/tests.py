@@ -31,16 +31,25 @@ class TestPodcastModels(TestCase):
             audio = SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg'),
             podcaster = get_user(self.client)
         )
+        self.test_comment = models.PodcastComment.objects.create(
+            content = 'test comment',
+            comment_for = self.test_comment,
+            author = get_user(self.client)
+        )
 
     def test_podcast_creation(self):
         self.assertEqual(self.test_podcast.title, "Podcast title")
         self.assertEqual(self.test_podcast.slug,"podcast-title")
         self.assertEqual(self.test_podcast.podcaster, get_user(self.client))
 
+    def test_podcast_comment_creation(self):
+        self.assertEqual(self.test_comment.content,'test comment')
+
+
 
 # form test 
 
-class TestPodcastForms(SimpleTestCase):
+class TestPodcastForms(TestCase):
 
     def test_podcast_form_with_valid_data(self):
         form = forms.PodcastForm(
@@ -56,9 +65,19 @@ class TestPodcastForms(SimpleTestCase):
 
     def test_podcast_form_with_invalid_data(self):
         form = forms.PodcastForm(data={})
-        self.assertFalse(form.is_valid())    
+        self.assertFalse(form.is_valid())
 
+    def test_podcast_comment_form_with_valid_data(self):
+        form = forms.PodcastCommentForm(
+            data={
+                'comment_content':'test comment'
+            }
+        )
+        self.assertTrue(form.is_valid())   
 
+    def test_podcast_comment_form_with_invalid_data(self):
+        form = forms.PodcastCommentForm(data={})
+        self.assertFalse(form.is_valid())
 
 
 #views test (guest user)
@@ -114,4 +133,5 @@ class TestPodcastLoggedInViews(TestCase):
                 'auther':get_user(self.client)
             }
         )
-        self.assertRedirects(response,reverse('users:login'),target_status_code=302)
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/podcasts_details.html')

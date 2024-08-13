@@ -24,3 +24,8 @@ class Podcast(models.Model):
     
     def get_absolute_url(self):
         return reverse("podcasts:details", kwargs={"pk": self.pk})
+    
+
+
+class PodcastComment(models.Model):
+    pass

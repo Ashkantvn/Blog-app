@@ -15,3 +15,8 @@ class PodcastForm(ModelForm):
             for field in self.fields.values():
                 field.widget.attrs.update({'dir': 'ltr'})
 
+
+
+class PodcastCommentForm(ModelForm):
+    pass
+
