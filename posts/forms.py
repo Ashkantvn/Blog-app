@@ -14,13 +14,12 @@ class PostForm(forms.ModelForm):
 
     def __init__(self,*args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            if translation.get_language() == 'fa':
-                for field in self.fields.values():
-                    field.widget.attrs.update({'dir': 'rtl'})
-            else:
-                for field in self.fields.values():
-                    field.widget.attrs.update({'dir': 'ltr'})
+        if translation.get_language() == 'fa':
+            for field in self.fields.values():
+                field.widget.attrs.update({'dir': 'rtl'})
+        else:
+            for field in self.fields.values():
+                field.widget.attrs.update({'dir': 'ltr'})
 
 
 class CommentsForm(forms.ModelForm):
@@ -30,11 +29,10 @@ class CommentsForm(forms.ModelForm):
 
     def __init__(self,*args, **kwargs):
         super(CommentsForm, self).__init__(*args, **kwargs)
-        for field in self.fields.values():
-            if translation.get_language() == 'fa':
-                for field in self.fields.values():
-                    field.widget.attrs.update({'dir': 'rtl'})
-            else:
-                for field in self.fields.values():
-                    field.widget.attrs.update({'dir': 'ltr'})
+        if translation.get_language() == 'fa':
+            for field in self.fields.values():
+                field.widget.attrs.update({'dir': 'rtl'})
+        else:
+            for field in self.fields.values():
+                field.widget.attrs.update({'dir': 'ltr'})
     
