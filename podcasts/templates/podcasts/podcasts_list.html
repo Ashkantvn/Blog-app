@@ -14,8 +14,8 @@
         <article>
         {% for podcast in podcasts %}
             <section>
-                <h3>{{podcast.title}}</h3>
                 <img src="{{podcast.banner.url}}" alt=""/>
+                <h3>{{podcast.title}}</h3>
                 <p>{{podcast.description}}</p>
                 <address>Created by {{podcast.podcaster}}</address>
                 <a href="{{podcast.get_absolute_url}}">{% trans "More" %}</a>
@@ -26,24 +26,24 @@
         <h3> There is no Podcast to show </h3>
     {% endif %}
     <footer>{% comment %} paginator {% endcomment %}
-        {% if posts.has_other_pages %}
+        {% if podcasts.has_other_pages %}
             <ul class="d-flex list-unstyled my-5 justify-content-center gap-5">
-                {% if posts.has_previous %}
-                <li><a href="?page={{posts.previous_page_number}}">{% trans "Previous" %}</a></li>
+                {% if podcasts.has_previous %}
+                <li><a href="?page={{podcasts.previous_page_number}}">{% trans "Previous" %}</a></li>
                 {% else %}
                 <li class="disabled"><span>{% trans "Previous" %}</span></li>
                 {% endif %}
     
-                {% for page_number in posts.paginator.page_range %}
-                    {% if posts.number == page_number %}
+                {% for page_number in podcasts.paginator.page_range %}
+                    {% if podcasts.number == page_number %}
                     <li class="active"><span>{{page_number}}</span></li>
                     {% else %}
                     <li><a href="?page={{page_number}}">{{page_number}}</a></li>
                     {% endif %}
                 {% endfor %}
                 
-                {% if posts.has_next %}
-                <li><a href="?page={{posts.next_page_number}}">{% trans "Next" %}</a></li>
+                {% if podcasts.has_next %}
+                <li><a href="?page={{podcasts.next_page_number}}">{% trans "Next" %}</a></li>
                 {% else %}
                 <li class="disabled"><span>{% trans "Next" %}</span></li>
                 {% endif %}
