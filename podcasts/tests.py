@@ -33,7 +33,7 @@ class TestPodcastModels(TestCase):
         )
         self.test_comment = models.PodcastComment.objects.create(
             content = 'test comment',
-            comment_for = self.test_comment,
+            comment_for = self.test_podcast,
             author = get_user(self.client)
         )
 
