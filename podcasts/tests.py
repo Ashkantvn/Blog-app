@@ -70,7 +70,7 @@ class TestPodcastForms(TestCase):
     def test_podcast_comment_form_with_valid_data(self):
         form = forms.PodcastCommentForm(
             data={
-                'comment_content':'test comment'
+                'content':'test comment'
             }
         )
         self.assertTrue(form.is_valid())   
