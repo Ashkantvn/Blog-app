@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.urls import reverse
+from django.utils import timezone
 
 
 # Create your models here.
@@ -12,6 +13,7 @@ class Podcast(models.Model):
     banner = models.ImageField(default='fallback.png',blank=True)
     audio = models.FileField(upload_to='audio/')
     podcaster = models.ForeignKey(User,default=None,on_delete=models.CASCADE)
+    created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return self.title

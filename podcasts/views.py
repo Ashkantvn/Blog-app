@@ -5,7 +5,7 @@ from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 
 # podcast list view
 def podcast_list(request):
-    podcasts = Podcast.objects.all()
+    podcasts = Podcast.objects.all().order_by('-created_date')
     paginator = Paginator(podcasts,10)
     current_page = request.GET.get('page',1)
     try:
