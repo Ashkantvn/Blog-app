@@ -43,8 +43,8 @@
         </button>
           
         <nav class="navbar-nav justify-content-lg-end  collapse navbar-collapse" id="navbarNavAltMarkup">
-          <a class="text-light nav-item nav-link" href="/"> {% trans "HOME" %} </a>
-          <a class="text-light nav-item nav-link" href="/about"> {% trans "ABOUT" %} </a>
+          <a class="text-light nav-item nav-link" href="{% url 'home' %}"> {% trans "HOME" %} </a>
+          <a class="text-light nav-item nav-link" href="{% url 'about' %}"> {% trans "ABOUT" %} </a>
           <a class="text-light nav-item nav-link" href="{% url "posts:list" %}"> {% trans "BLOGS" %} </a>
           <a class="text-light nav-item nav-link" href="{% url "podcasts:list" %}"> {% trans "PODCASTS" %} </a>
           {% if user.is_authenticated %}
@@ -54,7 +54,7 @@
             <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> {% trans "SIGN-IN" %} </a>
             <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> {% trans "SIGN-UP" %} </a>
           {% endif %}
-          <a class="text-light nav-item nav-link" href="/setting"> {% trans "PAGE-SETTING" %} </a>
+          <a class="text-light nav-item nav-link" href="{% url 'settings' %}"> {% trans "PAGE-SETTING" %} </a>
         </nav>
       </div>
     </header>
