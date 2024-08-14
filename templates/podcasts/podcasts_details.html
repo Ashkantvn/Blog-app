@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+
+
+{% block title %}
+{{podcast.title}}
+{% endblock title %}
+
+
+
+
+{% block content %}
+<h2> {{podcast.title}}</h2>
+<p> {{podcast.description}}</p>
+<audio control>
+    <source src="{{podcast.audio.url}}" type="audio/mpeg"/>
+    Your browser does not support audio tag
+</audio>
+<address>Created by {{podcast.podcaster}} on {{podcast.created_date}}</address>
+<h6>{{podcast.slug}}</h6>
+<aside>
+    {% if user.is_authenticated %}        
+        <h3 class="my-5"> {% trans "Comments" %} </h3>
+        {% if comments %}
+            {% for comment  in comments %}
+            <div class="card p-3">
+                    <p>
+                        {{comment.content}}
+                    </p>
+                    <address class="text-secondary"> {% trans "Created at" %} {{comment.created_date}} {% trans "by" %} {{comment.author}} </address>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h4>{% trans "There is no Comments for this post" %}</h4>
+        {% endif %}
+    {% endif %}
+</aside>
+{% endblock content %}
