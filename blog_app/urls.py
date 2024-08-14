@@ -30,9 +30,9 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path(_(r'admin/'), admin.site.urls),
-    path(_(r""), views.home_view),
-    path(_(r"about/"), views.about_view),
-    path(_(r"setting"), views.change_lang_view),
+    path(_(r""), views.home_view,name='home'),
+    path(_(r"about/"), views.about_view,name='about'),
+    path(_(r"setting"), views.change_lang_view,name='settings'),
     path(_(r"posts/"), include("posts.urls")),
     path(_(r"users/"), include("users.urls")),
     path(_(r"podcasts/"), include("podcasts.urls")),
