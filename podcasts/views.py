@@ -1,5 +1,7 @@
-from django.shortcuts import render,HttpResponse
-from .models import Podcast
+from django.shortcuts import render,HttpResponse,redirect
+from django.urls import reverse
+from .models import Podcast,PodcastComment
+from .forms import PodcastCommentForm
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 # Create your views here.
 
@@ -22,8 +24,25 @@ def podcast_list(request):
 
 #podcast details view
 def podcast_details(request,pk):
-    post = Podcast.objects.get(pk = pk)
+    podcast = Podcast.objects.get(pk = pk)
+    comments = PodcastComment.objects.filter(comment_for = podcast)
+    form = PodcastCommentForm(request.POST or None)
+    status_code = 200
     context={
-        "post":post
+        "podcast":podcast,
+        'comments':comments,
+        'form':form
     }
-    return render(request,'podcasts/podcasts_details.html',context)
+    
+    if request.method=='POST':
+        if request.user.is_authenticated :
+            if form.is_valid():
+                comment_form = form.save(commit=False)
+                comment_form.author = request.user
+                comment_form.comment_for = podcast
+                comment_form.save()
+                status_code = 201
+        else:
+            return redirect(reverse('users:login'))
+        
+    return render(request,'podcasts/podcasts_details.html',context,status=status_code)
