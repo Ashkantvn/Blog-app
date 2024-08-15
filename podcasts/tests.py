@@ -4,6 +4,7 @@ from . import views , models ,forms
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.translation import activate
 
 # Create your tests here.
 
@@ -107,11 +108,10 @@ class TestPodcastLoggedOutViews(TestCase):
         response = self.client.post(
             reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}),
             data={
-                'comment_content':"test comment",
-                'comment_for':""
+                'content':"test comment",
             }
         )
-        self.assertRedirects(response,reverse('users:login'),target_status_code=302)
+        self.assertRedirects(response,reverse('users:login'))
 
 
 #views test (logged in user)
@@ -137,8 +137,6 @@ class TestPodcastLoggedInViews(TestCase):
             reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}),
             data={
                 'content':"test comment",
-                'comment_for':self.test_podcast,
-                'author':get_user(self.client)
             }
         )
         self.assertEqual(response.status_code,201)
