@@ -22,4 +22,8 @@ def podcast_list(request):
 
 #podcast details view
 def podcast_details(request,pk):
-    return HttpResponse("")
+    post = Podcast.objects.get(pk = pk)
+    context={
+        "post":post
+    }
+    return render(request,'podcasts/podcasts_details.html',context)

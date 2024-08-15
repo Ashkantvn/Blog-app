@@ -84,6 +84,14 @@ class TestPodcastForms(TestCase):
 
 class TestPodcastLoggedOutViews(TestCase):
 
+    def setUp(self):
+        self.user = User.objects.update_or_create(username = "testuser")[0]
+        self.test_podcast = models.Podcast.objects.create(
+            title = "Podcast title",
+            description = "Something about podcast",
+            audio = SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg'),
+            podcaster = self.user
+        )
 
     def test_logged_out_podcast_list_views(self):
         response = self.client.get(reverse("podcasts:list"))
@@ -91,13 +99,13 @@ class TestPodcastLoggedOutViews(TestCase):
         self.assertTemplateUsed(response,'podcasts/podcasts_list.html')
 
     def test_logged_out_podcast_details_view(self):
-        response = self.client.get(reverse("podcasts:details",kwargs={"pk":1}))
+        response = self.client.get(reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
 
     def test_logged_out_podcast_details_POST_view(self):
         response = self.client.post(
-            reverse("podcasts:details",kwargs={"pk":1}),
+            reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}),
             data={
                 'comment_content':"test comment",
                 'comment_for':""
@@ -120,13 +128,13 @@ class TestPodcastLoggedInViews(TestCase):
         )
 
     def test_logged_out_podcast_details_view(self):
-        response = self.client.get(reverse("podcasts:details",kwargs={"pk":1}))
+        response = self.client.get(reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
 
     def test_logged_out_podcast_details_POST_view(self):
         response = self.client.post(
-            reverse("podcasts:details",kwargs={"pk":1}),
+            reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}),
             data={
                 'content':"test comment",
                 'comment_for':self.test_podcast,
