@@ -127,19 +127,19 @@ class TestPodcastLoggedInViews(TestCase):
             podcaster = get_user(self.client)
         )
 
-    def test_logged_out_podcast_details_view(self):
+    def test_logged_in_podcast_details_view(self):
         response = self.client.get(reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
 
-    def test_logged_out_podcast_details_POST_view(self):
+    def test_logged_in_podcast_details_POST_view(self):
         response = self.client.post(
             reverse("podcasts:details",kwargs={"pk":self.test_podcast.pk}),
             data={
                 'content':"test comment",
                 'comment_for':self.test_podcast,
-                'auther':get_user(self.client)
+                'author':get_user(self.client)
             }
         )
-        self.assertEqual(response.status_code,200)
+        self.assertEqual(response.status_code,201)
         self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
