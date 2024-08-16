@@ -46,3 +46,8 @@ def podcast_details(request,pk):
             return redirect(reverse('users:login'))
         
     return render(request,'podcasts/podcasts_details.html',context,status=status_code)
+
+
+#Add new podcast view
+def add_podcast(request):
+    return HttpResponse('')
