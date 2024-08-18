@@ -1,8 +1,10 @@
 from django.shortcuts import render,HttpResponse,redirect
-from django.urls import reverse
+from django.urls import reverse,reverse_lazy
 from .models import Podcast,PodcastComment
-from .forms import PodcastCommentForm
+from .forms import PodcastCommentForm,PodcastForm
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 # Create your views here.
 
 # podcast list view
@@ -33,7 +35,6 @@ def podcast_details(request,pk):
         'comments':comments,
         'form':form
     }
-    
     if request.method=='POST':
         if request.user.is_authenticated :
             if form.is_valid():
@@ -49,5 +50,22 @@ def podcast_details(request,pk):
 
 
 #Add new podcast view
+@login_required(login_url=reverse_lazy('users:login'))
 def add_podcast(request):
-    return HttpResponse('')
+    form = PodcastForm(request.POST or None , request.FILES)
+    context = {
+        'form':form
+    }
+    status_code = 200
+    if request.method == "POST":
+        if form.is_valid():
+            podcast_form = form.save(commit=False)
+            podcast_form.podcaster = request.user
+            podcast_form.save()
+            status_code = 201
+            messages.success(request,"Successfully added")
+        else:
+            for field , errors in form.errors.items():
+                for error in errors:
+                    messages.error(request,f"{field} : {error}")
+    return render(request,'podcasts/add_podcasts.html',context,status=status_code)
