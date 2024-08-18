@@ -117,13 +117,13 @@ class TestPodcastLoggedOutViews(TestCase):
         )
         self.assertRedirects(response,reverse('users:login'))
     
-    def test_add_podcast_view(self):
+    def test_logged_out_add_podcast_view(self):
         response = self.client.get(reverse('podcasts:add'))
-        self.assertRedirects(response,reverse('users:login'))
+        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse('podcasts:add')}')
 
-    def test_add_podcast_POST_view(self):
+    def test_logged_out_add_podcast_POST_view(self):
         response = self.client.post(reverse('podcasts:add'),data={})
-        self.assertRedirects(response,reverse('users:login'))
+        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse('podcasts:add')}')
 
 
 #views test (logged in user)
@@ -154,12 +154,12 @@ class TestPodcastLoggedInViews(TestCase):
         self.assertEqual(response.status_code,201)
         self.assertTemplateUsed(response,'podcasts/podcasts_details.html')
 
-    def test_add_podcast_view(self):
+    def test_logged_in_add_podcast_view(self):
         response = self.client.get(reverse("podcasts:add"))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/add_podcasts.html')
 
-    def test_add_podcast_POST_view(self):
+    def test_logged_in_add_podcast_POST_view(self):
         response = self.client.post(
             reverse('podcasts:add'),
             data=
@@ -170,4 +170,6 @@ class TestPodcastLoggedInViews(TestCase):
             'audio':SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg')
             }
         )
+        self.assertEqual(response.status_code,201)
+        self.assertTemplateUsed(response,'podcasts/add_podcasts.html')
     
