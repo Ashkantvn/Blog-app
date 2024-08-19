@@ -24,7 +24,7 @@ class TestPodcastURL(SimpleTestCase):
         self.assertEqual(resolve(url).func,views.add_podcast)
 
     def test_edit_podcast_is_resolve(self):
-        url = reverse('podcasts:edit')
+        url = reverse('podcasts:edit',kwargs={'pk':1})
         self.assertEqual(resolve(url).func,views.edit_podcast)
 
 
@@ -130,12 +130,14 @@ class TestPodcastLoggedOutViews(TestCase):
         self.assertRedirects(response,f'{reverse('users:login')}?next={reverse('podcasts:add')}')
 
     def test_logged_out_edit_podcast_view(self):
-        response = self.client.get(reverse('podcasts:edit'))
-        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcasts:edit")}')
+        response = self.client.get(reverse('podcasts:edit',kwargs={"pk":self.test_podcast.pk}))
+        expected_url = f'{reverse('users:login')}?next={reverse("podcasts:edit",kwargs={"pk":self.test_podcast.pk})}'
+        self.assertRedirects(response,expected_url)
         
     def test_logged_out_edit_podcast_POST_view(self):
-        response = self.client.post(reverse('podcasts:edit'),data={})
-        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcasts:edit")}')
+        response = self.client.post(reverse('podcasts:edit',kwargs={"pk":self.test_podcast.pk}),data={})
+        expected_url = f'{reverse('users:login')}?next={reverse("podcasts:edit",kwargs={"pk":self.test_podcast.pk})}'
+        self.assertRedirects(response,expected_url)
 
 
 #views test (logged in user)
@@ -186,13 +188,13 @@ class TestPodcastLoggedInViews(TestCase):
         self.assertTemplateUsed(response,'podcasts/add_podcasts.html')
 
     def test_logged_in_edit_podcast_view(self):
-        response = self.client.get(reverse("podcasts:edit"))
+        response = self.client.get(reverse("podcasts:edit",kwargs={"pk":self.test_podcast.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/edit_podcasts.html')
 
     def test_logged_in_edit_podcast_POST_view(self):
         response = self.client.post(
-            reverse('podcasts:edit'),
+            reverse('podcasts:edit',kwargs={"pk":self.test_podcast.pk}),
             data=
             {
             'title':'title of podcast',
