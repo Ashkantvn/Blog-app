@@ -131,11 +131,11 @@ class TestPodcastLoggedOutViews(TestCase):
 
     def test_logged_out_edit_podcast_view(self):
         response = self.client.get(reverse('podcasts:edit'))
-        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcast:edit")}')
+        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcasts:edit")}')
         
     def test_logged_out_edit_podcast_POST_view(self):
         response = self.client.post(reverse('podcasts:edit'),data={})
-        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcast:edit")}')
+        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcasts:edit")}')
 
 
 #views test (logged in user)
