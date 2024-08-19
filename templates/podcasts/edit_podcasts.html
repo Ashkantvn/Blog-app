@@ -1,1 +1,24 @@
 {% extends "layout.html" %}
+
+
+{% block title %}
+Edit {{podcast.title}}
+{% endblock title %}
+
+
+
+
+{% block content %}
+<ul class="messages">
+    {% if messages %}
+        {% for message in messages %}
+            <li{% if message.tags == 'error' %} class="alert alert-danger"{% else %} class="alert alert-success"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    {% endif %}
+</ul>
+<form action="{% url "podcasts:edit" pk=podcast.pk %}" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Edit</button>
+</form>
+{% endblock content %}

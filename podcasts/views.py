@@ -72,5 +72,18 @@ def add_podcast(request):
 
 
 @login_required(login_url=reverse_lazy('users:login'))
-def edit_podcast(request):
-    return HttpResponse("")
+def edit_podcast(request,pk):
+    target_podcast = Podcast.objects.get(pk= pk)
+    if request.method == 'POST':
+        form = PodcastForm(request.POST,request.FILES, instance=target_podcast)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Successfully updated!')
+    else:
+        form = PodcastForm(instance=target_podcast)
+    
+    context = {
+        "podcast":target_podcast,
+        "form":form
+    }
+    return render(request,'podcasts/edit_podcasts.html',context)
