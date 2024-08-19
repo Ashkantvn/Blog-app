@@ -23,6 +23,10 @@ class TestPodcastURL(SimpleTestCase):
         url = reverse('podcasts:add')
         self.assertEqual(resolve(url).func,views.add_podcast)
 
+    def test_edit_podcast_is_resolve(self):
+        url = reverse('podcasts:edit')
+        self.assertEqual(resolve(url).func,views.edit_podcast)
+
 
 # model tests
 
@@ -125,6 +129,14 @@ class TestPodcastLoggedOutViews(TestCase):
         response = self.client.post(reverse('podcasts:add'),data={})
         self.assertRedirects(response,f'{reverse('users:login')}?next={reverse('podcasts:add')}')
 
+    def test_logged_out_edit_podcast_view(self):
+        response = self.client.get(reverse('podcasts:edit'))
+        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcast:edit")}')
+        
+    def test_logged_out_edit_podcast_POST_view(self):
+        response = self.client.post(reverse('podcasts:edit'),data={})
+        self.assertRedirects(response,f'{reverse('users:login')}?next={reverse("podcast:edit")}')
+
 
 #views test (logged in user)
 
@@ -172,4 +184,23 @@ class TestPodcastLoggedInViews(TestCase):
         )
         self.assertEqual(response.status_code,201)
         self.assertTemplateUsed(response,'podcasts/add_podcasts.html')
+
+    def test_logged_in_edit_podcast_view(self):
+        response = self.client.get(reverse("podcasts:edit"))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/edit_podcasts.html')
+
+    def test_logged_in_edit_podcast_POST_view(self):
+        response = self.client.post(
+            reverse('podcasts:edit'),
+            data=
+            {
+            'title':'title of podcast',
+            'description':'description of podcast',
+            'banner':'title of podcast',
+            'audio':SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg')
+            }
+        )
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/edit_podcasts.html')
     
