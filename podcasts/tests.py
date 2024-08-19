@@ -198,7 +198,9 @@ class TestPodcastLoggedInViews(TestCase):
             'title':'title of podcast',
             'description':'description of podcast',
             'banner':'title of podcast',
-            'audio':SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg')
+            'audio':SimpleUploadedFile('test_audio.mp3',b'file_content','audio/mpeg'),
+            'target' : self.test_podcast.pk,
+            '_method':"PUT"
             }
         )
         self.assertEqual(response.status_code,200)

@@ -71,5 +71,6 @@ def add_podcast(request):
     return render(request,'podcasts/add_podcasts.html',context,status=status_code)
 
 
+@login_required(login_url=reverse_lazy('users:login'))
 def edit_podcast(request):
     return HttpResponse("")
