@@ -69,3 +69,7 @@ def add_podcast(request):
                 for error in errors:
                     messages.error(request,f"{field} : {error}")
     return render(request,'podcasts/add_podcasts.html',context,status=status_code)
+
+
+def edit_podcast(request):
+    return HttpResponse("")
