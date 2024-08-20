@@ -64,7 +64,7 @@ def posts_add_view(request):
 
 
 @login_required(login_url=reverse_lazy("users:login"))
-def posts_edit_view(request):
+def posts_edit_view(request,pk):
     user_posts = models.Post.objects.filter(author = request.user)
     detector = LanguageDetectorBuilder.from_all_languages().build()
     for post in user_posts:#language detector
@@ -77,7 +77,7 @@ def posts_edit_view(request):
     if request.method == "POST" and request.POST.get('_method')=="PUT" and target_post:# check mehtod is PUT and target is exist
         if request.user == target_post.author and form.is_valid():
             form.save()
-            return redirect(reverse("posts:edit"))
+            # return redirect(reverse("posts:edit"))
 
     context = {
         "posts":user_posts,
