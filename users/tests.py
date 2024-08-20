@@ -70,8 +70,8 @@ class UsersTestViews(TestCase):
             }    
         )
         self.assertNotIn(self.test_comment,post_models.Comment.objects.all())
-        self.assertEqual(response.status_code,200)
-        self.assertTemplateUsed(response,"users/users_info.html")
+        self.assertEqual(response.status_code,302)
+        self.assertRedirects(response,reverse('users:info'))
 
     
     def test_register_GET(self):
