@@ -27,6 +27,10 @@ class TestPodcastURL(SimpleTestCase):
         url = reverse('podcasts:edit',kwargs={'pk':1})
         self.assertEqual(resolve(url).func,views.edit_podcast)
 
+    def test_delete_podcast_is_resolve(self):
+        url = reverse('podcasts:delete',kwargs={'pk':1})
+        self.assertEqual(resolve(url).func,views.delete_podcast)
+
 
 # model tests
 
@@ -139,7 +143,15 @@ class TestPodcastLoggedOutViews(TestCase):
         expected_url = f'{reverse('users:login')}?next={reverse("podcasts:edit",kwargs={"pk":self.test_podcast.pk})}'
         self.assertRedirects(response,expected_url)
 
+    def test_logged_out_delete_podcast_view(self):
+        response = self.client.get(reverse('podcasts:delete',kwargs={'pk':self.test_podcast.pk}))
+        expected_url = f'{reverse('users:login')}?next={reverse("podcasts:delete",kwargs={"pk":self.test_podcast.pk})}'
+        self.assertRedirects(response,expected_url)
 
+    def test_logged_out_delete_podcast_POST_view(self):
+        response = self.client.post(reverse('podcasts:delete',kwargs={'pk':self.test_podcast.pk}),data={})
+        expected_url = f'{reverse('users:login')}?next={reverse("podcasts:delete",kwargs={"pk":self.test_podcast.pk})}'
+        self.assertRedirects(response,expected_url)
 #views test (logged in user)
 
 class TestPodcastLoggedInViews(TestCase):
@@ -207,4 +219,15 @@ class TestPodcastLoggedInViews(TestCase):
         )
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'podcasts/edit_podcasts.html')
+
+    def test_logged_in_delete_podcast_view(self):
+        response = self.client.get(reverse('podcasts:delete',kwargs={'pk':self.test_podcast.pk}))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'podcasts/delete_podcasts.html')
+
+    def test_logged_in_delete_podcast_POST_view(self):
+        response = self.client.post(reverse('podcasts:delete',kwargs={'pk':self.test_podcast.pk}),data={'post':self.test_podcast.pk})
+        self.assertRedirects(response,reverse('users:info'))
+
+    
     
