@@ -16,11 +16,10 @@
         </h2>
         <div class="d-flex flex-column">
             <a href="{% url "posts:add" %}"> {% trans "ADD-BLOGS" %} </a>
-            <a href="{% url "posts:edit" %}"> {% trans "EDIT-BLOGS" %} </a>
             <a href="{% url 'users:change-pass'%}">
                 {% trans "Change password" %}
             </a>
-            <a href="{% url 'users:logout'%}">
+            <a class='btn card my-1' href="{% url 'users:logout'%}">
                 {% trans "Exit from your account" %}
             </a>
         </div>
@@ -41,7 +40,7 @@
                         {{post.content}}
                     </p>
                     <div class="text-center">
-                        <a href = "{% url "posts:edit" %}?target={{post.pk}}">{% trans "Edit" %}</a>
+                        <a href = "{% url "posts:edit" pk=post.pk %}?target={{post.pk}}">{% trans "Edit" %}</a>
                         <a href = "{% url "posts:details" pk=post.pk %}" class="mx-3 link-success">{% trans "Details" %}</a>
                         <a href = "{% url "posts:delete" pk=post.pk %}" class="link-danger">{% trans "Delete" %}</a>
                     </div>

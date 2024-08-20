@@ -5,6 +5,7 @@ from django.contrib.auth import login,logout,update_session_auth_hash
 from posts import models as posts_model
 from django.contrib import messages
 from lingua import LanguageDetectorBuilder
+from django.urls import reverse
 
 def users_login_view(request):
     if request.method == "POST":
@@ -52,8 +53,10 @@ def users_view(request):
         "user_favorite_posts":users_favorite_posts
         }
     if request.method == "POST" and request.POST.get("_method") == "DELETE":
-        target_post = posts_model.Comment.objects.get(pk = request.POST.get("comment"))
-        target_post.delete()
+        target_comment = posts_model.Comment.objects.get(pk = request.POST.get("comment"))
+        target_comment.delete()
+        return redirect(reverse('users:info'))
+    
     return render(request,"users/users_info.html",context)
 
 

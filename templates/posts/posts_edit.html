@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% load i18n %}
+
+{% block title %}
+    edit post
+{% endblock title %}
+
+
+
+{% block content %}
+{% if user.is_authenticated %}
+<ul class="messages">
+    {% if messages %}
+        {% for message in messages %}
+            <li{% if message.tags == 'error' %} class="alert alert-danger"{% else %} class="alert alert-success"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    {% endif %}
+</ul>
+<section>
+    <h2>
+        {% trans "Edit blogs" %}
+    </h2>
+    <form action="{% url "posts:edit" pk=post.pk %}" enctype="multipart/form-data" method="post"> {# form of edit post #} 
+        {% csrf_token %}
+        {{form}}
+        <input type="hidden" name="_method" value="PUT">
+        <button  type="submit" class="btn btn-primary mt-3">{% trans "Submit" %}</button>
+    </form>
+</section>
+{% endif %}
+{% endblock content %}

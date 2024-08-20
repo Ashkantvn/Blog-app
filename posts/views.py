@@ -4,6 +4,7 @@ from . import models,forms
 from django.urls import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from lingua import LanguageDetectorBuilder
+from django.contrib.messages import success
 
 # Create your views here.
 def posts_list_view(request):
@@ -64,23 +65,22 @@ def posts_add_view(request):
 
 
 @login_required(login_url=reverse_lazy("users:login"))
-def posts_edit_view(request):
-    user_posts = models.Post.objects.filter(author = request.user)
+def posts_edit_view(request,pk):
+    user_post = models.Post.objects.get(pk = pk)
     detector = LanguageDetectorBuilder.from_all_languages().build()
-    for post in user_posts:#language detector
-        lang = detector.detect_language_of(post.content).iso_code_639_1.name.lower()
-        post.lang = lang
-    target_post = user_posts.first()
-    if request.GET.get('target'):#set form values
-        target_post = models.Post.objects.get(pk = request.GET.get('target'))
-    form = forms.PostForm(request.POST or None, request.FILES or None, instance=target_post)
-    if request.method == "POST" and request.POST.get('_method')=="PUT" and target_post:# check mehtod is PUT and target is exist
-        if request.user == target_post.author and form.is_valid():
+
+    #language detector
+    lang = detector.detect_language_of(user_post.content).iso_code_639_1.name.lower()
+    user_post.lang = lang
+    
+    form = forms.PostForm(request.POST or None, request.FILES or None, instance=user_post)
+    if request.method == "POST" and request.POST.get('_method')=="PUT":# check mehtod is PUT and target is exist
+        if request.user == user_post.author and form.is_valid():
             form.save()
-            return redirect(reverse("posts:edit"))
+            success(request,"Post Changed")
 
     context = {
-        "posts":user_posts,
+        "post":user_post,
         "form":form
     }
     return render(request,"posts/posts_edit.html",context)
