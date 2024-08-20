@@ -81,7 +81,7 @@ def edit_podcast(request,pk):
                 form.save()
                 messages.success(request, 'Successfully updated!')
         else:
-            messages.error("You can only edit your posts")
+            messages.error(request,"You can only edit your posts")
     else:
         form = PodcastForm(instance=target_podcast)
     
