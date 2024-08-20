@@ -129,7 +129,6 @@ class PostsLoggedInViewsTests(TestCase):
             data= {
                 "title" : "test post",
                 'content' : 'testcontent',
-                'target' : self.test_post.pk,
                 '_method':"PUT"
             }
         )
