@@ -1,5 +1,5 @@
 from django.forms.models import ModelForm
-from .models import Podcast
+from .models import Podcast,PodcastComment
 from django.utils import translation
 class PodcastForm(ModelForm):
     class Meta:
@@ -14,4 +14,21 @@ class PodcastForm(ModelForm):
         else:
             for field in self.fields.values():
                 field.widget.attrs.update({'dir': 'ltr'})
+
+
+
+class PodcastCommentForm(ModelForm):
+    class Meta:
+        model = PodcastComment
+        fields = ['content']
+
+    def __init__(self,*args,**kwargs):
+        super(PodcastCommentForm,self).__init__(*args,**kwargs)
+        if translation.get_language() == 'fa':
+            for field in self.fields.values():
+                field.widget.attrs.update({'dir': 'rtl'})
+        else:
+            for field in self.fields.values():
+                field.widget.attrs.update({'dir': 'ltr'})
+
 
