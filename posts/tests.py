@@ -22,7 +22,7 @@ class PostsUrlTests(SimpleTestCase):
         self.assertEqual(resolve(url).func,views.posts_add_view)
 
     def test_edit_post_url_is_resolve(self):
-        url = reverse("posts:edit")
+        url = reverse("posts:edit",kwargs={"pk":1})
         self.assertEqual(resolve(url).func,views.posts_edit_view)
 
     def test_delete_url_is_resolve(self):
@@ -119,13 +119,13 @@ class PostsLoggedInViewsTests(TestCase):
         self.assertRedirects(response,reverse("users:info"))
 
     def test_posts_edit_view_GET(self):
-        response = self.client.get(reverse("posts:edit"))
+        response = self.client.get(reverse("posts:edit",kwargs={"pk":self.test_post.pk}))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"posts/posts_edit.html")
 
     def test_posts_edit_view_POST(self):
         response = self.client.post(
-            reverse("posts:add"),
+            reverse("posts:edit",kwargs={"pk":self.test_post.pk}),
             data= {
                 "title" : "test post",
                 'content' : 'testcontent',
@@ -133,8 +133,9 @@ class PostsLoggedInViewsTests(TestCase):
                 '_method':"PUT"
             }
         )
-        self.assertRedirects(response,reverse("users:info"))
-
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,"posts/posts_edit.html")
+        
     def test_posts_delete_GET(self):
         response = self.client.get(reverse("posts:delete",kwargs={"pk" : self.test_post.pk}))
         self.assertEqual(response.status_code,200)
@@ -162,8 +163,8 @@ class PostsLoggedOutViewsTests(TestCase):
         self.assertRedirects(response,expected_url)
 
     def test_logged_out_posts_edit_view_GET(self):
-        response = self.client.get(reverse("posts:edit"))
-        expected_url = reverse('users:login') + '?next=' + reverse('posts:edit')
+        response = self.client.get(reverse("posts:edit",kwargs={"pk":self.test_post.pk}))
+        expected_url = reverse('users:login') + '?next=' + reverse('posts:edit',kwargs={"pk":self.test_post.pk})
         self.assertRedirects(response,expected_url)
     
     def test_logged_out_posts_delete_GET(self):
