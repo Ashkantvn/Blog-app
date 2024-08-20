@@ -76,9 +76,12 @@ def edit_podcast(request,pk):
     target_podcast = Podcast.objects.get(pk= pk)
     if request.method == 'POST':
         form = PodcastForm(request.POST,request.FILES, instance=target_podcast)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Successfully updated!')
+        if target_podcast.podcaster == request.user:
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Successfully updated!')
+        else:
+            messages.error("You can only edit your posts")
     else:
         form = PodcastForm(instance=target_podcast)
     
