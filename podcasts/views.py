@@ -90,3 +90,8 @@ def edit_podcast(request,pk):
         "form":form
     }
     return render(request,'podcasts/edit_podcasts.html',context)
+
+
+
+def delete_podcast(request,pk):
+    return HttpResponse("")
