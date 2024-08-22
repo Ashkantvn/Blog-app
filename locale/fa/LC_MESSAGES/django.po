@@ -1,0 +1,146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: .\blog_app\urls.py:33
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-11 12:50+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\blog_app\urls.py:32
+msgid "admin/"
+msgstr ""
+
+#: .\blog_app\urls.py:34
+msgid "about/"
+msgstr ""
+
+#: .\blog_app\urls.py:35
+msgid "setting"
+msgstr ""
+
+#: .\blog_app\urls.py:36
+msgid "posts/"
+msgstr ""
+
+#: .\blog_app\urls.py:37
+msgid "users/"
+msgstr ""
+
+#: .\blog_app\urls.py:38
+msgid "podcasts/"
+msgstr ""
+
+#: .\templates\about.html:5
+msgid "About"
+msgstr "درباره سایت"
+
+#: .\templates\about.html:11
+msgid "About us"
+msgstr "درباره ما"
+
+#: .\templates\home.html:6
+msgid "home page"
+msgstr "صفحه اصلی"
+
+#: .\templates\home.html:13
+msgid "write your blogs and share it"
+msgstr "بلاگ های خود را بنوسید و آن ها را به اشتراک بذارید"
+
+#: .\templates\home.html:18
+msgid "Latest blogs"
+msgstr "بلاگ های اخیر"
+
+#: .\templates\home.html:26 .\templates\home.html:43
+msgid "Created by"
+msgstr "ساخته شده توسط"
+
+#: .\templates\home.html:27 .\templates\home.html:44
+msgid "More"
+msgstr "بیشتر"
+
+#: .\templates\home.html:32
+msgid "More Blogs"
+msgstr "بلاگ های بیشتر"
+
+#: .\templates\home.html:37
+msgid "Favorite blogs"
+msgstr "بلاگ های مورد علاقه"
+
+#: .\templates\home.html:54
+msgid "Recent comments"
+msgstr "کامنت های اخیر"
+
+#: .\templates\home.html:60
+msgid "Comment for"
+msgstr "کامنت مربوط به"
+
+#: .\templates\layout.html:30
+msgid "Blog app"
+msgstr ""
+
+#: .\templates\layout.html:46
+msgid "HOME"
+msgstr "صفحه اصلی"
+
+#: .\templates\layout.html:47
+msgid "ABOUT"
+msgstr "درباره سایت"
+
+#: .\templates\layout.html:48
+msgid "BLOGS"
+msgstr "بلاگ ها"
+
+#: .\templates\layout.html:49
+msgid "PODCASTS"
+msgstr "پادکست ها"
+
+#: .\templates\layout.html:51
+msgid "PROFILE"
+msgstr "پروفایل"
+
+#: .\templates\layout.html:52
+msgid "SIGN-OUT"
+msgstr "خروج"
+
+#: .\templates\layout.html:54
+msgid "SIGN-IN"
+msgstr "ورود"
+
+#: .\templates\layout.html:55
+msgid "SIGN-UP"
+msgstr "ثبت نام"
+
+#: .\templates\layout.html:57 .\templates\setting.html:6
+msgid "PAGE-SETTING"
+msgstr "تنظیمات سایت"
+
+#: .\templates\setting.html:17
+msgid "language"
+msgstr "زبان"
+
+#: .\templates\setting.html:18
+msgid "Persian"
+msgstr "فارسی"
+
+#: .\templates\setting.html:19
+msgid "English"
+msgstr "انگلیسی"
+
+msgid "ADD-BLOGS"
+msgstr "اضافه کردن بلاگ جدید"
+
+msgid "EDIT-BLOGS"
+msgstr "تغییر بلاگ موجود"
