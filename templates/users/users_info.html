@@ -15,14 +15,12 @@
             {% trans "hello" %} {{request.user.username}}
         </h2>
         <div class="d-flex flex-column">
-            <a href="{% url "posts:add" %}"> {% trans "ADD-BLOGS" %} </a>
-            <a href="{% url 'users:change-pass'%}">
-                {% trans "Change password" %}
-            </a>
-            <a class='btn card my-1' href="{% url 'users:logout'%}">
-                {% trans "Exit from your account" %}
-            </a>
+            <a class='btn card my-1' href="{% url "posts:add" %}"> {% trans "ADD-BLOGS" %} </a>
+            <a class='btn card my-1' href="{% url 'podcasts:add' %}">{% trans "ADD-PODCAST" %}</a>
+            <a class='btn card my-1' href="{% url 'users:change-pass'%}">{% trans "Change password" %}</a>
+            <a class='btn card my-1' href="{% url 'users:logout'%}">{% trans "Exit from your account" %}</a>
         </div>
+
         <h3 class="my-5"> {% trans "Your blogs" %} </h3>
         {% if not user_posts %}{% comment %}  check if user has posts or not (if user had it , will render posts) {% endcomment %}
             {% trans "You do not have any blog" %} 
@@ -48,6 +46,31 @@
             </div>
             {% endfor %}
         {% endif %}
+
+        <h3 class="my-5"> {% trans "Your Podcasts" %} </h3>
+        {% if user_podcasts %}
+        {% for podcast in user_podcasts %}
+        <div class="card">
+            <h2 class="card-title">
+                {{podcast.title}}
+            </h2>
+            <div class="card-body">
+                <audio controls>
+                    <source src="{{podcast.audio.url}}" type="audio/mpeg"/>
+                    Your browser does not support audio tag
+                </audio>
+                <div class="text-center">
+                    <a href = "{% url "podcasts:edit" pk=podcast.pk %}?target={{podcast.pk}}">{% trans "Edit" %}</a>
+                    <a href = "{% url "podcasts:details" pk=podcast.pk %}" class="mx-3 link-success">{% trans "Details" %}</a>
+                    <a href = "{% url "podcasts:delete" pk=podcast.pk %}" class="link-danger">{% trans "Delete" %}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        {% trans "You do not have any Podcasts" %}
+        {% endif %}
+        
         <h3 class="my-5"> {% trans "Your comments" %} </h3>
         {% if not user_comments %}{% comment %}  check if user has comments or not (if user had it , will render comments) {% endcomment %}
             {% trans "You do not have any comments " %}
@@ -75,6 +98,8 @@
             </div>
             {% endfor %}
         {% endif %}
+
+
         <h3 class="my-5"> {% trans "Your favorite posts" %} </h3>
         {% if not user_favorite_posts %}{% comment %}  check if user has favorite post or not (if user had it , will render favorite posts) {% endcomment %}
             {% trans "You do not have any favorite posts" %}
@@ -89,5 +114,6 @@
             </div>
             {% endfor %}
         {% endif %}
+
     </div>
 {% endblock content %}
