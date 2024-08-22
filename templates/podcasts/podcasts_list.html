@@ -4,12 +4,12 @@
 
 
 {% block title %}
-    Podcast
+    {% trans "Podcast" %}
 {% endblock title %}
 
 
 {% block content %}
-    <h2>Podcast list</h2>
+    <h2>{% trans "Podcast list" %}</h2>
     {% if podcasts %}
         <article>
         {% for podcast in podcasts %}
@@ -17,13 +17,13 @@
                 <img src="{{podcast.banner.url}}" alt=""/>
                 <h3>{{podcast.title}}</h3>
                 <p>{{podcast.description}}</p>
-                <address>Created by {{podcast.podcaster}}</address>
+                <address>{% trans "Created by" %} {{podcast.podcaster}}</address>
                 <a href="{{podcast.get_absolute_url}}">{% trans "More" %}</a>
             </section>
         {% endfor %}
         </article>
     {% else %}
-        <h3> There is no Podcast to show </h3>
+        <h3> {% trans "There is no Podcast to show" %} </h3>
     {% endif %}
     <footer>{% comment %} paginator {% endcomment %}
         {% if podcasts.has_other_pages %}

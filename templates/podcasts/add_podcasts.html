@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 
 
 
 {% block title %}
-Add new podcast
+{% trans "Add new podcast" %}
 {% endblock title %}
 
 
 
 
 {% block content %}
-<h2>Add new podcast</h2>
+<h2>{% trans "Add new podcast" %}</h2>
 <ul class="messages">
     {% if messages %}
         {% for message in messages %}
@@ -24,6 +24,6 @@ Add new podcast
 <form action="{% url 'podcasts:add' %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{form}}
-    <button type="submit">ADD</button>
+    <button type="submit">{% trans "Add" %}</button>
 </form>
 {% endblock content %}

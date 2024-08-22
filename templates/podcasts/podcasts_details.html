@@ -17,7 +17,7 @@
     <source src="{{podcast.audio.url}}" type="audio/mpeg"/>
     Your browser does not support audio tag
 </audio>
-<address>Created by {{podcast.podcaster}} on {{podcast.created_date}}</address>
+<address>{% trans "Created by" %} {{podcast.podcaster}} {% trans "on" %} {{podcast.created_date}}</address>
 <h6>{{podcast.slug}}</h6>
 <aside>
     <div class="my-5">
