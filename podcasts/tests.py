@@ -226,7 +226,14 @@ class TestPodcastLoggedInViews(TestCase):
         self.assertTemplateUsed(response,'podcasts/delete_podcasts.html')
 
     def test_logged_in_delete_podcast_POST_view(self):
-        response = self.client.post(reverse('podcasts:delete',kwargs={'pk':self.test_podcast.pk}),data={'post':self.test_podcast.pk})
+        response = self.client.post(
+            reverse(
+                'podcasts:delete',kwargs={'pk':self.test_podcast.pk}),
+                data={
+                    'post':self.test_podcast.pk,
+                    '_method':"DELETE"
+                }
+            )
         self.assertRedirects(response,reverse('users:info'))
 
     

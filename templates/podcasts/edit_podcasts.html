@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 {% block title %}
-Edit {{podcast.title}}
+{% trans "Edit" %} {{podcast.title}}
 {% endblock title %}
 
 
@@ -19,6 +19,6 @@ Edit {{podcast.title}}
 <form action="{% url "podcasts:edit" pk=podcast.pk %}" method="post">
     {% csrf_token %}
     {{form}}
-    <button type="submit">Edit</button>
+    <button type="submit">{% trans "Edit" %}</button>
 </form>
 {% endblock content %}

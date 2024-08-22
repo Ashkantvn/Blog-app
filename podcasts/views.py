@@ -92,6 +92,14 @@ def edit_podcast(request,pk):
     return render(request,'podcasts/edit_podcasts.html',context)
 
 
-
+@login_required(login_url=reverse_lazy('users:login'))
 def delete_podcast(request,pk):
-    return HttpResponse("")
+    target_podcast = Podcast.objects.get(pk = pk)
+    context = {
+        'podcast':target_podcast
+    }
+    if request.method == "POST" and request.POST.get('_method') == "DELETE":
+        if request.user == target_podcast.podcaster and target_podcast:
+            target_podcast.delete()
+            return redirect(reverse("users:info"))
+    return render(request,'podcasts/delete_podcasts.html',context)
