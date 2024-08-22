@@ -9,24 +9,26 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<h2 class="my-5">
-    {% trans "are you sure about delete" %} {{podcast.title}}{% trans "?" %}
-</h2>
-<audio controls>
-    <source src="{{podcast.audio.url}}" type="audio/mpeg"/>
-    Your browser does not support audio tag
-</audio>
-<form action="{% url "podcasts:delete" pk=podcast.pk %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="_method" value="DELETE">
-    <div class="d-flex justify-content-evenly">
-        <a href="{% url 'podcasts:list' %}" class="btn btn-primary">
-            {% trans "Cancel" %}
-        </a>
-        <button type="submit" class="btn btn-danger">
-            {% trans "Accept" %}
-        </button>
-    </div>
-</form>
+<div class="d-flex flex-column align-items-center gap-5">
+    <h2 class="my-5">
+        {% trans "are you sure about delete" %} {{podcast.title}}{% trans "?" %}
+    </h2>
+    <audio controls>
+        <source src="{{podcast.audio.url}}" type="audio/mpeg"/>
+        Your browser does not support audio tag
+    </audio>
+    <form action="{% url "podcasts:delete" pk=podcast.pk %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="_method" value="DELETE">
+        <div class="d-flex justify-content-evenly">
+            <a href="{% url 'podcasts:list' %}" class="btn btn-primary">
+                {% trans "Cancel" %}
+            </a>
+            <button type="submit" class="btn btn-danger">
+                {% trans "Accept" %}
+            </button>
+        </div>
+    </form>
+</div>
 {% endif %}
 {% endblock content %}
