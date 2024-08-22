@@ -24,6 +24,6 @@
 <form action="{% url 'podcasts:add' %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{form}}
-    <button type="submit">{% trans "Add" %}</button>
+    <button type="submit" class="btn btn-primary mt-3">{% trans "Add" %}</button>
 </form>
 {% endblock content %}
