@@ -6,6 +6,7 @@ from posts import models as posts_model
 from django.contrib import messages
 from lingua import LanguageDetectorBuilder
 from django.urls import reverse
+from podcasts.models import Podcast as podcastModel
 
 def users_login_view(request):
     if request.method == "POST":
@@ -40,17 +41,21 @@ def users_view(request):
     detector = LanguageDetectorBuilder.from_all_languages().build()
     users_posts = posts_model.Post.objects.filter(author = request.user)
     uesrs_comments = posts_model.Comment.objects.filter(author = request.user)
+    users_podcasts = podcastModel.objects.filter(podcaster = request.user)
     users_favorite_posts = posts_model.FavoritePost.objects.filter(user = request.user)
+
     for post in users_posts:
         lang = detector.detect_language_of(post.content).iso_code_639_1.name.lower()
         post.lang = lang
     for comment in uesrs_comments:
         lang = detector.detect_language_of(comment.content).iso_code_639_1.name.lower()
         comment.lang = lang
+
     context = {
         "user_posts":users_posts,
         "user_comments":uesrs_comments,
-        "user_favorite_posts":users_favorite_posts
+        "user_favorite_posts":users_favorite_posts,
+        "user_podcasts":users_podcasts
         }
     if request.method == "POST" and request.POST.get("_method") == "DELETE":
         target_comment = posts_model.Comment.objects.get(pk = request.POST.get("comment"))
