@@ -19,6 +19,6 @@
 <form action="{% url "podcasts:edit" pk=podcast.pk %}" method="post">
     {% csrf_token %}
     {{form}}
-    <button type="submit">{% trans "Edit" %}</button>
+    <button type="submit" class="btn btn-primary mt-3">{% trans "Edit" %}</button>
 </form>
 {% endblock content %}
