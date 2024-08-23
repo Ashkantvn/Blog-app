@@ -82,8 +82,19 @@
             </section>
             {% endfor %}
             {% endif %}
+            {% if podcasts_comments %}
+            {% for comment in podcasts_comments %}
+            <section class="card p-3">
+                <h4>
+                    {% trans "Comment for" %} <a href ="{{comment.comment_for.get_absolute_url}}"> {{comment.comment_for.title}}</a>
+                </h4>
+                <p lang='{{comment.lang}}'>
+                    {{comment.content}}
+                </p>
+            </section>
+            {% endfor %}
+            {% endif %}
         </div>
-
     </aside>
 
 {% endblock content %}

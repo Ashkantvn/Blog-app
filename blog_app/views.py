@@ -14,15 +14,21 @@ def home_view(request):
     latest_posts = postModel.Post.objects.all().order_by('-date_created')[:9]
     comments = postModel.Comment.objects.all().order_by("-created_date")[:9]
     latest_podcasts = podcastModel.Podcast.objects.all().order_by("-created_date")[:9]
+    podcasts_comments = podcastModel.PodcastComment.objects.all().order_by("-created_date")[:9]
 
     for comment in comments:
         lang = detector.detect_language_of(comment.comment_for.content).iso_code_639_1.name.lower()
         comment.lang = lang
 
+    for comment in podcasts_comments:
+        lang = detector.detect_language_of(comment.comment_for.description).iso_code_639_1.name.lower()
+        comment.lang = lang
+
     context = {
         "latest_posts":latest_posts,
         "comments":comments,  
-        'latest_podcasts':latest_podcasts 
+        'latest_podcasts':latest_podcasts ,
+        'podcasts_comments':podcasts_comments
     }
     if request.user.is_authenticated:
         favorite_posts = postModel.FavoritePost.objects.filter(user=request.user)[:9] 
