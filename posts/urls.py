@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .feeds import LatestEntriesFeed
 
 app_name="posts"
 
@@ -9,4 +10,5 @@ urlpatterns = [
     path("<int:pk>/edit",views.posts_edit_view,name="edit"),
     path("add/",views.posts_add_view,name="add"),
     path("<int:pk>/delete",views.posts_delete_view,name="delete"),
+    path('latest/feed/',LatestEntriesFeed())
 ]

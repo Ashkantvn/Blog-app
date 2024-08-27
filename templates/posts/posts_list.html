@@ -20,6 +20,7 @@
                 <h3 class="card-title">
                     {{post.title}}
                 </h3>
+                <p>{{post.content|truncatewords:30}}</p>
                 <address> {% trans "Created by" %} {{post.author}} </address>
                 <a href="{{post.get_absolute_url}}">{% trans "More" %}</a>
             </div>
