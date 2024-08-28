@@ -18,9 +18,18 @@ from django.contrib import admin
 from django.urls import path,re_path,include
 from django.views.static import serve
 from django.conf import settings
-from . import views
+from . import views,sitemaps
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
+from django.contrib.sitemaps.views import sitemap
+
+
+sitemaps={
+    'static':sitemaps.StaticViewSiteMap,
+    'posts':sitemaps.PostsViewSiteMap,
+    'podcasts':sitemaps.PodcastsViewSiteMap
+}
+
 
 urlpatterns = [
     re_path(r"^media/(?P<path>.*)$", serve,{'document_root' : settings.MEDIA_ROOT}),
@@ -29,6 +38,7 @@ urlpatterns = [
 
 
 urlpatterns += i18n_patterns(
+    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",),
     path(_(r'admin/'), admin.site.urls),
     path(_(r""), views.home_view,name='home'),
     path(_(r"about/"), views.about_view,name='about'),
