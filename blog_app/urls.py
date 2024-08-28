@@ -34,11 +34,12 @@ sitemaps={
 urlpatterns = [
     re_path(r"^media/(?P<path>.*)$", serve,{'document_root' : settings.MEDIA_ROOT}),
     re_path(r"^static/(?P<path>.*)$", serve,{'document_root' : settings.STATIC_ROOT}),
+    re_path(r'^robots\.txt', include('robots.urls')),
+    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",),
 ]
 
 
 urlpatterns += i18n_patterns(
-    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",),
     path(_(r'admin/'), admin.site.urls),
     path(_(r""), views.home_view,name='home'),
     path(_(r"about/"), views.about_view,name='about'),

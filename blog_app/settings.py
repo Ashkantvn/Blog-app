@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django_cleanup.apps.CleanupConfig',
+    'robots',
     'users',
     'posts',
     'podcasts',
@@ -160,3 +161,11 @@ MEDIA_ROOT = BASE_DIR/'media'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#robots
+ROBOTS_SITEMAP_URLS = [
+    'http://127.0.0.1:8000/sitemap.xml',
+]
+
+ROBOTS_USE_HOST = False
