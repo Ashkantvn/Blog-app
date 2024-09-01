@@ -4,6 +4,7 @@ from podcasts import models as podcastModel
 from django.conf import settings
 from django.utils import translation
 from lingua import LanguageDetectorBuilder
+from users.forms import ContactForm
 
 
 
@@ -53,4 +54,8 @@ def change_lang_view(request):
 
 
 def contact_view(request):
-    return render(request,'contact.html')
+    form = ContactForm()
+    context = {
+        'form':form
+    }
+    return render(request,'contact.html',context)
