@@ -8,7 +8,6 @@ from lingua import LanguageDetectorBuilder
 
 
 
-
 def home_view(request):
     detector = LanguageDetectorBuilder.from_all_languages().build()
     latest_posts = postModel.Post.objects.all().order_by('-date_created')[:9]
@@ -51,3 +50,7 @@ def change_lang_view(request):
     else:
         response = response = render(request,"setting.html")
     return response
+
+
+def contact_view(request):
+    return render(request,'contact.html')
