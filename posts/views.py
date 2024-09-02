@@ -8,7 +8,7 @@ from django.contrib.messages import success
 
 # Create your views here.
 def posts_list_view(request):
-    posts = models.Post.objects.all().order_by("-date_created")
+    posts = models.Post.objects.all()
     paginator = Paginator(posts,10)
     current_page = request.GET.get('page',1)
     try :# set the current page in paginator result to do pagination of blogs(posts) and handle errors of inputs 
