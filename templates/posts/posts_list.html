@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load i18n %}
+{% load humanize %}
 
 {% block title %}
     {% trans "Blogs" %}
@@ -22,6 +23,8 @@
                 </h3>
                 <p>{{post.content|truncatewords:30}}</p>
                 <address> {% trans "Created by" %} {{post.author}} </address>
+                <span>{{post.counted_views}} Views</span>
+                <address>{{post.published_date|naturaltime}}</address>
                 <a href="{{post.get_absolute_url}}">{% trans "More" %}</a>
             </div>
         </section>

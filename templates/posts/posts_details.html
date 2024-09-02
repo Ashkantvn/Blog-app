@@ -18,9 +18,24 @@
         <p class="pre-white-space">
             {{post.content}}
         </p>
-        <span>{{post.counted_views|intword}}</span>
+        <span>{{post.counted_views|intword}} Views</span>
         <address class="text-secondary"> {% trans "Created at" %} {{post.date_created}} {% trans "by" %} {{post.author}} </address>
         <h4 class="text-secondary h6"> {{post.slug}} </h4>
+    </section>
+    <section>
+        <h5>Categories</h5>
+        {% for cat in post.categories.all %}
+        <span> {{cat.name}}{% if not forloop.last %},{% endif %} </span>
+        {% endfor %}
+
+        <h6>Tags</h6>
+        {% for tag in post.tags.all %}
+        <span>{{tag}},{% if not forloop.last %},{% endif %}</span>
+        {% endfor %}
+    </section>
+    <section>
+        <div>Next post:<a href="{{next_post.get_absolute_url}}">{{next_post.title}}</a></div>
+        <div>Previous post:<a href="{{prev_post.get_absolute_url}}">{{prev_post.title}}</a></div>
     </section>
 </article>
 <aside>
