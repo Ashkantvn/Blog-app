@@ -24,6 +24,7 @@ class Post(models.Model):
     status = models.BooleanField(default=False)
     premium = models.BooleanField(default=False)
     published_date = models.DateTimeField(default=now())
+    counted_views = models.PositiveIntegerField(default=0)
 
 
     def __str__(self):
