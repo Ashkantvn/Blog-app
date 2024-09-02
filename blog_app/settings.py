@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'django_cleanup.apps.CleanupConfig',
     'robots',
+    'taggit',
     'users',
     'posts',
     'podcasts',

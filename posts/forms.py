@@ -10,7 +10,7 @@ from django.utils import translation
 class PostForm(forms.ModelForm):
     class Meta:
         model = models.Post
-        fields = ["title","content","banner"]
+        fields = ["title","content",'status','premium','categories','tags','published_date',"banner"]
 
     def __init__(self,*args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
