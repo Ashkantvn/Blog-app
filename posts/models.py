@@ -3,6 +3,7 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.utils.timezone import now
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=50)
@@ -22,6 +23,7 @@ class Post(models.Model):
     tags = TaggableManager()
     status = models.BooleanField(default=False)
     premium = models.BooleanField(default=False)
+    published_date = models.DateTimeField(default=now())
 
 
     def __str__(self):
@@ -36,7 +38,7 @@ class Post(models.Model):
         return reverse("posts:details", kwargs={"pk": self.pk})
     
     class Meta:
-        ordering = ['-date_created']
+        ordering = ['-published_date']
     
 
 class Comment(models.Model):
