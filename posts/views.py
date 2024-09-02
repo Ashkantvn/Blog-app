@@ -6,8 +6,10 @@ from django.contrib.auth.decorators import login_required
 from lingua import LanguageDetectorBuilder
 from django.contrib.messages import success
 from django.utils.timezone import now
+from django.contrib import messages
 
 # Create your views here.
+#post list view
 def posts_list_view(request):
     posts = models.Post.objects.filter(status=1,published_date__lt = now())
     paginator = Paginator(posts,3)
@@ -21,12 +23,20 @@ def posts_list_view(request):
     context = {"posts": paginator_result}   
     return render(request,'posts/posts_list.html',context)
 
+
+
+#posts details view
 def posts_details_view(request , pk):
     post = models.Post.objects.get(pk = pk)
     form = forms.CommentsForm(request.POST or None)
     comments = models.Comment.objects.filter(comment_for = post)
+
     if not request.user.is_authenticated and post.premium:
         return redirect(reverse('users:login'))
+    
+    post.counted_views += 1 #add one view count
+    post.save()
+
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect(reverse("users:login"))
@@ -45,28 +55,46 @@ def posts_details_view(request , pk):
                 new_comment.comment_for = post
                 new_comment.save()
 
+    if request.user.is_authenticated:
+        posts = models.Post.objects.filter(status=1,published_date__lt=now())
+    else:
+        posts = models.Post.objects.filter(premium=0,status=1,published_date__lt=now())
+
+    next_post = posts.filter(published_date__lt = post.published_date).first()
+    prev_post = posts.filter(published_date__gt = post.published_date).last()
+
     context = {
         "post" : post,
         "form" : form,
-        "comments":comments
+        "comments":comments,
+        'prev_post':prev_post,
+        'next_post':next_post
     }
     return render(request,"posts/posts_details.html",context)
 
+
+
+#post add view
 @login_required(login_url=reverse_lazy("users:login"))
 def posts_add_view(request):
+    form = forms.PostForm()
     if request.method == "POST":
         form = forms.PostForm(request.POST , request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
-            return redirect("users:info")
+            return redirect(reverse('users:info'))
     else :
-        form = forms.PostForm()
+        for field , errors in form.errors.items():
+            for error in errors:
+                messages.add_message(request,messages.ERROR,f'{field}:{error}')
     context = {"form":form}
     return render(request,"posts/posts_add.html",context)
 
 
+
+#post edit view
 @login_required(login_url=reverse_lazy("users:login"))
 def posts_edit_view(request,pk):
     user_post = models.Post.objects.get(pk = pk)
@@ -88,6 +116,9 @@ def posts_edit_view(request,pk):
     }
     return render(request,"posts/posts_edit.html",context)
 
+
+
+#post delete view
 @login_required(login_url=reverse_lazy("users:login"))
 def posts_delete_view(request,pk):
     target_post = models.Post.objects.get(pk=pk)

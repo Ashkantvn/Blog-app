@@ -3,8 +3,7 @@ from django.urls import reverse,resolve
 from . import views,models,forms
 from django.contrib.auth.models import User
 from django.contrib import auth
-from django.utils import translation
-
+from django.utils.timezone import now
 # Create your tests here.
 # urls test
 class PostsUrlTests(SimpleTestCase):
@@ -68,6 +67,9 @@ class PostsLoggedInViewsTests(TestCase):
             content = 'testcontent',
             author = auth.get_user(self.client)
         )
+        self.test_category=models.Category.objects.create(
+            name="TEST"
+        )
 
     def test_posts_list_view_GET(self):
         response = self.client.get(reverse("posts:list"))
@@ -111,9 +113,13 @@ class PostsLoggedInViewsTests(TestCase):
         response = self.client.post(
             reverse("posts:add"),
             data= {
-                "title" : "test post",
-                'content' : 'testcontent',
-                'author' : auth.get_user(self.client)
+                "title":'testcontent',
+                "content":'testcontent',
+                'status':False,
+                'premium':False,
+                'categories':[self.test_category.pk],
+                'tags':'testcontent',
+                'published_date':'2024-09-02 15:27:41',
             }
         )
         self.assertRedirects(response,reverse("users:info"))
@@ -182,13 +188,22 @@ class PostsLoggedOutViewsTests(TestCase):
         self.assertRedirects(response,reverse("users:login"))
 
 # forms test
-class PostsFormsTest(SimpleTestCase):
+class PostsFormsTest(TestCase):
+    def setUp(self) -> None:
+        self.test_category=models.Category.objects.create(
+            name='TEST'
+        )
 
     def test_post_form_with_valid_data(self):
         form = forms.PostForm(
             data={
                 "title": "testpost",
                 "content":"testcontent",
+                "tags":'test',
+                'categories':[self.test_category],
+                'status':False,
+                'premium':False,
+                'published_date':now()
             }
         )
         self.assertTrue(form.is_valid())
@@ -198,7 +213,7 @@ class PostsFormsTest(SimpleTestCase):
             data={}
         )
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors),2)
+        self.assertEqual(len(form.errors),5)
 
     def test_comment_form_with_valid_data(self):
         form = forms.CommentsForm(
