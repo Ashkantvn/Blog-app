@@ -18,13 +18,24 @@ from django.contrib import admin
 from django.urls import path,re_path,include
 from django.views.static import serve
 from django.conf import settings
-from . import views
+from . import views,sitemaps
 from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import gettext_lazy as _
+from django.contrib.sitemaps.views import sitemap
+
+
+sitemaps={
+    'static':sitemaps.StaticViewSiteMap,
+    'posts':sitemaps.PostsViewSiteMap,
+    'podcasts':sitemaps.PodcastsViewSiteMap
+}
+
 
 urlpatterns = [
     re_path(r"^media/(?P<path>.*)$", serve,{'document_root' : settings.MEDIA_ROOT}),
     re_path(r"^static/(?P<path>.*)$", serve,{'document_root' : settings.STATIC_ROOT}),
+    re_path(r'^robots\.txt', include('robots.urls')),
+    path("sitemap.xml",sitemap,{"sitemaps": sitemaps},name="django.contrib.sitemaps.views.sitemap",),
 ]
 
 
@@ -33,7 +44,9 @@ urlpatterns += i18n_patterns(
     path(_(r""), views.home_view,name='home'),
     path(_(r"about/"), views.about_view,name='about'),
     path(_(r"setting"), views.change_lang_view,name='settings'),
+    path(_(r'contacts/'), views.contact_view, name="contact"),
     path(_(r"posts/"), include("posts.urls")),
     path(_(r"users/"), include("users.urls")),
     path(_(r"podcasts/"), include("podcasts.urls")),
+
 )

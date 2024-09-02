@@ -4,9 +4,8 @@ from podcasts import models as podcastModel
 from django.conf import settings
 from django.utils import translation
 from lingua import LanguageDetectorBuilder
-
-
-
+from users.forms import ContactForm
+from django.contrib import messages
 
 
 def home_view(request):
@@ -51,3 +50,26 @@ def change_lang_view(request):
     else:
         response = response = render(request,"setting.html")
     return response
+
+
+def contact_view(request):
+    form = ContactForm()
+    context = {
+        'form':form
+    }
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            if request.user.is_authenticated:
+                form_data = form.save(commit=False)
+                form_data.user = request.user
+                form_data.save()
+            else:
+                form.save()
+            messages.add_message(request,messages.SUCCESS,"Your data submited successfully")
+        else:
+            for field,errors in form.errors.items():
+                for error in errors:
+                    messages.add_message(request,messages.ERROR,f"{field}:{error}") 
+                    
+    return render(request,'contact.html',context)

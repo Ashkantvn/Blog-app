@@ -49,11 +49,11 @@
           <a class="text-light nav-item nav-link" href="{% url "podcasts:list" %}"> {% trans "PODCASTS" %} </a>
           {% if user.is_authenticated %}
             <a class="text-light nav-item nav-link" href="{% url 'users:info' %}"> {% trans "PROFILE" %} </a>
-            <a class="text-light nav-item nav-link" href="{% url 'users:logout' %}"> {% trans "SIGN-OUT" %} </a>
-          {% else %}
+            {% else %}
             <a class="text-light nav-item nav-link" href="{% url 'users:login' %}"> {% trans "SIGN-IN" %} </a>
             <a class="text-light nav-item nav-link" href="{% url 'users:register' %}"> {% trans "SIGN-UP" %} </a>
-          {% endif %}
+            {% endif %}
+          <a class="text-light nav-item nav-link" href="{% url 'contact' %}"> {% trans "CONTACT" %} </a>
           <a class="text-light nav-item nav-link" href="{% url 'settings' %}"> {% trans "PAGE-SETTING" %} </a>
         </nav>
       </div>

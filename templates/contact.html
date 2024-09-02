@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Contact
+{% endblock title %}
+
+
+
+{% block content %}
+<h2>Contact with us</h2>
+<form action="" method='post'>
+    {% csrf_token %}
+    {{form}}
+    <button type="submit" class="btn btn-primary my-3">SEND</button>
+</form>
+<div class="my-5">
+    {% if messages %}
+      {% for message in messages %}
+      {% if message.tags  == 'success' %}
+      <div class="alert alert-success alert-dismissible">
+        <i>{{ message }}</i>
+      </div>
+      {% else %}
+      <div class="alert alert-danger alert-dismissible">
+        <i>{{ message }}</i>
+      </div>
+      {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock content %}

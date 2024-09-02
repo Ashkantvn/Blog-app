@@ -4,6 +4,7 @@ from .views import users_login_view,users_logout_view,users_register_view,users_
 from django.contrib.auth.models import User
 from django.contrib import auth
 from posts import models as post_models
+from . import models , forms
 
 # Create your tests here.
 
@@ -31,7 +32,24 @@ class UsersTestUrls(SimpleTestCase):
         url = reverse("users:change-pass")
         self.assertEqual(resolve(url).func,users_change_pass_view)
 
+# test forms
+class UsersTestForms(TestCase):
+    def test_contact_form_with_valid_data(self):
+        form = forms.ContactForm(
+            data={
+                "subject": "",
+                'email':'example@example.com',
+                "content":"testcontent",
+            }
+        )
+        self.assertTrue(form.is_valid())
 
+    def test_contact_form_with_invalid_data(self):
+        form = forms.ContactForm(
+            data={}
+        )
+        self.assertFalse(form.is_valid())
+        self.assertEqual(len(form.errors),2)
 
 # test views
 class UsersTestViews(TestCase):
@@ -89,3 +107,18 @@ class UsersTestViews(TestCase):
         response = self.client.get(reverse("users:change-pass"))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,"users/users_change_pass.html")
+
+
+#test models
+class UsersTestModels(TestCase):
+    def setUp(self):
+        self.client  = Client()
+        self.client.force_login(User.objects.get_or_create(username="testuser")[0])
+        self.testContact = models.Contact.objects.create(
+            email = "test",
+            content = 'Test content',
+            user = auth.get_user(self.client)
+        )
+
+    def test_created_object_is_correct(self):
+        self.assertEqual(self.testContact.content , "Test content")
