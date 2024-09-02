@@ -6,11 +6,12 @@ from django.utils import translation
 from lingua import LanguageDetectorBuilder
 from users.forms import ContactForm
 from django.contrib import messages
+from django.utils.timezone import now
 
 
 def home_view(request):
     detector = LanguageDetectorBuilder.from_all_languages().build()
-    latest_posts = postModel.Post.objects.all()[:9]
+    latest_posts = postModel.Post.objects.filter(status=1,published_date__lt=now())[:9]
     comments = postModel.Comment.objects.all()[:9]
     latest_podcasts = podcastModel.Podcast.objects.all().order_by("-created_date")[:9]
     podcasts_comments = podcastModel.PodcastComment.objects.all().order_by("-created_date")[:9]

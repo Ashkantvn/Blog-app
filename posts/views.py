@@ -5,11 +5,12 @@ from django.urls import reverse,reverse_lazy
 from django.contrib.auth.decorators import login_required
 from lingua import LanguageDetectorBuilder
 from django.contrib.messages import success
+from django.utils.timezone import now
 
 # Create your views here.
 def posts_list_view(request):
-    posts = models.Post.objects.all()
-    paginator = Paginator(posts,10)
+    posts = models.Post.objects.filter(status=1,published_date__lt = now())
+    paginator = Paginator(posts,3)
     current_page = request.GET.get('page',1)
     try :# set the current page in paginator result to do pagination of blogs(posts) and handle errors of inputs 
         paginator_result = paginator.page(current_page)
@@ -24,6 +25,8 @@ def posts_details_view(request , pk):
     post = models.Post.objects.get(pk = pk)
     form = forms.CommentsForm(request.POST or None)
     comments = models.Comment.objects.filter(comment_for = post)
+    if not request.user.is_authenticated and post.premium:
+        return redirect(reverse('users:login'))
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect(reverse("users:login"))
