@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% load i18n %}
+{% load humanize %}
 
 {% block title %}
     {{post.title}}
@@ -17,6 +18,7 @@
         <p class="pre-white-space">
             {{post.content}}
         </p>
+        <span>{{post.counted_views|intword}}</span>
         <address class="text-secondary"> {% trans "Created at" %} {{post.date_created}} {% trans "by" %} {{post.author}} </address>
         <h4 class="text-secondary h6"> {{post.slug}} </h4>
     </section>
@@ -43,7 +45,7 @@
                     <p>
                         {{comment.content}}
                     </p>
-                    <address class="text-secondary"> {% trans "Created at" %} {{comment.created_date}} {% trans "by" %} {{comment.author}} </address>
+                    <address class="text-secondary">{{comment.created_date|naturaltime}} {% trans "by" %} {{comment.author}} </address>
             </div>
             {% endfor %}
         {% else %}

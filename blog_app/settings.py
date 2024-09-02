@@ -44,13 +44,23 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django_cleanup.apps.CleanupConfig',
+     'django.contrib.humanize',
     'captcha',
     'robots',
     'taggit',
     'users',
     'posts',
     'podcasts',
+    'compressor'
 ]
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
 
 MULTI_CAPTCHA_ADMIN = {
     'engine': 'simple-captcha',
@@ -153,7 +163,7 @@ LANGUAGES = [
 STATIC_URL = 'static/'
 
 
-STATIC_ROOT = BASE_DIR/"assets"
+STATIC_ROOT = BASE_DIR/"staticfiles"
 STATICFILES_DIRS=[
     BASE_DIR/"static"
 ]
@@ -173,3 +183,7 @@ ROBOTS_SITEMAP_URLS = [
 ]
 
 ROBOTS_USE_HOST = False
+
+
+COMPRESS_ENABLED = True
+
