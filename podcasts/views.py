@@ -19,7 +19,7 @@ def podcast_list(request):
     except EmptyPage:
         paginator_result = paginator.page(paginator.num_pages)
     context = {
-        "podcasts":paginator_result
+        "posts":paginator_result
     }
     return render(request,'podcasts/podcasts_list.html',context)
 

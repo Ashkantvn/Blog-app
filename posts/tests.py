@@ -160,7 +160,7 @@ class PostsLoggedOutViewsTests(TestCase):
     def setUp(self):
         self.client = Client()
         self.user = User.objects.update_or_create(username = "testuser")[0]
-        self.test_post = models.Post.objects.get_or_create(title = "test post" , author = self.user)[0]
+        self.test_post = models.Post.objects.get_or_create(title = "test post",content='testcontent' , author = self.user)[0]
 
     def test_logged_out_posts_add_view_GET(self):
         response = self.client.get(reverse("posts:add"))

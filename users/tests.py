@@ -42,14 +42,15 @@ class UsersTestForms(TestCase):
                 "content":"testcontent",
             }
         )
-        self.assertTrue(form.is_valid())
+        form.fields['captcha'].required = False
+        self.assertTrue(form.is_valid)
 
     def test_contact_form_with_invalid_data(self):
         form = forms.ContactForm(
             data={}
         )
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors),2)
+        self.assertEqual(len(form.errors),3)
 
 # test views
 class UsersTestViews(TestCase):

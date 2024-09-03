@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% load i18n %}
-
+{% load podcast_tags %}
+{% load post_tags %}
 
 {% block title %}
     Blog app | {% trans "home page" %}
@@ -16,37 +17,14 @@
     <article class="">
             <section class="my-5">
                 <h3>{% trans "Latest blogs" %}</h3>
-                <div class="d-flex flex-column gap-3">
-                    {% for post in latest_posts %}
-                    <div class="d-flex align-items-center rounded border justify-content-between">
-                        
-                        <img class = "rounded-start" width="174px" height="155px" src="{{post.banner.url}}" alt="{{post.title}}"/>
-                        <div class="text-center w-25 mx-3">
-                            <h3 class="card-title">{{post.title}}</h3>
-                            <address>{% trans "Created by" %} {{post.author}}</address>
-                            <a class='btn btn-dark w-100' href="{{post.get_absolute_url}}">{% trans "More" %}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <a class='btn btn-dark w-100' href="{% url "posts:list" %}">{% trans "More Blogs" %}</a>
+                {% latest_posts %}
+                <a class='btn btn-dark w-100 my-5' href="{% url "posts:list" %}">{% trans "More Blogs" %}</a>
             </section>
 
             <section class="my-5">
                 <h3>{% trans "Latest podcasts" %}</h3>
-                <div class="d-flex flex-column gap-3">
-                    {% for podcast in latest_podcasts %}
-                    <div class="d-flex align-items-center rounded border justify-content-between">
-                        <img class = "rounded-start" width="174px" height="155px" src="{{podcast.banner.url}}" alt="{{podcast.title}}"/>
-                        <div class="text-center w-25 mx-3">
-                            <h3 class="card-title">{{podcast.title}}</h3>
-                            <address>{% trans "Created by" %} {{podcast.author}}</address>
-                            <a class='btn btn-dark w-100' href="{{podcast.get_absolute_url}}">{% trans "More" %}</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-                <a class='btn btn-dark w-100' href="{% url "podcasts:list" %}">{% trans "More Podcasts" %}</a>
+                {% latest_podcasts %}
+                <a class='btn btn-dark w-100 my-5' href="{% url "podcasts:list" %}">{% trans "More Podcasts" %}</a>
             </section>
 
             <section class="my-5">
@@ -69,31 +47,7 @@
 
     <aside>
         <h3>{% trans "Recent comments" %}</h3>
-        <div class="d-flex flex-column gap-3">
-            {% if comments %}
-            {% for comment in comments %}
-            <section class="card p-3">
-                <h4>
-                    {% trans "Comment for" %} <a href ="{{comment.comment_for.get_absolute_url}}"> {{comment.comment_for.title}}</a>
-                </h4>
-                <p lang='{{comment.lang}}'>
-                    {{comment.content}}
-                </p>
-            </section>
-            {% endfor %}
-            {% endif %}
-            {% if podcasts_comments %}
-            {% for comment in podcasts_comments %}
-            <section class="card p-3">
-                <h4>
-                    {% trans "Comment for" %} <a href ="{{comment.comment_for.get_absolute_url}}"> {{comment.comment_for.title}}</a>
-                </h4>
-                <p lang='{{comment.lang}}'>
-                    {{comment.content}}
-                </p>
-            </section>
-            {% endfor %}
-            {% endif %}
+        {% latest_comments %}
         </div>
     </aside>
 

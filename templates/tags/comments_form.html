@@ -1,0 +1,9 @@
+{% load i18n %}
+<div class="my-5">
+    <h3> {% trans "Add comment" %} </h3>
+    <form action="{{post.get_absolute_url}}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <button class="btn btn-primary" type="submit"> {% trans "Submit" %} </button>
+    </form>
+</div>

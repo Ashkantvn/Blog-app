@@ -1,0 +1,17 @@
+{% load i18n %}
+<div class="d-flex flex-column gap-3">
+    {% for target in targets %}
+    <div class="d-flex align-items-center rounded border justify-content-between">
+        <img class = "rounded-start" width="174px" height="155px" src="{{target.banner.url}}" alt="{{target.title}}"/>
+        <div class="text-center w-25 mx-3">
+            <h3 class="card-title">{{target.title}}</h3>
+            {% if is_podcast %}
+            <address>{% trans "Created by" %} {{target.podcaster}}</address>
+            {% else %}
+            <address>{% trans "Created by" %} {{target.author}}</address>
+            {% endif %}
+            <a class='btn btn-dark w-100' href="{{target.get_absolute_url}}">{% trans "More" %}</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>

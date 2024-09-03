@@ -59,24 +59,10 @@
             <input type="hidden" name="favorite_post" value="True"/>
             <button type="submit" class="btn btn-success my-5">{% trans "Add to favorite post" %}</button>
         </form>
-        <div class="my-5">
-            <h3> {% trans "Add comment" %} </h3>
-            <form action="{{post.get_absolute_url}}" method="post">
-                {% csrf_token %}
-                {{form}}
-                <button class="btn btn-primary" type="submit"> {% trans "Submit" %} </button>
-            </form>
-        </div>
+        {% include "tags/comments_form.html" %}
         <h3 class="my-5"> {% trans "Comments" %} </h3>
         {% if comments %}
-            {% for comment  in comments %}
-            <div class="card p-3">
-                    <p>
-                        {{comment.content}}
-                    </p>
-                    <address class="text-secondary">{{comment.created_date|naturaltime}} {% trans "by" %} {{comment.author}} </address>
-            </div>
-            {% endfor %}
+            {% include "tags/item_details_comments.html" %}
         {% else %}
             <h4>{% trans "There is no Comments for this post" %}</h4>
         {% endif %}

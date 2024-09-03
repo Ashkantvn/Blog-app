@@ -10,12 +10,8 @@
 <h2>
     {% trans "Change password" %}
 </h2>
-<ul class="messages">
-    {% if messages %}
-        {% for message in messages %}
-            <li{% if message.tags == 'error' %} class="alert alert-danger"{% else %} class="alert alert-success"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    {% endif %}
+<ul class="my-5">
+    {% include "tags/alert.html" %}
 </ul>
 <form action="{% url "users:change-pass" %}" method="post">
     {% csrf_token %}

@@ -23,8 +23,9 @@
         </button>
         
     </form>
-    
-    
+    <ul class="my-5">
+        {% include "tags/alert.html" %}
+    </ul>
     <span> 
         {% trans "Already have account" %}{% trans "?" %} <a href="{% url 'users:login' %}"> {% trans "Login" %} </a> 
     </span>

@@ -13,13 +13,9 @@
 
 {% block content %}
 <h2>{% trans "Add new podcast" %}</h2>
-<ul class="messages">
-    {% if messages %}
-        {% for message in messages %}
-            <li{% if message.tags == 'error' %} class="alert alert-danger"{% else %} class="alert alert-success"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    {% endif %}
-</ul>
+<ul class='messages'>
+    {% include "tags/alert.html" %}
+  </ul>
 
 <form action="{% url 'podcasts:add' %}" enctype="multipart/form-data" method="post">
     {% csrf_token %}

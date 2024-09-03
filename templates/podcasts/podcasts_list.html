@@ -9,10 +9,10 @@
 
 
 {% block content %}
-    <h2 class="text-center my-5">{% trans "Podcast list" %} - {% trans "page" %} {{podcasts.number|apnumber}} </h2>
-    {% if podcasts %}
+    <h2 class="text-center my-5">{% trans "Podcast list" %} - {% trans "page" %} {{posts.number|apnumber}} </h2>
+    {% if posts %}
         <article class="d-flex flex-wrap justify-content-center  gap-3">   
-        {% for podcast in podcasts %}
+        {% for podcast in posts %}
             <section class='card width'>
                 <img src="{{podcast.banner.url}}" alt="{{podcast.title}}" class="card-img-top"/>
                 <div  class="d-flex flex-column justify-content-between card-body text-center">
@@ -28,29 +28,5 @@
     {% else %}
         <h3> {% trans "There is no Podcast to show" %} </h3>
     {% endif %}
-    <footer class="">{% comment %} paginator {% endcomment %}
-        {% if podcasts.has_other_pages %}
-            <ul class="d-flex list-unstyled my-5 justify-content-center flex-wrap">
-                {% if podcasts.has_previous %}
-                <li><a class='active btn btn-dark'  href="?page={{podcasts.previous_page_number}}">&lt;</a></li>
-                {% else %}
-                <li class="mx-1 disabled btn btn-secondary"><span>&lt;</span></li>
-                {% endif %}
-    
-                {% for page_number in podcasts.paginator.page_range %}
-                    {% if podcasts.number == page_number %}
-                    <li class="active btn btn-dark "><span>{{page_number}}</span></li>
-                    {% else %}
-                    <li class=''><a class='btn' href="?page={{page_number}}">{{page_number}}</a></li>
-                    {% endif %}
-                {% endfor %}
-                
-                {% if podcasts.has_next %}
-                <li class='mx-1 ' ><a class='active btn btn-dark' href="?page={{podcasts.next_page_number}}">&gt;</a></li>
-                {% else %}
-                <li class="mx-1 disabled btn btn-secondary"><span>&gt;</span></li>
-                {% endif %}
-            </ul>
-        {% endif %}
-    </footer>
+    {% include "tags/paginator.html" %}
 {% endblock content %}

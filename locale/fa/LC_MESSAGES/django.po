@@ -225,10 +225,6 @@ msgstr "تغییر"
 msgid "on"
 msgstr "در"
 
-#: .\templates\podcasts\podcasts_details.html:25
-#: .\templates\posts\posts_details.html:63
-#, fuzzy
-#| msgid "Recent comments"
 msgid "Add comment"
 msgstr "اضافه کردن کامنت"
 
@@ -238,17 +234,11 @@ msgstr "اضافه کردن کامنت"
 msgid "Submit"
 msgstr "ثبت"
 
-#: .\templates\podcasts\podcasts_details.html:32
-#: .\templates\posts\posts_details.html:70
-#, fuzzy
-#| msgid "Comment for"
+
 msgid "Comments"
 msgstr "کامنت ها"
 
-#: .\templates\podcasts\podcasts_details.html:39
-#: .\templates\posts\posts_details.html:22
-#, fuzzy
-#| msgid "Created by"
+
 msgid "Created at"
 msgstr "ساخته شده توسط"
 
@@ -270,12 +260,9 @@ msgstr "پادکست"
 msgid "Podcast list"
 msgstr "پادکست ها"
 
-#: .\templates\podcasts\podcasts_list.html:12
-#: .\templates\posts\posts_list.html:13
-#, fuzzy
-#| msgid "home page"
+
 msgid "page"
-msgstr "صفحه اصلی"
+msgstr "صفحه"
 
 #: .\templates\podcasts\podcasts_list.html:29
 msgid "There is no Podcast to show"
@@ -310,15 +297,10 @@ msgstr "اضافه کردن به علاقه مندی ها"
 msgid "There is no Comments for this post"
 msgstr "هیچ کامنتی وجود ندارد"
 
-#: .\templates\posts\posts_edit.html:21
-#, fuzzy
-#| msgid "Favorite blogs"
 msgid "Edit blogs"
 msgstr "تغییر بلاگ"
 
-#: .\templates\posts\posts_list.html:6
-#, fuzzy
-#| msgid "More Blogs"
+
 msgid "Blogs"
 msgstr "بلاگ ها"
 #: .\templates\posts\posts_list.html:13
@@ -363,9 +345,7 @@ msgstr "سلام"
 msgid "ADD-BLOGS"
 msgstr "اضافه کردن بلاگ جدید"
 
-#: .\templates\users\users_info.html:19
-#, fuzzy
-#| msgid "PODCASTS"
+
 msgid "ADD-PODCAST"
 msgstr "اضافه کردن پادکست"
 
@@ -373,9 +353,7 @@ msgstr "اضافه کردن پادکست"
 msgid "Exit from your account"
 msgstr "خروج از اکانت"
 
-#: .\templates\users\users_info.html:24
-#, fuzzy
-#| msgid "More Blogs"
+
 msgid "Your blogs"
 msgstr "بلاگ های شما"
 
@@ -383,9 +361,7 @@ msgstr "بلاگ های شما"
 msgid "You do not have any blog"
 msgstr "هیچ بلاگی ندارید"
 
-#: .\templates\users\users_info.html:29
-#, fuzzy
-#| msgid "Created by"
+
 msgid "Create one"
 msgstr "بسار"
 
@@ -401,9 +377,7 @@ msgstr "پادکست های شما"
 msgid "You do not have any Podcasts"
 msgstr "هیچ پادکستی ندارید"
 
-#: .\templates\users\users_info.html:75
-#, fuzzy
-#| msgid "Recent comments"
+
 msgid "Your comments"
 msgstr "کامنت های اخیر"
 
@@ -411,9 +385,7 @@ msgstr "کامنت های اخیر"
 msgid "You do not have any comments "
 msgstr "کامنتی ندارید"
 
-#: .\templates\users\users_info.html:105
-#, fuzzy
-#| msgid "Favorite blogs"
+
 msgid "Your favorite posts"
 msgstr "بلاگ های مورد علاقه شما"
 
