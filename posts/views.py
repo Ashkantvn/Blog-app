@@ -37,6 +37,13 @@ def posts_details_view(request , pk):
     post.counted_views += 1 #add one view count
     post.save()
 
+
+    detector = LanguageDetectorBuilder.from_all_languages().build()
+
+    #language detector
+    lang = detector.detect_language_of(post.content).iso_code_639_1.name.lower()
+    post.lang = lang
+
     if request.method == "POST":
         if not request.user.is_authenticated:
             return redirect(reverse("users:login"))
@@ -84,6 +91,7 @@ def posts_add_view(request):
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
+            form.save_m2m()
             return redirect(reverse('users:info'))
     else :
         for field , errors in form.errors.items():

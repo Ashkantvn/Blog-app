@@ -51,3 +51,30 @@ label[for=banner-clear_id]{
   margin-top: 0;
   display: inline !important;
 }
+
+.post-small-card-img{
+  max-width: 125px;
+  max-height: 61px;
+}
+
+.post-small-card-height{
+  height: 64px;
+}
+
+@media screen and (min-width:481px) and (max-width:1024px) {
+  .width{
+    width: 45%;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .width{
+    width: 25%;
+  }
+}
+
+@media screen and (max-width:481px) {
+  .width{
+    width: 70%;
+  }
+}

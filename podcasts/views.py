@@ -10,7 +10,7 @@ from django.contrib import messages
 # podcast list view
 def podcast_list(request):
     podcasts = Podcast.objects.all().order_by('-created_date')
-    paginator = Paginator(podcasts,10)
+    paginator = Paginator(podcasts,3)
     current_page = request.GET.get('page',1)
     try:
         paginator_result = paginator.page(current_page)

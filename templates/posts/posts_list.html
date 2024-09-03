@@ -10,14 +10,14 @@
 
 {% block content %}
 <h2 class="text-center my-5">
-    {% trans "Blogs list" %}
+    {% trans "Blogs list" %} - page {{posts.number}}
 </h2>
-<article class="d-flex flex-column gap-3">
+<article class="d-flex flex-wrap justify-content-center  gap-3">
     {% if posts %}
         {% for post in posts %}
-        <section class="card">
-            <img src="{{post.banner.url}}" alt="{{post.title}}" class="card-img-top">
-            <div class="card-body text-center">
+        <section class="card width">
+            <img src="{{post.banner.url}}" alt="{{post.title}}" style="height: 125px;" class="card-img-top">
+            <div class="d-flex flex-column justify-content-between card-body text-center">
                 <h3 class="card-title">
                     {{post.title}}
                 </h3>
@@ -25,7 +25,7 @@
                 <address> {% trans "Created by" %} {{post.author}} </address>
                 <span>{{post.counted_views}} Views</span>
                 <address>{{post.published_date|naturaltime}}</address>
-                <a href="{{post.get_absolute_url}}">{% trans "More" %}</a>
+                <a class='btn btn-dark w-100' href="{{post.get_absolute_url}}">{% trans "More" %}</a>
             </div>
         </section>
         {% endfor %}
@@ -33,27 +33,27 @@
         <h3>{% trans "There is no blog" %}</h3>
     {% endif %}
 </article>
-<footer>{% comment %} paginator {% endcomment %}
+<footer class="">{% comment %} paginator {% endcomment %}
     {% if posts.has_other_pages %}
-        <ul class="d-flex list-unstyled my-5 justify-content-center gap-5">
+        <ul class="d-flex list-unstyled my-5 justify-content-center flex-wrap">
             {% if posts.has_previous %}
-            <li><a href="?page={{posts.previous_page_number}}">{% trans "Previous" %}</a></li>
+            <li><a class='active btn btn-dark'  href="?page={{posts.previous_page_number}}">&lt;</a></li>
             {% else %}
-            <li class="disabled"><span>{% trans "Previous" %}</span></li>
+            <li class="mx-1 disabled btn btn-secondary"><span>&lt;</span></li>
             {% endif %}
 
             {% for page_number in posts.paginator.page_range %}
                 {% if posts.number == page_number %}
-                <li class="active"><span>{{page_number}}</span></li>
+                <li class="active btn btn-dark "><span>{{page_number}}</span></li>
                 {% else %}
-                <li><a href="?page={{page_number}}">{{page_number}}</a></li>
+                <li class=''><a class='btn' href="?page={{page_number}}">{{page_number}}</a></li>
                 {% endif %}
             {% endfor %}
             
             {% if posts.has_next %}
-            <li><a href="?page={{posts.next_page_number}}">{% trans "Next" %}</a></li>
+            <li class='mx-1 ' ><a class='active btn btn-dark' href="?page={{posts.next_page_number}}">&gt;</a></li>
             {% else %}
-            <li class="disabled"><span>{% trans "Next" %}</span></li>
+            <li class="mx-1 disabled btn btn-secondary"><span>&gt;</span></li>
             {% endif %}
         </ul>
     {% endif %}

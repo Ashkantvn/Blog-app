@@ -21,15 +21,15 @@
                     <div class="d-flex align-items-center rounded border justify-content-between">
                         
                         <img class = "rounded-start" width="174px" height="155px" src="{{post.banner.url}}" alt="{{post.title}}"/>
-                        <div class="text-center w-25">
+                        <div class="text-center w-25 mx-3">
                             <h3 class="card-title">{{post.title}}</h3>
                             <address>{% trans "Created by" %} {{post.author}}</address>
-                            <a href="{{post.get_absolute_url}}">{% trans "More" %}</a>
+                            <a class='btn btn-dark w-100' href="{{post.get_absolute_url}}">{% trans "More" %}</a>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-                <a href="{% url "posts:list" %}">{% trans "More Blogs" %}</a>
+                <a class='btn btn-dark w-100' href="{% url "posts:list" %}">{% trans "More Blogs" %}</a>
             </section>
 
             <section class="my-5">
@@ -38,15 +38,15 @@
                     {% for podcast in latest_podcasts %}
                     <div class="d-flex align-items-center rounded border justify-content-between">
                         <img class = "rounded-start" width="174px" height="155px" src="{{podcast.banner.url}}" alt="{{podcast.title}}"/>
-                        <div class="text-center w-25">
+                        <div class="text-center w-25 mx-3">
                             <h3 class="card-title">{{podcast.title}}</h3>
                             <address>{% trans "Created by" %} {{podcast.author}}</address>
-                            <a href="{{podcast.get_absolute_url}}">{% trans "More" %}</a>
+                            <a class='btn btn-dark w-100' href="{{podcast.get_absolute_url}}">{% trans "More" %}</a>
                         </div>
                     </div>
                     {% endfor %}
                 </div>
-                <a href="{% url "podcasts:list" %}">{% trans "More Podcasts" %}</a>
+                <a class='btn btn-dark w-100' href="{% url "podcasts:list" %}">{% trans "More Podcasts" %}</a>
             </section>
 
             <section class="my-5">
@@ -55,10 +55,10 @@
                     {% for favorite_post in favorite_posts %}
                     <div class="d-flex align-items-center rounded border justify-content-between">
                         <img class = "rounded-start" width="174px" height="155px" src="{{favorite_post.post.banner.url}}" alt="{{favorite_post.post.title}}"/>
-                        <div class="text-center w-25">
+                        <div class="text-center w-25 mx-3">
                             <h3 class="card-title">{{favorite_post.post.title}}</h3>
                             <address>{% trans "Created by" %} {{favorite_post.post.author}}</address>
-                            <a href="{{favorite_post.post.get_absolute_url}}">{% trans "More" %}</a>
+                            <a class='btn btn-dark w-100' href="{{favorite_post.post.get_absolute_url}}">{% trans "More" %}</a>
                         </div>
                     </div>
                     {% endfor %}
