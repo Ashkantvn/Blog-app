@@ -18,19 +18,19 @@
         <p class="pre-white-space" lang='{{post.lang}}'>
             {{post.content}}
         </p>
-        <span>{{post.counted_views|intword}} Views</span>
+        <span>{{post.counted_views|intword}} {% trans "Views" %}</span>
         <address class="text-secondary"> {% trans "Created at" %} {{post.published_date}} {% trans "by" %} {{post.author}} </address>
         <h4 class="text-secondary h6"> {{post.slug}} </h4>
     </section>
     <section class='border border-1 p-3 m-2'>
         <div class='m-3'>
-            <h5>Categories</h5>
+            <h5>{% trans "Categories" %}</h5>
             {% for cat in post.categories.all %}
             <span> {{cat.name}}{% if not forloop.last %},{% endif %} </span>
             {% endfor %}
         </div>
         <div class='mx-3'>
-            <h6>Tags</h6>
+            <h6>{% trans "Tags" %}</h6>
             {% for tag in post.tags.all %}
             <span>{{tag}},{% if not forloop.last %},{% endif %}</span>
             {% endfor %}
@@ -40,13 +40,13 @@
         <div class='border my-3 post-small-card-height'>
             <a class='btn p-0' href="{{prev_post.get_absolute_url}}">
             <img src="{{prev_post.banner.url}}" alt="{{prev_post.title}}" class='img-fluid mx-auto post-small-card-img'>
-            <span class='mx-3'>Previous post: {{prev_post.title}}</span>
+            <span class='mx-3'>{% trans "Previous post" %}: {{prev_post.title}}</span>
             </a>
         </div>
         
         <div class='border my-3 post-small-card-height'>
             <a class='btn p-0 text-center' href="{{next_post.get_absolute_url}}">
-                <span class='mx-3'>Next Post: {{next_post.title}}</span>
+                <span class='mx-3'>{% trans "Next Post" %}: {{next_post.title}}</span>
                 <img src="{{next_post.banner.url}}" alt="{{next_post.title}}" class='img-fluid mx-auto post-small-card-img'>
             </a>
         </div>

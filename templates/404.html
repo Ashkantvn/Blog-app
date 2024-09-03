@@ -1,16 +1,16 @@
 {% extends "layout.html" %}
-
+{% load i18n %}
 
 {% block title %}
-Not Found
+{% trans "Not Found" %}
 {% endblock title %}
 
 
 
 {% block content %}
 <section>
-    <h2>Page not Found!</h2>
-    <p>I cannot find the file you requested!</p>
-    <a href="{% url "home" %}" class="btn btn-primary">Home Page</a>
+    <h2>{% trans "Page not Found!" %}</h2>
+    <p>{% trans "I cannot find the file you requested!" %}</p>
+    <a href="{% url "home" %}" class="btn btn-primary">{% trans "Home Page" %}</a>
 </section>
 {% endblock content %}

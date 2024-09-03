@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% load i18n %}
-
+{% load humanize %}
 
 
 {% block title %}
@@ -9,7 +9,7 @@
 
 
 {% block content %}
-    <h2 class="text-center my-5">{% trans "Podcast list" %}</h2>
+    <h2 class="text-center my-5">{% trans "Podcast list" %} - {% trans "page" %} {{podcasts.number|apnumber}} </h2>
     {% if podcasts %}
         <article class="d-flex flex-wrap justify-content-center  gap-3">   
         {% for podcast in podcasts %}

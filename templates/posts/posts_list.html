@@ -10,7 +10,7 @@
 
 {% block content %}
 <h2 class="text-center my-5">
-    {% trans "Blogs list" %} - page {{posts.number}}
+    {% trans "Blogs list" %} - {% trans "page" %} {{posts.number|apnumber}}
 </h2>
 <article class="d-flex flex-wrap justify-content-center  gap-3">
     {% if posts %}
@@ -23,7 +23,7 @@
                 </h3>
                 <p>{{post.content|truncatewords:30}}</p>
                 <address> {% trans "Created by" %} {{post.author}} </address>
-                <span>{{post.counted_views}} Views</span>
+                <span>{{post.counted_views|intword}} {% trans "Views" %}</span>
                 <address>{{post.published_date|naturaltime}}</address>
                 <a class='btn btn-dark w-100' href="{{post.get_absolute_url}}">{% trans "More" %}</a>
             </div>

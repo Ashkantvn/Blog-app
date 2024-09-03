@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: .\blog_app\urls.py:33
+#: .\blog_app\urls.py:44
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-23 12:07+0330\n"
+"POT-Creation-Date: 2024-09-03 12:11+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,29 +19,53 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\blog_app\urls.py:32
+#: .\blog_app\urls.py:43
 msgid "admin/"
 msgstr ""
 
-#: .\blog_app\urls.py:34
+#: .\blog_app\urls.py:45
 msgid "about/"
 msgstr ""
 
-#: .\blog_app\urls.py:35
+#: .\blog_app\urls.py:46
 msgid "setting"
 msgstr ""
 
-#: .\blog_app\urls.py:36
+#: .\blog_app\urls.py:47
+msgid "contacts/"
+msgstr ""
+
+#: .\blog_app\urls.py:48
 msgid "posts/"
 msgstr ""
 
-#: .\blog_app\urls.py:37
+#: .\blog_app\urls.py:49
 msgid "users/"
 msgstr ""
 
-#: .\blog_app\urls.py:38
+#: .\blog_app\urls.py:50
 msgid "podcasts/"
 msgstr ""
+
+#: .\blog_app\urls.py:51
+msgid "captcha/"
+msgstr ""
+
+#: .\templates\404.html:5
+msgid "Not Found"
+msgstr ""
+
+#: .\templates\404.html:12
+msgid "Page not Found!"
+msgstr "پیدا نشد!"
+
+#: .\templates\404.html:13
+msgid "I cannot find the file you requested!"
+msgstr "نتوانستم درخواست شما را پیدا کنم"
+
+#: .\templates\404.html:14
+msgid "Home Page"
+msgstr "صفحه اصلی"
 
 #: .\templates\about.html:5
 msgid "About"
@@ -50,6 +74,18 @@ msgstr "درباره سایت"
 #: .\templates\about.html:11
 msgid "About us"
 msgstr "درباره ما"
+
+#: .\templates\contact.html:4
+msgid "Contact"
+msgstr "ارتباط"
+
+#: .\templates\contact.html:10
+msgid "Contact with us"
+msgstr "ارتباط با ما"
+
+#: .\templates\contact.html:14
+msgid "SEND"
+msgstr "ارسال"
 
 #: .\templates\home.html:6
 msgid "home page"
@@ -66,13 +102,13 @@ msgstr "بلاگ های اخیر"
 #: .\templates\home.html:26 .\templates\home.html:43 .\templates\home.html:60
 #: .\templates\podcasts\podcasts_details.html:21
 #: .\templates\podcasts\podcasts_list.html:21
-#: .\templates\posts\posts_list.html:23
+#: .\templates\posts\posts_list.html:25
 msgid "Created by"
 msgstr "ساخته شده توسط"
 
 #: .\templates\home.html:27 .\templates\home.html:44 .\templates\home.html:61
 #: .\templates\podcasts\podcasts_list.html:22
-#: .\templates\posts\posts_list.html:24
+#: .\templates\posts\posts_list.html:28
 msgid "More"
 msgstr "بیشتر"
 
@@ -81,12 +117,10 @@ msgid "More Blogs"
 msgstr "بلاگ های بیشتر"
 
 #: .\templates\home.html:36
-#| msgid "Latest blogs"
 msgid "Latest podcasts"
 msgstr "پادکست های اخیر"
 
 #: .\templates\home.html:49
-#| msgid "More Blogs"
 msgid "More Podcasts"
 msgstr "پادکست های بیشتر"
 
@@ -98,191 +132,202 @@ msgstr "بلاگ های مورد علاقه"
 msgid "Recent comments"
 msgstr "کامنت های اخیر"
 
-#: .\templates\home.html:77 .\templates\users\users_info.html:84
+#: .\templates\home.html:77 .\templates\home.html:89
+#: .\templates\users\users_info.html:84
 msgid "Comment for"
 msgstr "کامنت مربوط به"
 
-#: .\templates\layout.html:30
+#: .\templates\layout.html:34
 msgid "Blog app"
 msgstr ""
 
-#: .\templates\layout.html:46
+#: .\templates\layout.html:50
 msgid "HOME"
 msgstr "صفحه اصلی"
 
-#: .\templates\layout.html:47
+#: .\templates\layout.html:51
 msgid "ABOUT"
 msgstr "درباره سایت"
 
-#: .\templates\layout.html:48
+#: .\templates\layout.html:52
 msgid "BLOGS"
 msgstr "بلاگ ها"
 
-#: .\templates\layout.html:49
+#: .\templates\layout.html:53
 msgid "PODCASTS"
 msgstr "پادکست ها"
 
-#: .\templates\layout.html:51
+#: .\templates\layout.html:55
 msgid "PROFILE"
 msgstr "پروفایل"
 
-#: .\templates\layout.html:52
-msgid "SIGN-OUT"
-msgstr "خروج"
-
-#: .\templates\layout.html:54
+#: .\templates\layout.html:57
 msgid "SIGN-IN"
 msgstr "ورود"
 
-#: .\templates\layout.html:55
+#: .\templates\layout.html:58
 msgid "SIGN-UP"
 msgstr "ثبت نام"
 
-#: .\templates\layout.html:57 .\templates\setting.html:6
+#: .\templates\layout.html:60
+msgid "CONTACT"
+msgstr "ارتباط"
+
+#: .\templates\layout.html:61 .\templates\setting.html:6
 msgid "PAGE-SETTING"
 msgstr "تنظیمات سایت"
 
 #: .\templates\podcasts\add_podcasts.html:8
 #: .\templates\podcasts\add_podcasts.html:15
 msgid "Add new podcast"
-msgstr ""
+msgstr "اضافه کردن پادکست جدید"
 
 #: .\templates\podcasts\add_podcasts.html:27
 #: .\templates\posts\posts_add.html:19
 msgid "Add"
-msgstr ""
+msgstr "اضافه"
 
 #: .\templates\podcasts\delete_podcasts.html:5
 #: .\templates\posts\posts_delete.html:6 .\templates\users\users_info.html:44
 #: .\templates\users\users_info.html:66 .\templates\users\users_info.html:95
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: .\templates\podcasts\delete_podcasts.html:14
 #: .\templates\posts\posts_delete.html:15
 msgid "are you sure about delete"
-msgstr ""
+msgstr "آیا اطمینان دارید درباره حذف"
 
 #: .\templates\podcasts\delete_podcasts.html:14
 #: .\templates\posts\posts_delete.html:15
 #: .\templates\users\users_login.html:31
 #: .\templates\users\users_register.html:29
 msgid "?"
-msgstr ""
+msgstr "؟"
 
 #: .\templates\podcasts\delete_podcasts.html:25
 #: .\templates\posts\posts_delete.html:22
 msgid "Cancel"
-msgstr ""
+msgstr "خیر"
 
 #: .\templates\podcasts\delete_podcasts.html:28
 #: .\templates\posts\posts_delete.html:25
 msgid "Accept"
-msgstr ""
+msgstr "قبول"
 
 #: .\templates\podcasts\edit_podcasts.html:5
 #: .\templates\podcasts\edit_podcasts.html:22
 #: .\templates\users\users_info.html:42 .\templates\users\users_info.html:64
 msgid "Edit"
-msgstr ""
+msgstr "تغییر"
 
 #: .\templates\podcasts\podcasts_details.html:21
 msgid "on"
-msgstr ""
+msgstr "در"
 
 #: .\templates\podcasts\podcasts_details.html:25
-#: .\templates\posts\posts_details.html:32
+#: .\templates\posts\posts_details.html:63
 #, fuzzy
 #| msgid "Recent comments"
 msgid "Add comment"
-msgstr "کامنت های اخیر"
+msgstr "اضافه کردن کامنت"
 
 #: .\templates\podcasts\podcasts_details.html:29
-#: .\templates\posts\posts_details.html:36
+#: .\templates\posts\posts_details.html:67
 #: .\templates\posts\posts_edit.html:27
 msgid "Submit"
-msgstr ""
+msgstr "ثبت"
 
 #: .\templates\podcasts\podcasts_details.html:32
-#: .\templates\posts\posts_details.html:39
+#: .\templates\posts\posts_details.html:70
 #, fuzzy
 #| msgid "Comment for"
 msgid "Comments"
-msgstr "کامنت مربوط به"
+msgstr "کامنت ها"
 
 #: .\templates\podcasts\podcasts_details.html:39
-#: .\templates\posts\posts_details.html:20
-#: .\templates\posts\posts_details.html:46
+#: .\templates\posts\posts_details.html:22
 #, fuzzy
 #| msgid "Created by"
 msgid "Created at"
 msgstr "ساخته شده توسط"
 
 #: .\templates\podcasts\podcasts_details.html:39
-#: .\templates\posts\posts_details.html:20
-#: .\templates\posts\posts_details.html:46
+#: .\templates\posts\posts_details.html:22
+#: .\templates\posts\posts_details.html:77
 msgid "by"
-msgstr ""
+msgstr "توسط"
 
 #: .\templates\podcasts\podcasts_details.html:43
 msgid "There is no Comments for this podcast"
-msgstr ""
+msgstr "هیچ کامنتی برای این پادکست وجود ندارد"
 
 #: .\templates\podcasts\podcasts_list.html:7
 msgid "Podcast"
-msgstr ""
+msgstr "پادکست"
 
 #: .\templates\podcasts\podcasts_list.html:12
 msgid "Podcast list"
-msgstr ""
+msgstr "پادکست ها"
 
-#: .\templates\podcasts\podcasts_list.html:28
+#: .\templates\podcasts\podcasts_list.html:12
+#: .\templates\posts\posts_list.html:13
+#, fuzzy
+#| msgid "home page"
+msgid "page"
+msgstr "صفحه اصلی"
+
+#: .\templates\podcasts\podcasts_list.html:29
 msgid "There is no Podcast to show"
-msgstr ""
-
-#: .\templates\podcasts\podcasts_list.html:35
-#: .\templates\podcasts\podcasts_list.html:37
-#: .\templates\posts\posts_list.html:37 .\templates\posts\posts_list.html:39
-msgid "Previous"
-msgstr ""
-
-#: .\templates\podcasts\podcasts_list.html:49
-#: .\templates\podcasts\podcasts_list.html:51
-#: .\templates\posts\posts_list.html:51 .\templates\posts\posts_list.html:53
-msgid "Next"
-msgstr ""
+msgstr "هیچ پادکستی وجود ندارد"
 
 #: .\templates\posts\posts_add.html:6 .\templates\posts\posts_add.html:14
 msgid "Add new post"
-msgstr ""
+msgstr "اضافه کردن بلاگ جدید"
 
-#: .\templates\posts\posts_details.html:29
+#: .\templates\posts\posts_details.html:21
+#: .\templates\posts\posts_list.html:26
+msgid "Views"
+msgstr "بازدید"
+
+msgid "Categories"
+msgstr "دسته بندی ها"
+
+
+#: .\templates\posts\posts_details.html:43
+msgid "Previous post"
+msgstr "پست قبلی"
+
+#: .\templates\posts\posts_details.html:49
+msgid "Next Post"
+msgstr "پست بعدی"
+
+#: .\templates\posts\posts_details.html:60
 msgid "Add to favorite post"
-msgstr ""
+msgstr "اضافه کردن به علاقه مندی ها"
 
-#: .\templates\posts\posts_details.html:50
+#: .\templates\posts\posts_details.html:81
 msgid "There is no Comments for this post"
-msgstr ""
+msgstr "هیچ کامنتی وجود ندارد"
 
 #: .\templates\posts\posts_edit.html:21
 #, fuzzy
 #| msgid "Favorite blogs"
 msgid "Edit blogs"
-msgstr "بلاگ های مورد علاقه"
+msgstr "تغییر بلاگ"
 
-#: .\templates\posts\posts_list.html:5
+#: .\templates\posts\posts_list.html:6
 #, fuzzy
 #| msgid "More Blogs"
 msgid "Blogs"
-msgstr "بلاگ های بیشتر"
-
-#: .\templates\posts\posts_list.html:12
+msgstr "بلاگ ها"
+#: .\templates\posts\posts_list.html:13
 msgid "Blogs list"
-msgstr ""
+msgstr "بلاگ ها"
 
-#: .\templates\posts\posts_list.html:29
+#: .\templates\posts\posts_list.html:33
 msgid "There is no blog"
-msgstr ""
+msgstr "هیچ بلاگی وجود ندارد"
 
 #: .\templates\setting.html:17
 msgid "language"
@@ -300,19 +345,19 @@ msgstr "انگلیسی"
 #: .\templates\users\users_change_pass.html:11
 #: .\templates\users\users_info.html:20
 msgid "Change password"
-msgstr ""
+msgstr "تغییر رمز"
 
 #: .\templates\users\users_change_pass.html:24
 msgid "Change"
-msgstr ""
+msgstr "تغییر"
 
 #: .\templates\users\users_info.html:6
 msgid "User"
-msgstr ""
+msgstr "کاربر"
 
 #: .\templates\users\users_info.html:15
 msgid "hello"
-msgstr ""
+msgstr "سلام"
 
 #: .\templates\users\users_info.html:18
 msgid "ADD-BLOGS"
@@ -322,39 +367,39 @@ msgstr "اضافه کردن بلاگ جدید"
 #, fuzzy
 #| msgid "PODCASTS"
 msgid "ADD-PODCAST"
-msgstr "پادکست ها"
+msgstr "اضافه کردن پادکست"
 
 #: .\templates\users\users_info.html:21
 msgid "Exit from your account"
-msgstr ""
+msgstr "خروج از اکانت"
 
 #: .\templates\users\users_info.html:24
 #, fuzzy
 #| msgid "More Blogs"
 msgid "Your blogs"
-msgstr "بلاگ های بیشتر"
+msgstr "بلاگ های شما"
 
 #: .\templates\users\users_info.html:27
 msgid "You do not have any blog"
-msgstr ""
+msgstr "هیچ بلاگی ندارید"
 
 #: .\templates\users\users_info.html:29
 #, fuzzy
 #| msgid "Created by"
 msgid "Create one"
-msgstr "ساخته شده توسط"
+msgstr "بسار"
 
 #: .\templates\users\users_info.html:43 .\templates\users\users_info.html:65
 msgid "Details"
-msgstr ""
+msgstr "جزئیات"
 
 #: .\templates\users\users_info.html:51
 msgid "Your Podcasts"
-msgstr ""
+msgstr "پادکست های شما"
 
 #: .\templates\users\users_info.html:72
 msgid "You do not have any Podcasts"
-msgstr ""
+msgstr "هیچ پادکستی ندارید"
 
 #: .\templates\users\users_info.html:75
 #, fuzzy
@@ -364,41 +409,44 @@ msgstr "کامنت های اخیر"
 
 #: .\templates\users\users_info.html:78
 msgid "You do not have any comments "
-msgstr ""
+msgstr "کامنتی ندارید"
 
 #: .\templates\users\users_info.html:105
 #, fuzzy
 #| msgid "Favorite blogs"
 msgid "Your favorite posts"
-msgstr "بلاگ های مورد علاقه"
+msgstr "بلاگ های مورد علاقه شما"
 
 #: .\templates\users\users_info.html:108
 msgid "You do not have any favorite posts"
-msgstr ""
+msgstr "هیچ بلاگ مورد علاقه ای ندارید"
 
 #: .\templates\users\users_login.html:5 .\templates\users\users_login.html:12
 #: .\templates\users\users_login.html:24
 #: .\templates\users\users_register.html:5
 #: .\templates\users\users_register.html:29
 msgid "Login"
-msgstr ""
+msgstr "ورود"
 
 #: .\templates\users\users_login.html:31
 msgid "New user"
-msgstr ""
+msgstr "کاربر جدید"
 
 #: .\templates\users\users_login.html:31
 #: .\templates\users\users_register.html:22
 msgid "Register"
-msgstr ""
+msgstr "ثبت نام"
 
 #: .\templates\users\users_register.html:13
 msgid "Registration"
-msgstr ""
+msgstr "عملیات ثبت نام"
 
 #: .\templates\users\users_register.html:29
 msgid "Already have account"
-msgstr ""
+msgstr "اکانت دارم"
+
+#~ msgid "SIGN-OUT"
+#~ msgstr "خروج"
 
 #~ msgid "EDIT-BLOGS"
 #~ msgstr "تغییر بلاگ موجود"
