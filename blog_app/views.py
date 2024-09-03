@@ -12,9 +12,11 @@ from django.utils.timezone import now
 def home_view(request):
     if request.user.is_authenticated:
         favorite_posts = postModel.FavoritePost.objects.filter(user=request.user)[:9] 
-    context = {
-        "favorite_posts":favorite_posts,  
-    }
+        context = {
+            "favorite_posts":favorite_posts,  
+        }
+    else:
+        context={}
     return render(request,"home.html",context)
 
 

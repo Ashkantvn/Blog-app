@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
+import dj_database_url
 #load env files
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +29,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG',cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://blogapp.liara.run/']
 
 
 # Application definition
@@ -103,7 +104,7 @@ WSGI_APPLICATION = 'blog_app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# if DEBUG:
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.postgresql',
@@ -114,6 +115,9 @@ DATABASES = {
         'PORT':config("DB_PORT"),
     }
 }
+# else:
+#     DATABASES = {'default': dj_database_url.config(default=config('DATABASE_URL'))}
+    
 
 
 # Password validation
@@ -178,12 +182,35 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 #robots
-ROBOTS_SITEMAP_URLS = [
-    'http://127.0.0.1:8000/sitemap.xml',
-]
+if DEBUG:
+    ROBOTS_SITEMAP_URLS = [
+        'http://127.0.0.1:8000/sitemap.xml',
+    ]
+else:
+    ROBOTS_SITEMAP_URLS = [
+        'https://blogapp.liara.run/sitemap.xml'
+    ]
 
 ROBOTS_USE_HOST = False
 
 
 COMPRESS_ENABLED = True
 
+# X-Frame-Options
+X_FRAME_OPTIONS = 'DENY'
+#X-Content-Type-Options
+SECURE_CONTENT_TYPE_NOSNIFF = True
+## Strict-Transport-Security
+SECURE_HSTS_SECONDS = 15768000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+## that requests over HTTP are redirected to HTTPS. aslo can config in webserver
+SECURE_SSL_REDIRECT = True 
+
+# for more security
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Strict'

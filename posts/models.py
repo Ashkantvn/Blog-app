@@ -23,7 +23,7 @@ class Post(models.Model):
     tags = TaggableManager()
     status = models.BooleanField(default=False)
     premium = models.BooleanField(default=False)
-    published_date = models.DateTimeField(default=now())
+    published_date = models.DateTimeField()
     counted_views = models.PositiveIntegerField(default=0)
 
 
