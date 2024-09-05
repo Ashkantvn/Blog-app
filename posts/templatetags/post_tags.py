@@ -20,7 +20,7 @@ def latest_posts():
 def latest_comments(context):
     detector = LanguageDetectorBuilder.from_all_languages().build()
     comments = Comment.objects.all()[:9]
-    podcasts_comments = PodcastComment.objects.all().order_by("-created_date")[:9]
+    podcasts_comments = PodcastComment.objects.all()[:9]
 
     for comment in comments:
         lang = detector.detect_language_of(comment.comment_for.content).iso_code_639_1.name.lower()
