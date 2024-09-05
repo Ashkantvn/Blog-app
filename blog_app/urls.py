@@ -46,6 +46,7 @@ urlpatterns += i18n_patterns(
     path(_(r"setting"), views.change_lang_view,name='settings'),
     path(_(r'contacts/'), views.contact_view, name="contact"),
     path(_(r"posts/"), include("posts.urls")),
+    path(_(r"gallery/"), include("photo_gallery.urls")),
     path(_(r"users/"), include("users.urls")),
     path(_(r"podcasts/"), include("podcasts.urls")),
     path(_(r'captcha/'), include('captcha.urls')),
