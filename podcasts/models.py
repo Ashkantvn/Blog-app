@@ -25,6 +25,9 @@ class Podcast(models.Model):
     def get_absolute_url(self):
         return reverse("podcasts:details", kwargs={"pk": self.pk})
     
+    class Meta:
+        ordering = ['-created_date']
+    
 
 
 class PodcastComment(models.Model):
@@ -35,3 +38,8 @@ class PodcastComment(models.Model):
 
     def __str__(self):
         return f'comment for {self.comment_for.title}'
+    
+    class Meta:
+        ordering = ['-created_date']
+    
+    

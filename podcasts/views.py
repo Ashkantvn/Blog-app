@@ -9,7 +9,7 @@ from django.contrib import messages
 
 # podcast list view
 def podcast_list(request):
-    podcasts = Podcast.objects.all().order_by('-created_date')
+    podcasts = Podcast.objects.all()
     paginator = Paginator(podcasts,3)
     current_page = request.GET.get('page',1)
     try:

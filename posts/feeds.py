@@ -8,7 +8,7 @@ class LatestEntriesFeed(Feed):
     description = "Latest blogs from BLOG."
 
     def items(self):
-        return Post.objects.order_by('-date_created')[:6]
+        return Post.objects.all()[:6]
 
     def item_title(self, item):
         return item.title
