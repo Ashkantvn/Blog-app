@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'users',
     'posts',
     'podcasts',
-    'compressor'
+    'compressor',
+    'photo_gallery'
 ]
 
 
