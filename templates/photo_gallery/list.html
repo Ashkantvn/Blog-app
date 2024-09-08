@@ -1,13 +1,17 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} 
 
 
-{% block title %}
-Photo Gallery
-{% endblock title %}
+
+
+{% block title %} Photo Gallery {% endblock title %}
+
+
 
 
 
 {% block content %}
-
+<div class="d-flex flex-wrap justify-content-center gap-3">
+  <a class='btn btn-dark p-5' href="#">Posts Gallery</a>
+  <a class='btn btn-dark p-5' href="#">Podcasts Gallery</a>
+</div>
 {% endblock content %}
-
