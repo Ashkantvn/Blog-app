@@ -6,4 +6,4 @@ def gallery_view(request):
 
 
 def post_gallery(request):
-    return HttpResponse('')
+    return render(request,'photo_gallery/posts.html')
