@@ -12,3 +12,7 @@ def post_gallery(request):
      'posts':posts   
     }
     return render(request,'photo_gallery/posts.html',context)
+
+
+def podcast_gallery(request):
+    pass

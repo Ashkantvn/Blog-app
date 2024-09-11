@@ -14,6 +14,10 @@ class PhotoGalleryUrlTest(SimpleTestCase):
     def test_photo_gallery_posts_is_resolve(self):
         url = reverse('photoGallery:posts')
         self.assertEqual(resolve(url).func,views.post_gallery)
+    
+    def test_photo_gallery_podcasts_is_resolve(self):
+        url = reverse('photoGallery:podcasts')
+        self.assertEqual(resolve(url).func,views.podcast_gallery)
 
 
 #views tests
