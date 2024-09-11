@@ -32,3 +32,8 @@ class PhotoGalleryViewsTest(TestCase):
         response = self.client.get(reverse('photoGallery:posts'))
         self.assertEqual(response.status_code,200)
         self.assertTemplateUsed(response,'photo_gallery/posts.html')
+
+    def test_photo_gallery_podcasts_view(self):
+        response=self.client.get(reverse('photoGallery:podcasts'))
+        self.assertEqual(response.status_code,200)
+        self.assertTemplateUsed(response,'photo_gallery/podcasts.html')
