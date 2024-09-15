@@ -9,3 +9,4 @@ This is a simple blog application built with Django. It allows users to create, 
 - Post,and Podcast creation, editing, and deletion
 - Comments creation, and deletion
 - Adding favorite post
+- Photo Gallery for posts and podcasts
