@@ -1,2 +1,8 @@
 # django core
 django==5.2.6
+
+# test
+pytest
+
+# env file
+python-decouple
