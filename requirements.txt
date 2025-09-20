@@ -1,8 +1,18 @@
-# django core
+# Django core
 django==5.2.6
 
-# test
+# Test
 pytest
 
 # env file
 python-decouple
+
+# Reformat code
+black
+flake8
+
+# PostgreSQL
+psycopg2-binary
+
+# celery
+celery
