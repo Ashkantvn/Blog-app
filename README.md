@@ -1,0 +1,1 @@
+A simple Django-based blog application for creating, editing, and managing posts. 
