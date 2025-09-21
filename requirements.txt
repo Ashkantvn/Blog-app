@@ -3,6 +3,7 @@ django==5.2.6
 
 # Test
 pytest
+pytest-django
 
 # env file
 python-decouple
