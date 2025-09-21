@@ -17,3 +17,10 @@ psycopg2-binary
 
 # celery
 celery
+
+# Media handling
+pillow
+django-cleanup
+
+# Redis
+redis

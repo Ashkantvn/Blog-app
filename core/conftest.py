@@ -8,6 +8,7 @@ User = get_user_model()
 def user():
     user_obj = User.objects.create_user(
         username="testuser",
+        email="test@example.com",
         first_name="Test",
         last_name="User",
         password="testpassword123",
