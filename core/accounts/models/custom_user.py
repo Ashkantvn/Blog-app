@@ -10,7 +10,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     password = models.CharField(max_length=128)
-    profile_image = models.ImageField(upload_to='profiles/', default="profiles/default.png", blank=True)
+    profile_image = models.ImageField(
+        upload_to='profiles/',
+        default="profiles/default.png",
+        blank=True
+    )
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, blank=True)
     user_slug = models.SlugField(unique=True)
