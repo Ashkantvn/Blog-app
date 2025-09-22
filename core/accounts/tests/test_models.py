@@ -1,4 +1,7 @@
 import pytest
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 @pytest.mark.django_db
 class TestAccountModels:
@@ -22,3 +25,14 @@ class TestAccountModels:
 
     def test_user_str(self, user):
         assert str(user) == f"{user.first_name} {user.last_name}"
+
+    # The 'confirm_code' fixtrue is defined in conftest.py
+    # Tests for confirm_code
+    def test_create_confirm_code(self,confirm_code):
+        assert confirm_code.code == "ladlfjlkajfl"
+        assert isinstance(confirm_code.user,User)
+        assert hasattr(confirm_code.created_date,'created_date')
+        assert hasattr(confirm_code.updated_date,'updated_date')
+
+    def test_confirm_code_str(self, confirm_code):
+        assert str(confirm_code) == f"{confirm_code.code} for {confirm_code.user.username}"

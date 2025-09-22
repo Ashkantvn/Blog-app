@@ -48,7 +48,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: celery_worker
     restart: unless-stopped
-    command: celery -A core worker --loglevel=info
+    command: celery -A core.celery:app worker --loglevel=info
     depends_on:
       redis:
         condition: service_healthy

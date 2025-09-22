@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.text import slugify
+from accounts.managers import CustomUserManager
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
@@ -15,6 +16,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     user_slug = models.SlugField(unique=True)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
