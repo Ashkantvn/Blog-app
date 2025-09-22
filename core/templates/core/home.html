@@ -1,1 +1,28 @@
 {% extends "layout.html" %}
+
+{% block content %}
+    <section class="hero">
+      <h2>Welcome to Blog app</h2>
+      <p>Insights, stories, and updates from our world.</p>
+    </section>
+
+    
+    <section class="section">
+        <h2>Latest Blogs</h2>
+        {% include "core/partial/blogs_list.html" %}
+        <a href="#">Explore more</a>
+    </section>
+
+    <section class="section">
+        <h2>Hot Blogs</h2>
+        {% include "core/partial/blogs_list.html" %}
+        <a href="#">Explore more</a>
+    </section>
+
+    <section class="section login-signup">
+      <h2>Join the Community</h2>
+      <p>Sign up to share your thoughts.</p>
+      <a href="#">Login</a>
+      <a href="#">Sign Up</a>
+    </section>
+{% endblock content %}

@@ -4,12 +4,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog app</title>
   <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+
+  {% block title %}
+    <title>Blog app</title>
+  {% endblock title %}
+
+  {% block link %}
+  {% endblock link %}
 </head>
 <body>
+
+  {# Header part #}
   <header>
-    <h1>Blog app</h1>
+    <h1>Blog App</h1>
     <nav>
       <ul>
         <li><a href="#">Home</a></li>
@@ -25,66 +33,18 @@
     </nav>
   </header>
 
+  {# Content part #}
   <main>
-    <section class="hero">
-      <h2>Welcome to Blog app</h2>
-      <p>Insights, stories, and updates from my world.</p>
-    </section>
-
-    <section class="section login-signup">
-      <h2>Join the Community</h2>
-      <p>Sign up to share your thoughts or log in to continue reading.</p>
-      <a href="#">Login</a>
-      <a href="#">Sign Up</a>
-    </section>
-
-    <section class="section">
-      <h2>Latest Blogs</h2>
-      <div class="blogs">
-        <div class="blog-card">
-          <h3>Exploring the Mountains</h3>
-          <p>A fresh look at hiking trails and nature escapes.</p>
-          <a href="#">Read more</a>
-        </div>
-        <div class="blog-card">
-          <h3>Tech Trends 2025</h3>
-          <p>What's new in AI, gadgets, and the digital world.</p>
-          <a href="#">Read more</a>
-        </div>
-        <div class="blog-card">
-          <h3>Healthy Living Tips</h3>
-          <p>Simple habits to boost your wellness every day.</p>
-          <a href="#">Read more</a>
-        </div>
-      </div>
-      <a href="#">Explore more</a>
-    </section>
-
-    <section class="section">
-      <h2>Hot Blogs</h2>
-      <div class="blogs">
-        <div class="blog-card">
-          <h3>Top 10 Travel Destinations</h3>
-          <p>These places are trending among explorers right now.</p>
-          <a href="#">Read more</a>
-        </div>
-        <div class="blog-card">
-          <h3>Mastering Remote Work</h3>
-          <p>Tips and tools for staying productive from anywhere.</p>
-          <a href="#">Read more</a>
-        </div>
-        <div class="blog-card">
-          <h3>Cooking with Passion</h3>
-          <p>Delicious recipes that are winning hearts online.</p>
-          <a href="#">Read more</a>
-        </div>
-      </div>
-      <a href="#">Explore more</a>
-    </section>
+    {% block content %}
+    Welcome to Blog App
+    {% endblock content %}
   </main>
 
   <footer>
-    <p>&copy; 2025 My Blog. All rights reserved.</p>
+    <p>&copy; 2025 Blog App. All rights reserved.</p>
   </footer>
+  
+  {% block script %}{% endblock script %}
+  <script src="{% static 'js/global.js' %}"></script>
 </body>
 </html>
