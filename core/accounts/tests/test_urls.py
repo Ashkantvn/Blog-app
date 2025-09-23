@@ -5,6 +5,7 @@ from accounts import views
 @pytest.mark.django_db
 class TestAccountsUrl:
 
+    # Account management
     def test_profile_is_resolved(self):
         url= reverse("accounts:profile",args=["testuser"])
         view_class = resolve(url).func.view_class
@@ -20,6 +21,7 @@ class TestAccountsUrl:
         view_class = resolve(url).func.view_class
         assert view_class == views.DeleteAccount
 
+    # Authentications
     def test_signup_is_resolved(self):
         url= reverse("accounts:signup")
         view_class = resolve(url).func.view_class
@@ -35,6 +37,7 @@ class TestAccountsUrl:
         view_class = resolve(url).func.view_class
         assert view_class == views.Logout
 
+    # Reset and Activations
     def test_password_reset_is_resolved(self):
         url= reverse("accounts:reset")
         view_class = resolve(url).func.view_class
