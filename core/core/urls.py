@@ -8,7 +8,7 @@ urlpatterns = [
     # Main pages
     path("", Home.as_view(), name="home"),
     # Accounts url
-    path("accounts/", include('accounts.urls'), name="accounts")
+    path("accounts/", include('accounts.urls'))
 ]
 
 if settings.DEBUG:

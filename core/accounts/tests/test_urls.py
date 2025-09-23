@@ -21,7 +21,7 @@ class TestAccountsUrl:
         assert view_class == views.DeleteAccount
 
     def test_signup_is_resolved(self):
-        url= reverse("accounts:profile",args=["testuser"])
+        url= reverse("accounts:signup")
         view_class = resolve(url).func.view_class
         assert view_class == views.SignUp
 
