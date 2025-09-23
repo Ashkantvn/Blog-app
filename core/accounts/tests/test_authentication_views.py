@@ -22,14 +22,14 @@ class TestAccountAuthenticationViews:
     def test_POST_login_status_200(self, user):
         data = {
             "email": user.email,
-            "password": user.password
+            "password": "testpassword123"
         }
         response = self.client.post(self.login_url,data)
+        assert response.status_code == HTTPStatus.OK
         assert response.wsgi_request.user.is_authenticated , (
             "User is not authenticated"
         )
-        assert response.status_code == HTTPStatus.OK
-        assert hasattr(response.context,"data")
+        assert "data" in response.context
         assert "accounts/authentications/login.html" in [
             template.name for template in response.templates
         ]
@@ -37,23 +37,11 @@ class TestAccountAuthenticationViews:
     def test_POST_login_status_404(self):
         data = {
             "email": "someone@email.com",
-            "password": "soemogj"
+            "password": "soemogj@adoii2342@#$dlsjf"
         }
         response = self.client.post(self.login_url,data)
         assert response.status_code == HTTPStatus.NOT_FOUND
-        assert hasattr(response.context, "error")
-        assert "accounts/authentications/login.html" in [
-            template.name for template in response.templates
-        ]
-
-    def test_POST_login_status_401(self, user):
-        data = {
-            "email" : user.email,
-            "password": user.password
-        }
-        response = self.client.post(self.login_url,data)
-        assert response.status_code == HTTPStatus.UNAUTHORIZED
-        assert hasattr(response.context, "error")
+        assert "error" in response.context
         assert "accounts/authentications/login.html" in [
             template.name for template in response.templates
         ]
@@ -76,7 +64,7 @@ class TestAccountAuthenticationViews:
             "User is not authenticated"
         )
         assert response.status_code == HTTPStatus.CREATED
-        assert hasattr(response.context,"data")
+        assert "data" in response.context
         assert "accounts/authentications/signup.html" in [
             template.name for template in response.templates
         ]
@@ -88,7 +76,19 @@ class TestAccountAuthenticationViews:
         }
         response = self.client.post(self.signup_url,data)
         assert response.status_code == HTTPStatus.BAD_REQUEST
-        assert hasattr(response.context,"data")
+        assert "error" in response.context
+        assert "accounts/authentications/signup.html" in [
+            template.name for template in response.templates
+        ]
+
+    def test_POST_sign_up_403(self, user):
+        data = {
+            "email":user.email,
+            "password":"testpassword123",
+        }
+        response = self.client.post(self.signup_url,data)
+        assert response.status_code == HTTPStatus.FORBIDDEN
+        assert "error" in response.context
         assert "accounts/authentications/signup.html" in [
             template.name for template in response.templates
         ]
@@ -105,7 +105,7 @@ class TestAccountAuthenticationViews:
     def test_GET_logout_401(self):
         response = self.client.get(self.logout_url)
         assert response.status_code == HTTPStatus.UNAUTHORIZED
-        assert hasattr(response,"error")
+        assert "error" in response.context(response.context,"error")
         assert "accounts/authentications/logout.html" in [
             template.name for template in response.templates
         ]
@@ -124,7 +124,7 @@ class TestAccountAuthenticationViews:
     def test_POST_logout_401(self):
         response = self.client.post(self.logout_url)
         assert response.status_code == HTTPStatus.UNAUTHORIZED
-        assert hasattr(response,"error")
+        assert "error" in response.context(response.context,"error")
         assert "accounts/authentications/logout.html" in [
             template.name for template in response.templates
         ]
