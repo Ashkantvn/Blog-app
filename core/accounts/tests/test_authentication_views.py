@@ -111,7 +111,7 @@ class TestAccountAuthenticationViews:
     def test_GET_logout_401(self):
         response = self.client.get(self.logout_url)
         assert response.status_code == HTTPStatus.UNAUTHORIZED
-        assert "error" in response.context(response.context,"error")
+        assert "error" in response.context
         assert "accounts/authentications/logout.html" in [
             template.name for template in response.templates
         ]
@@ -123,6 +123,7 @@ class TestAccountAuthenticationViews:
         assert not response.wsgi_request.user.is_authenticated , (
             "User is still authenticated"
         )
+        assert "data" in response.context
         assert "accounts/authentications/logout.html" in [
             template.name for template in response.templates
         ]
@@ -130,7 +131,7 @@ class TestAccountAuthenticationViews:
     def test_POST_logout_401(self):
         response = self.client.post(self.logout_url)
         assert response.status_code == HTTPStatus.UNAUTHORIZED
-        assert "error" in response.context(response.context,"error")
+        assert "error" in response.context
         assert "accounts/authentications/logout.html" in [
             template.name for template in response.templates
         ]
