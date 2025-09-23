@@ -58,6 +58,8 @@ class TestAccountAuthenticationViews:
         data = {
             "email": "test12345@test.com",
             "password": "oadf!@#@#$2345dsjflkj",
+            "username": "testuser12345",
+            "first_name": "Test",
         }
         response = self.client.post(self.signup_url,data)
         assert response.wsgi_request.user.is_authenticated , (
@@ -71,8 +73,10 @@ class TestAccountAuthenticationViews:
 
     def test_POST_sign_up_400(self):
         data = {
-            "email":"teslkjda",
-            "password":"lakjdfjadl@#134245ljosaij",
+            "email": "test12345m",
+            "password": "oadf!@#@#$2345dsjflkj",
+            "username": "testuser12345",
+            "first_name": "Test",
         }
         response = self.client.post(self.signup_url,data)
         assert response.status_code == HTTPStatus.BAD_REQUEST
@@ -83,8 +87,10 @@ class TestAccountAuthenticationViews:
 
     def test_POST_sign_up_403(self, user):
         data = {
-            "email":user.email,
-            "password":"testpassword123",
+            "email": user.email,
+            "password": "oadf!@#@#$2345dsjflkj",
+            "username": "testuser12345",
+            "first_name": "Test",
         }
         response = self.client.post(self.signup_url,data)
         assert response.status_code == HTTPStatus.FORBIDDEN
