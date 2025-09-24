@@ -27,12 +27,13 @@ class UpdateAccount(CustomLoginRequiredMixin,View):
         # Fields
         email = request.POST.get("email","")
         password = request.POST.get("password","")
+        password_confirm = request.POST.get("password_confirm","")
         first_name = request.POST.get("first_name","")
         last_name = request.POST.get("last_name","")
         profile_image = request.POST.get("profile_image","")
         username = request.POST.get("username","")
         # Check if all fields exists
-        if not all([email,password,first_name,username]):
+        if not all([email,password,first_name,username,password_confirm]):
             return render(
                 request,
                 "accounts/account-management/update.html",
@@ -40,6 +41,15 @@ class UpdateAccount(CustomLoginRequiredMixin,View):
                     "error":"All fields are required."
                 },
                 status= HTTPStatus.BAD_REQUEST
+            )
+        # Check if password and password_confirm are the same
+        if password!=password_confirm:
+            return render(
+                request,
+                "accounts/authentications/update.html",
+                context={
+                    "error":"password and password_confirm must be same."
+                }
             )
         # Validate email nad password
         try:
@@ -94,7 +104,7 @@ class Profile(View):
                 request,
                 "accounts/account-management/profile.html",
                 context={
-                    "data": target_user,
+                    "data": target_user.first(),
                 },
                 status= HTTPStatus.OK,
             )

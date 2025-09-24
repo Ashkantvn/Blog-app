@@ -49,7 +49,7 @@ class TestAccountsUrl:
         assert view_class == views.PasswordResetConfirm
 
     def test_activate_account_is_resolved(self):
-        url= reverse("accounts:activate")
+        url= reverse("accounts:activate",args=["email"])
         view_class = resolve(url).func.view_class
         assert view_class == views.Activate
 

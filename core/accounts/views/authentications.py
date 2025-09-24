@@ -78,16 +78,17 @@ class SignUp(View):
     def post(self,request):
         email = request.POST.get("email", "")
         password = request.POST.get("password", "")
+        password_confirm = request.POST.get("password_confirm","")
         username = request.POST.get("username","")
         first_name = request.POST.get("first_name","")
         last_name = request.POST.get("last_name","")
-        # Check if first name is exist
-        if not first_name:
+        # Check if required fields is exist
+        if not all([first_name,email,password_confirm,password,username]):
             return render(
                 request,
                 "accounts/authentications/signup.html",
                 context={
-                    "error":"First name are required."
+                    "error":"Enter all required fields."
                 },
                 status=HTTPStatus.BAD_REQUEST
             )
@@ -101,6 +102,15 @@ class SignUp(View):
                     "error":"User exists."
                 },
                 status=HTTPStatus.FORBIDDEN
+            )
+        # Check if password and password_confirm are the same
+        if password!=password_confirm:
+            return render(
+                request,
+                "accounts/authentications/signup.html",
+                context={
+                    "error":"password and password_confirm must be same."
+                }
             )
         # Validate email nad password
         try:

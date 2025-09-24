@@ -14,7 +14,8 @@ class TestAccountManagementViews:
             "email": "updatedtest@test.com",
             "first_name":"new name",
             "username":"new username",
-            "password": "wodjafmpodjw@#334808"
+            "password": "wodjafmpodjw@#334808",
+            "password_confirm": "wodjafmpodjw@#334808"
         }
 
     # Profile tests
@@ -78,7 +79,11 @@ class TestAccountManagementViews:
     def test_POST_account_update_400(self, authenticated_user):
         client = authenticated_user
         data={
-            "email":"something"
+            "email":"something",
+            "first_name":"new name",
+            "username":"new username",
+            "password": "wodjafmpodjw@#334808",
+            "password_confirm": "wodjafmpodjw@#334808"
         }
         response = client.post(self.update_url,data)
         # Asserts
