@@ -11,6 +11,9 @@ class TestAccountManagementViews:
         # Update data
         self.update_url = reverse("accounts:update")
         self.update_data={
+            "email": "updatedtest@test.com",
+            "first_name":"new name",
+            "username":"new username",
             "password": "wodjafmpodjw@#334808"
         }
 
@@ -92,7 +95,7 @@ class TestAccountManagementViews:
         response = client.get(self.delete_url)
         # Asserts
         assert response.status_code == HTTPStatus.OK
-        assert "accounts/account-managemet/delete.html" in [
+        assert "accounts/account-management/delete.html" in [
             template.name for template in response.templates
         ]
     
@@ -101,7 +104,7 @@ class TestAccountManagementViews:
         # Asserts
         assert response.status_code == HTTPStatus.UNAUTHORIZED
         assert "error" in response.context
-        assert "accounts/account-managemet/delete.html" in [
+        assert "accounts/account-management/delete.html" in [
             template.name for template in response.templates
         ]
 
@@ -111,15 +114,15 @@ class TestAccountManagementViews:
         # Asserts
         assert response.status_code == HTTPStatus.OK
         assert "data" in response.context
-        assert "accounts/account-managemet/delete.html" in [
+        assert "accounts/account-management/delete.html" in [
             template.name for template in response.templates
         ]
 
     def test_POST_delete_account_401(self):
         response = self.client.post(self.delete_url)
         # Asserts
-        assert response.status_code == HTTPStatus.OK
+        assert response.status_code == HTTPStatus.UNAUTHORIZED
         assert "error" in response.context
-        assert "accounts/account-managemet/delete.html" in [
+        assert "accounts/account-management/delete.html" in [
             template.name for template in response.templates
         ]
