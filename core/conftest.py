@@ -1,6 +1,7 @@
 import pytest
 from django.contrib.auth import get_user_model
 from accounts.models import ConfirmCode
+from django.test import Client
 
 User = get_user_model()
 
@@ -37,3 +38,20 @@ def confirm_code():
     yield confirm_code_obj
     if confirm_code_obj.pk:
         confirm_code_obj.delete()
+
+# Authenticated user fixture
+@pytest.fixture(autouse=True)
+def authenticated_user():
+    client = Client()
+    user_obj = User.objects.create_user(
+        username="testuser3",
+        email="test3@example.com",
+        first_name="Test3",
+        last_name="User3",
+        password="testpassword123",
+        is_active=True,
+    )
+    client.force_login(user_obj)
+    yield client
+    if user_obj.pk:
+        user_obj.delete()

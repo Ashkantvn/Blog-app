@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+
+  {% block title %}
+    <title>Blog app</title>
+  {% endblock title %}
+
+  {% block link %}
+  {% endblock link %}
+</head>
+<body>
+
+  {# Header part #}
+  <header>
+    <h1>Blog App</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Posts</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="#">{{user.username}}</a></li>
+        {% else %}
+            <li><a href="#">Login</a></li>
+        {% endif %}
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  {# Content part #}
+  <main>
+    {% block content %}
+    Welcome to Blog App
+    {% endblock content %}
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Blog App. All rights reserved.</p>
+  </footer>
+  
+  {% block script %}{% endblock script %}
+  <script src="{% static 'js/global.js' %}"></script>
+</body>
+</html>
