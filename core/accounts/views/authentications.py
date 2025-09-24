@@ -6,6 +6,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.db.models import Q
+from core.mixins import CustomLoginRequiredMixin
 
 User = get_user_model()
 
@@ -20,8 +21,6 @@ class Login(View):
     def post(self,request):
         email = request.POST.get("email","")
         password = request.POST.get("password","")
-
-
         user = authenticate(request,username=email,password=password)
         # Check if user is exists or not
         if user is None:
@@ -33,7 +32,7 @@ class Login(View):
                 },
                 status=HTTPStatus.NOT_FOUND,
             )
-        
+        # Login user
         login(request,user)
         return render(
             request,
@@ -46,34 +45,16 @@ class Login(View):
             status=HTTPStatus.OK
         )
 
-class Logout(View):
-    # Check permission method
-    def check_permission(self, request):
-        # Check if user is logged in
-        if not request.user.is_authenticated:
-            return render(
-                request,
-                "accounts/authentications/logout.html",
-                context={
-                    "error":"You must be logged in to access this page."
-                },
-                status=HTTPStatus.UNAUTHORIZED
-            )
-        return None
+class Logout(CustomLoginRequiredMixin,View):
+    permission_denied_template = "accounts/authentications/logout.html"
 
     def get(self,request):
-        check_permission = self.check_permission(request)
-        if check_permission:
-            return check_permission
         return render(
             request,
             "accounts/authentications/logout.html",
         )
     
     def post(self,request):
-        check_permission = self.check_permission(request)
-        if check_permission:
-            return check_permission
         logout(request)
         return render(
             request,
@@ -100,8 +81,7 @@ class SignUp(View):
         username = request.POST.get("username","")
         first_name = request.POST.get("first_name","")
         last_name = request.POST.get("last_name","")
-
-        # Check if first name and last name is exist
+        # Check if first name is exist
         if not first_name:
             return render(
                 request,
@@ -111,7 +91,6 @@ class SignUp(View):
                 },
                 status=HTTPStatus.BAD_REQUEST
             )
-
         user = User.objects.filter(Q(email=email)|Q(username=username))
         # Check if user is exist
         if user.exists():
@@ -123,33 +102,19 @@ class SignUp(View):
                 },
                 status=HTTPStatus.FORBIDDEN
             )
-        
-        # Email validation
+        # Validate email nad password
         try:
             validate_email(email)
+            validate_password(password)
         except ValidationError:
             return render(
                 request,
                 "accounts/authentications/signup.html",
                 context={
-                    "error":"Email validation error."
+                    "error":"Invalid password or email."
                 },
-                status=HTTPStatus.BAD_REQUEST
+                status= HTTPStatus.BAD_REQUEST
             )
-        
-        # Check password validation
-        try:
-            validate_password(password)
-        except:
-            return render(
-                request,
-                "accounts/authentications/signup.html",
-                context={
-                    "error":"Password validation error."
-                },
-                status=HTTPStatus.BAD_REQUEST
-            )
-        
         # User creation
         created_user = User.objects.create_user(
             email=email,

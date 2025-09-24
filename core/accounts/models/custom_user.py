@@ -26,9 +26,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f"{self.first_name} {self.last_name}"
     
     def save(self, *args, **kwargs):
-        if not self.user_slug:
+        if not self.user_slug or self.user_slug != slugify(self.username):
             self.user_slug = slugify(self.username)
         super().save(*args, **kwargs)
+
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name']
