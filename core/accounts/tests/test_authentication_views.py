@@ -58,6 +58,7 @@ class TestAccountAuthenticationViews:
         data = {
             "email": "test12345@test.com",
             "password": "oadf!@#@#$2345dsjflkj",
+            "password_confirm": "oadf!@#@#$2345dsjflkj",
             "username": "testuser12345",
             "first_name": "Test",
         }
@@ -75,6 +76,7 @@ class TestAccountAuthenticationViews:
         data = {
             "email": "test12345m",
             "password": "oadf!@#@#$2345dsjflkj",
+            "password_confirm": "oadf!@#@#$2345dsjflkj",
             "username": "testuser12345",
             "first_name": "Test",
         }
@@ -89,6 +91,7 @@ class TestAccountAuthenticationViews:
         data = {
             "email": user.email,
             "password": "oadf!@#@#$2345dsjflkj",
+            "password_confirm": "oadf!@#@#$2345dsjflkj",
             "username": "testuser12345",
             "first_name": "Test",
         }

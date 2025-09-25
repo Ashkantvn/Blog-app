@@ -20,6 +20,21 @@ def user():
     if user_obj.pk:
         user_obj.delete()
 
+# Inactive User fixture
+@pytest.fixture(autouse=True)
+def inactive_user():
+    user_obj = User.objects.create_user(
+        username="testuser30",
+        email="test30@example.com",
+        first_name="Test30",
+        last_name="User30",
+        password="testpassword1230",
+        is_active=False,
+    )
+    yield user_obj
+    if user_obj.pk:
+        user_obj.delete()
+
 # Confrm code fixture
 @pytest.fixture(autouse=True)
 def confirm_code():
