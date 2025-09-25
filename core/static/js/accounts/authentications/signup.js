@@ -2,7 +2,7 @@
 const password = document.querySelector("#password")
 const password_confirm = document.querySelector("#password_confirm")
 const signupForm = document.querySelector("#signup-form")
-
+// Submit event
 signupForm.addEventListener("submit",(e)=>{
     e.preventDefault()
     // Remove existing alert if any

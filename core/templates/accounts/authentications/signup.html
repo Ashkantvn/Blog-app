@@ -10,7 +10,7 @@
     
     <section class="section login-signup">
         <h2>Create Your Account</h2>
-        <form action="{% url 'accounts:signup' %}" method="POST" id="signup-form">
+        <form action="{% url 'accounts:signup' %}" enctype="multipart/form-data" method="POST" id="signup-form">
             {% if data %}
                 <div class="success">
                     Welcome {{data}}
@@ -31,8 +31,11 @@
             <label for="first_name">First name</label><br>
             <input type="text" id="first_name" name="first_name" required><br>
 
-            <label for="last_name">Last name (optional)</label><br>
+            <label for="last_name">Last name (Optional)</label><br>
             <input type="text" id="last_name" name="last_name"><br>
+
+            <label for="profile_image">Upload your photo(Optional):</label><br>
+            <input type="file" name="profile_image" id="profile_image" accept="image/*">
 
             <label for="password">Password</label><br>
             <input type="password" id="password" name="password" required><br>

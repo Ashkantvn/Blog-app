@@ -80,6 +80,7 @@ class SignUp(View):
         password = request.POST.get("password", "")
         password_confirm = request.POST.get("password_confirm","")
         username = request.POST.get("username","")
+        profile_image = request.FILES.get("profile_image")
         first_name = request.POST.get("first_name","")
         last_name = request.POST.get("last_name","")
         # Check if required fields is exist
@@ -126,19 +127,22 @@ class SignUp(View):
                 status= HTTPStatus.BAD_REQUEST
             )
         # User creation
-        created_user = User.objects.create_user(
-            email=email,
-            username=username,
-            first_name = first_name,
-            last_name = last_name,
-            password=password
-        )
+        data ={
+            "email":email,
+            "username":username,
+            "first_name":first_name,
+            "last_name":last_name,
+            "password":password,
+        }
+        if profile_image:
+            data["profile_image"] = profile_image
+        created_user = User.objects.create_user(**data)
         login(request,created_user)
         return render(
             request,
             "accounts/authentications/signup.html",
             context={
-                "data":username
+                "data":created_user
             },
             status= HTTPStatus.CREATED
         )
