@@ -1,1 +1,27 @@
 {% extends "layout.html" %}
+
+{% block content %}
+<section class="hero">
+    <h2>Confirm Logout</h2>
+    <p>Are you sure you want to log out of your account?</p>
+</section>
+
+<section class="section login-signup">
+        {% if data %}
+            <div class="success">
+                {{data}}
+            </div>
+        {% endif %}
+        {% if error %}
+            <div class="alert">
+                {{error}}
+            </div>
+        {% endif %}
+    <form method="POST" action="{% url 'accounts:logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="submit_button">Yes, Log Me Out</button>
+    </form>
+        <p><a href="{% url 'home' %}">No, Take Me Back</a></p>
+    </section>
+
+{% endblock content %}

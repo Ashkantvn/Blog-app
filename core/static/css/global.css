@@ -8,6 +8,10 @@ body {
       color: #333;
 }
 
+button{
+    cursor: pointer;
+}
+
 header {
     background-color: #333;
     color: white;
