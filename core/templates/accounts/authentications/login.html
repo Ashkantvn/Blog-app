@@ -1,1 +1,40 @@
 {% extends "layout.html" %}
+
+{% block content %}
+    <section class="hero">
+        <h2>Welcome Back</h2>
+        <p>Log in to access your account and manage your content.</p>
+    </section>
+
+    <section class="section login-signup">
+        <h2>Login</h2>
+        <form action="{% url 'accounts:login' %}" method="POST" id="signup-form">
+            {% if data %}
+                <div class="success">
+                    Welcome {{data.username}}
+                </div>
+                {% if not data.is_active %}
+                    <div class="alert">
+                        Your account is not activated. Please activate 
+                        it to stay logged in and use the website.
+                        <a href='{% url "accounts:activate" user_slug=data.user_slug %}'>activate</a>
+                    </div>
+                {% endif %}
+            {% endif %}
+            {% if error %}
+                <div class="alert">
+                    {{error}}
+                </div>
+            {% endif %}
+            {% csrf_token %}
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" required><br>
+
+            <button type="submit" id="submit_button" class="submit_button">LogIn</button>
+        </form>
+        <p>Don't have an account yet? <a href="{% url 'accounts:signup' %}">Sign up here</a></p>
+    </section>
+{% endblock content %}

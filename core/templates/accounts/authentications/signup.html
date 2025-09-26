@@ -13,8 +13,15 @@
         <form action="{% url 'accounts:signup' %}" enctype="multipart/form-data" method="POST" id="signup-form">
             {% if data %}
                 <div class="success">
-                    Welcome {{data}}
+                    Welcome {{data.username}}
                 </div>
+                {% if not data.is_active %}
+                    <div class="alert">
+                        Your account is not activated. Please activate 
+                        it to stay logged in and use the website.
+                        <a href='{% url "accounts:activate" user_slug=data.user_slug %}'>activate</a>
+                    </div>
+                {% endif %}
             {% endif %}
             {% if error %}
                 <div class="alert">

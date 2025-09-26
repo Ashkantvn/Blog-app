@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils.text import slugify
 from accounts.managers import CustomUserManager
+from django.urls import reverse
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=150, unique=True)
@@ -29,6 +30,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.user_slug or self.user_slug != slugify(self.username):
             self.user_slug = slugify(self.username)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("accounts:profile", kwargs={"user_slug": self.user_slug})
+    
 
 
     USERNAME_FIELD = 'email'

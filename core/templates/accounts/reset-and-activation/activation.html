@@ -1,1 +1,35 @@
 {% extends "layout.html" %}
+
+
+{% block content %}
+<section class="section hero">
+    <h1>Activate Your Account</h1>
+    <p>Welcome! You're just one step away from unlocking full access to the site.</p>
+    <p>Please enter the code and password to activate your account.</p>
+    <p>We've sent you an email with your confirmation code.<p>
+</section>
+<section class="section login-signup">
+    {% if user_slug %}
+        <form action="{% url 'accounts:activate' user_slug=user_slug %}" method="POST" id="activation-form">
+            {% csrf_token %}
+            <label for="code">Confirmation Code</label><br>
+            <input type="text" id="code" name="code" required><br>
+                        
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" required><br>
+            
+            <button type="submit" class="submit_button">Activate Account</button>
+        </form>
+    {% else  %}
+        {% if error %}
+            <div class="alert">
+                {{error}}
+            </div>
+        {% else %}
+            <div class="success">
+                {{data}}
+            </div>            
+        {% endif %}
+    {% endif %}
+<section>
+{% endblock content %}
