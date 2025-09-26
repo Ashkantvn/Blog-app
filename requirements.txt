@@ -17,6 +17,7 @@ psycopg2-binary
 
 # celery
 celery
+django-celery-beat
 
 # Media handling
 pillow

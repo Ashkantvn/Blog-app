@@ -55,6 +55,26 @@ services:
     env_file:
       - ./.env.dev
     working_dir: /app
+    volumes:
+      - ./core/:/app/
+
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: celery -A core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    working_dir: /app
+    env_file:
+      - ./.env.dev
+    volumes:
+      - ./core/:/app/
+    depends_on:
+      redis:
+        condition: service_healthy
+      django:
+        condition: service_started
+
     
   smtp4dev:
     image: rnwood/smtp4dev:v3
