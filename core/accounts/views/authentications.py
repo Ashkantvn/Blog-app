@@ -38,9 +38,7 @@ class Login(View):
             request,
             "accounts/authentications/login.html",
             context={
-                "data": {
-                    "username": user.username
-                },
+                "data": user,
             },
             status=HTTPStatus.OK
         )

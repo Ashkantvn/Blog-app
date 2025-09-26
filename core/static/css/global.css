@@ -134,6 +134,7 @@ input:focus{
 }
 
 .success{
+    text-align: center;
     background-color: #d4edda;
     color: #155724;
     padding: 1rem;
@@ -144,6 +145,7 @@ input:focus{
 }
 
 .alert{
+    text-align: center;
     background-color: #f8d7da;
     color: #721c24;
     padding: 1rem;
@@ -151,4 +153,10 @@ input:focus{
     border-radius: 6px;
     margin-bottom: 1rem;
     font-size: 1rem;
+}
+
+.no-blogs{
+    text-align: center;
+    font-weight: bold;
+    margin-block: 3em;
 }

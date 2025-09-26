@@ -119,6 +119,7 @@ class PasswordResetConfirm(View):
         user = User.objects.filter(email=email).first()
         user.set_password(password)
         user.save()
+        confirm_code.delete()
         return render(
             request,
             "accounts/reset-and-activation/password_reset_confirm.html",
@@ -149,6 +150,9 @@ class Activate(View):
         return render(
             request,
             "accounts/reset-and-activation/activation.html",
+            context={
+                "user_slug":user_slug
+            },
         )
     
     def post(self,request,user_slug):
@@ -161,7 +165,7 @@ class Activate(View):
                 request,
                 "accounts/reset-and-activation/activation.html",
                 context={
-                    "error":"User not found."
+                    "error":"User not found.",
                 },
                 status=HTTPStatus.NOT_FOUND
             )
@@ -174,7 +178,7 @@ class Activate(View):
                 request,
                 "accounts/reset-and-activation/activation.html",
                 context={
-                    "error":"Wrong user wants to be activated."
+                    "error":"Wrong user wants to be activated.",
                 },
                 status=HTTPStatus.FORBIDDEN
             )
