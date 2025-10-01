@@ -73,6 +73,9 @@ class PasswordResetConfirm(View):
         return render(
             request,
             "accounts/reset-and-activation/password_reset_confirm.html",
+            context={
+                "code":code
+            },
             status=HTTPStatus.OK,
         )
     

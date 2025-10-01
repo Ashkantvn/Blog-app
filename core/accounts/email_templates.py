@@ -3,6 +3,8 @@ Hello,
 
 Here is your confirmation code: {code}
 
+Add this code to the password reset page url to proceed
+
 This code is used to verify your identity for account activation or password reset. 
 Please keep it secure and do not share it with anyone — even if they claim to be from our team.
 
