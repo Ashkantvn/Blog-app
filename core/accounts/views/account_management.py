@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.contrib.auth.hashers import make_password
 
 
 User = get_user_model()
@@ -70,7 +69,7 @@ class UpdateAccount(CustomLoginRequiredMixin,View):
         user.email = email
         user.profile_image = profile_image
         user.username = username
-        user.password = make_password(password)
+        user.set_password(password)
         user.save()
         return render(
             request,
