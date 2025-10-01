@@ -95,6 +95,9 @@ class Profile(View):
                 return render(
                     request,
                     "accounts/account-management/profile.html",
+                    context={
+                        "data": request.user,
+                    },
                     status= HTTPStatus.OK
                 )
         # Query to find target user

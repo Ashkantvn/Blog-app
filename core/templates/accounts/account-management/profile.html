@@ -8,37 +8,29 @@
         </div>
     {% else %}
         <section class="section hero">
-            <h2>{{ user.username }}'s Profile</h2>
-            <p>{{ user.first_name }} {{ user.last_name }}</p>
+            <h2>{{ data.username }}'s Profile</h2>
+            <p>{{ data.first_name }} {{ data.last_name }}</p>
         </section>
         
         <section class="section login-signup">
-            <img src="{{ user.profile_image.url }}" alt="Profile Image" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:1rem;">
-            
-            <p><strong>Status:</strong> 
-                {% if user.is_authenticated %}
-                    {% if user.is_active %}
-                    <span class="success">Active</span>
-                    {% else %}
-                    <span class="alert">Inactive</span>
-                    <a href="{% url 'accounts:activate' user_slug=user.user_slug %}">Activate</a>
-                    {% endif %}
-                    {% endif %}
-                </p>
-            </section>
-            
-            <section class="section hero">
-                <h2>Blog Posts</h2>
-                <p>Explore articles written by {{ user.username }} on various topics. Dive into their thoughts, stories, and insights.</p>
-            </section>
-            {% for blog in user.blogs.all %}
-            <div class="blog-card">
-                <h3>{{ blog.title }}</h3>
-                <p>{{ blog.content|truncatewords:30 }}</p>
-                <a href="{{ blog.get_absolute_url }}">Read more</a>
-            </div>
+            <img src="{{ data.profile_image.url }}" alt="Profile Image" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:1rem;">
+            <a href='{% url "accounts:logout" %}'>logout</a>
+        </section>
+        
+        <section class="section hero">
+            <h2>Blog Posts</h2>
+            <p>Explore articles written by {{ data.username }} on various topics. Dive into their thoughts, stories, and insights.</p>
+        </section>
+
+        <section class="section">
+            {% for blog in data.blogs.all %}
+                <div class="blog-card">
+                    <h3>{{ blog.title }}</h3>
+                    <p>{{ blog.content|truncatewords:30 }}</p>
+                    <a href="{{ blog.get_absolute_url }}">Read more</a>
+                </div>
             {% empty %}
-            <p class="no-blogs">No blogs published yet.</p>
+                <p class="no-blogs">No blogs published yet.</p>
             {% endfor %}
         </section>
     {% endif %}
