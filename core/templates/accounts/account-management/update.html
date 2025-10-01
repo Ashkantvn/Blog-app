@@ -1,1 +1,50 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert">
+            {{ error }}
+        </div>
+    {% else %}
+    <section class="hero">
+        <h2>Update Your Profile</h2>
+        <p>Keep your information up to date.</p>
+    </section>
+
+    <section class="section blue-section">
+        <h2>Edit Account Details</h2>
+        <form action="{% url 'accounts:update' %}" enctype="multipart/form-data" method="POST" id="update-form">
+            {% if data %}
+                <div class="success">
+                    {{ data }}
+                </div>
+            {% endif %}
+            {% csrf_token %}
+
+            <label for="username">Username</label><br>
+            <input type="text" id="username" name="username" value="{{ user.username }}" required><br>
+
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" value="{{ user.email }}" required><br>
+
+            <label for="first_name">First name</label><br>
+            <input type="text" id="first_name" name="first_name" value="{{ user.first_name }}" required><br>
+
+            <label for="last_name">Last name</label><br>
+            <input type="text" id="last_name" name="last_name" value="{{ user.last_name }}"><br>
+
+            <label for="profile_image">Update your photo:</label><br>
+            <input type="file" name="profile_image" id="profile_image" accept="image/*"><br>
+
+            <label for="password">New Password (leave blank to keep current)</label><br>
+            <input type="password" id="password" name="password"><br>
+
+            <label for="password_confirm">Confirm New Password</label><br>
+            <input type="password" id="password_confirm" name="password_confirm"><br>
+
+            <button type="submit" id="submit_button" class="submit_button">Update Profile</button>
+        </form>
+    </section>
+    {% endif %}
+{% endblock content %}
