@@ -88,6 +88,10 @@ def blog():
         content="This is a test blog content.",
         author=user,
     )
+    tag_obj = Tag.objects.create(
+        tag_name="Test",
+    )
+    blog_obj.tags.add(tag_obj)
     yield blog_obj
     if user.pk:
         user.delete()
@@ -96,7 +100,7 @@ def blog():
 @pytest.fixture(autouse=True)
 def tag():
     tag_obj = Tag.objects.create(
-        tag_name="Test Tag",
+        tag_name="Django",
     )
     yield tag_obj
     if tag_obj.pk:

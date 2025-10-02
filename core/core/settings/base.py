@@ -21,6 +21,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
 
 INSTALLED_APPS = [
     'accounts',
+    'blogs',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
