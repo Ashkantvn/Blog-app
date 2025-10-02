@@ -20,9 +20,9 @@ class TestBlogDisplayViews:
             template.name for template in response.templates
         ]
 
-    def test_GET_blog_list_view_with_filter_200(self, blog):
+    def test_GET_blog_list_view_with_search_query_200(self, blog):
         blog_tag = blog.tags.first().tag_name
-        url = reverse("blogs:list") + f"?tag={blog_tag}"
+        url = reverse("blogs:list") + f"?q={blog_tag}"
         response = self.client.get(url)
         assert response.status_code == HTTPStatus.OK
         assert "data" in response.context,(
