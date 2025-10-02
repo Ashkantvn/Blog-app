@@ -1,1 +1,46 @@
 {% extends "layout.html" %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert">
+            {{error}}
+        </div>
+    {% else %}
+        {% if data %}
+            <div class="success">
+                {{data}}
+            </div>
+        {% else %}
+            <section class="section hero">
+                <h2>{{ user.username }}'s delete page</h2>
+                <p>{{ user.first_name }} {{ user.last_name }}</p>
+            </section>
+            
+            <section class="section hero">
+                <h2>Blog Posts</h2>
+                <p>Explore articles written by {{ user.username }} on various topics. Dive into their thoughts, stories, and insights.</p>
+            </section>
+            
+            <section class="section">
+                {% for blog in user.blogs.all %}
+                <div class="blog-card">
+                    <h3>{{ blog.title }}</h3>
+                    <p>{{ blog.content|truncatewords:30 }}</p>
+                    <a href="{{ blog.get_absolute_url }}">Read more</a>
+                </div>
+                {% empty %}
+                    <p class="no-blogs">No blogs published yet.</p>
+                {% endfor %}
+            </section>
+            
+            <section class="section blue-section">
+                <form method="post" action="{% url 'accounts:delete' %}">
+                    {% csrf_token %}
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <button type="submit" class="submit_button">Delete Account</button>
+                </form>
+                <p><a href="{{user.get_absolute_url}}">Cancel</a></p>
+            </section>
+        {% endif %}
+    {% endif %}
+{% endblock content %}

@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from django.contrib.auth.hashers import make_password
 
 
 User = get_user_model()
@@ -25,15 +24,15 @@ class UpdateAccount(CustomLoginRequiredMixin,View):
     def post(self,request):
         user = request.user
         # Fields
-        email = request.POST.get("email","")
+        email = request.POST.get("email",request.user.email)
         password = request.POST.get("password","")
         password_confirm = request.POST.get("password_confirm","")
-        first_name = request.POST.get("first_name","")
-        last_name = request.POST.get("last_name","")
-        profile_image = request.POST.get("profile_image","")
-        username = request.POST.get("username","")
+        first_name = request.POST.get("first_name",request.user.first_name)
+        last_name = request.POST.get("last_name",request.user.last_name)
+        profile_image = request.FILES.get("profile_image",request.user.profile_image)
+        username = request.POST.get("username",request.user.username)
         # Check if all fields exists
-        if not all([email,password,first_name,username,password_confirm]):
+        if not all([email,first_name,last_name,profile_image,username]):
             return render(
                 request,
                 "accounts/account-management/update.html",
@@ -42,19 +41,25 @@ class UpdateAccount(CustomLoginRequiredMixin,View):
                 },
                 status= HTTPStatus.BAD_REQUEST
             )
-        # Check if password and password_confirm are the same
-        if password!=password_confirm:
-            return render(
-                request,
-                "accounts/authentications/update.html",
-                context={
-                    "error":"password and password_confirm must be same."
-                }
-            )
-        # Validate email nad password
+        # Check if password and confirm password match
+        if password:
+            if password == password_confirm:
+                user.set_password(password)
+            else:
+                return render(
+                    request,
+                    "accounts/account-management/update.html",
+                    context={
+                        'error':"Password and Confirm Password do not match.",
+                    },
+                    status=HTTPStatus.BAD_REQUEST
+                )
+        # Validate email and password
         try:
             validate_email(email)
-            validate_password(password)
+            # Validate password only if it is being changed
+            if password:
+                validate_password(password)
         except ValidationError:
             return render(
                 request,
@@ -70,7 +75,6 @@ class UpdateAccount(CustomLoginRequiredMixin,View):
         user.email = email
         user.profile_image = profile_image
         user.username = username
-        user.password = make_password(password)
         user.save()
         return render(
             request,

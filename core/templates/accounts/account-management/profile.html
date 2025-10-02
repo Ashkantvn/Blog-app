@@ -12,9 +12,13 @@
             <p>{{ data.first_name }} {{ data.last_name }}</p>
         </section>
         
-        <section class="section login-signup">
-            <img src="{{ data.profile_image.url }}" alt="Profile Image" style="width:120px; height:120px; border-radius:50%; object-fit:cover; margin-bottom:1rem;">
-            <a href='{% url "accounts:logout" %}'>logout</a>
+        <section class="section blue-section">
+            <img src="{{ data.profile_image.url }}" alt="Profile Image" class="profile-image">
+            {% if user.is_authenticated %}
+                <a href='{% url "accounts:logout" %}' class="block">logout</a>
+                <a href='{% url "accounts:update" %}' class="block">update</a>
+                <a href='{% url "accounts:delete" %}' class="block">delete</a>
+            {% endif %}
         </section>
         
         <section class="section hero">
