@@ -45,7 +45,7 @@ class TestBlogDisplayViews:
         ]
         # check view count increment
         blog.refresh_from_db()
-        assert blog.view_count == 1
+        assert blog.views == 1
 
     def test_GET_blog_detail_view_404(self):
         url = reverse("blogs:details", kwargs={"blog_slug": "non-existent-slug"})
