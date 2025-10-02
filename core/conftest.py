@@ -67,7 +67,13 @@ def authenticated_user():
         password="testpassword123",
         is_active=True,
     )
+    blog_obj = Blog.objects.create(
+        title="Test Blog Auth",
+        content="This is a test blog content for authenticated user.",
+        author=user_obj,
+    )
     client.force_login(user_obj)
+    client.blog = blog_obj
     yield client
     if user_obj.pk:
         user_obj.delete()
