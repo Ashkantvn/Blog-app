@@ -1,1 +1,45 @@
 {% extends "layout.html" %}
+{% load static %}
+{% load number_format %}
+
+{% block link %}
+    <link rel="stylesheet" href="{% static 'css/blogs.css' %}"/>
+{% endblock link %}
+
+{% block title %}
+    {{data.blog_slug}}
+{% endblock title %}
+
+{% block content %}
+    <section class="section">
+    {% if error %}
+        <div class="alert">{{ error }}</div>
+    {% else %}
+        <div class="blog-card">
+        <h2>{{ data.title }}</h2>
+        <p><strong>Published:</strong> {{ data.published_date }} | {{ data.published_date|timesince}} ago</p>
+        <p><strong>Views:</strong> {{ data.views|short_number }}</p>
+        <p><strong>Author:</strong> {{ data.author.first_name }} {{data.author.last_name }}</p>
+
+        {% if data.banner %}
+            <img src="{{ data.banner.url }}" alt="Blog Banner" class="blog-banner" />
+        {% endif %}
+
+        <div>
+            <p>{{ data.content }}</p>
+        </div>
+
+        {% if data.tags.all %}
+            <div style="margin-top:1rem;">
+                <strong>Tags:</strong>
+                {% for tag in data.tags.all %}
+                    <span class="tag">
+                    {{ tag.tag_name }}
+                    </span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        </div>
+    {% endif %}
+    </section>
+{% endblock content %}

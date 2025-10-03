@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django_cleanup.apps.CleanupConfig',
     'django_celery_beat',
 ]
@@ -137,3 +138,6 @@ CELERY_TASK_SERIALIZER = 'json'
 
 # Login url
 LOGIN_URL = '/accounts/login/'
+
+USE_L10N = True
+USE_I18N = True

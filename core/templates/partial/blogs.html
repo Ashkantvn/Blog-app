@@ -1,0 +1,9 @@
+<div class="blogs">
+    {% for blog in blogs %}
+        <div class="blog-card">
+            <h3>{{blog.title}}</h3>
+            <p>{{blog.content|truncatewords:15}}</p>
+            <a href="{{blog.get_absolute_url}}">Read more</a>
+        </div>
+    {% endfor %}
+</div>
