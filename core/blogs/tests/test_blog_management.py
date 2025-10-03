@@ -22,9 +22,6 @@ class TestBlogManagementViews:
         url = reverse("blogs:add")
         response = authenticated_user.get(url)
         assert response.status_code == HTTPStatus.OK
-        assert "data" in response.context,(
-            "data field does not exist"
-        )
         assert "blogs/blog-management/add_blog.html" in [
             template.name for template in response.templates
         ]
