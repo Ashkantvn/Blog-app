@@ -37,7 +37,7 @@ class BlogDetails(View):
             blog.published_date > now().date()
             ) and blog.author!=request.user:
                 raise Blog.DoesNotExist
-        except blog.DoesNotExist:
+        except Blog.DoesNotExist:
             return render(
                 request,
                 "blogs/blog-display/blog_details.html",
@@ -46,6 +46,13 @@ class BlogDetails(View):
                 },
                 status=HTTPStatus.NOT_FOUND
             )
+        if (
+        blog.is_published and
+        blog.publishable and
+        blog.published_date <= now().date()
+        ):
+            blog.views += 1
+            blog.save()
         return render(
             request,
             "blogs/blog-display/blog_details.html",
