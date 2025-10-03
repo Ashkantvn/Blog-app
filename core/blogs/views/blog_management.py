@@ -5,6 +5,7 @@ from http import HTTPStatus
 from blogs.models import Blog, Tag
 from blogs.utils import render_blog_or_404, handle_tags
 from blogs.mixins import AuthorRequiredMixin
+from django.utils.text import slugify
 
 class BlogAdd(LoginRequiredMixin, View):
     def get(self, request):
@@ -29,15 +30,26 @@ class BlogAdd(LoginRequiredMixin, View):
                 },
                 status=HTTPStatus.BAD_REQUEST
             )
+        # Check if blog is exists
+        if Blog.objects.filter(blog_slug=slugify(title)).exists():
+            return render(
+                request,
+                'blogs/blog-management/add_blog.html',
+                {
+                    'error': 'Blog is exist.'
+                },
+                status=HTTPStatus.BAD_REQUEST
+            )
         # Create the blog post
         blog_data = {
             'title': title,
             'content': content,
             'is_published': is_published,
-            'published_date': published_date,
             'author': request.user
         }
         # Handle banner if provided
+        if published_date:
+            blog_data['published_date'] = published_date
         if banner:
             blog_data['banner'] = banner
         created_blog = Blog.objects.create(**blog_data)
