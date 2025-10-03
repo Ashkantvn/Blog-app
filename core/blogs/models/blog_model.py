@@ -31,5 +31,5 @@ class Blog(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['-published_date']
     
