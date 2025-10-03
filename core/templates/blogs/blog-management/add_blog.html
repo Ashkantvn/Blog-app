@@ -23,10 +23,11 @@
         <div class="alert">
             {{error}}
         </div>
-      {% else %}
-        <div class="success">
-            {{data}}
-        </div>
+      {% endif %}
+      {% if data %}
+       <div class="success">
+         {{data}}
+       </div>
       {% endif %}
       {% csrf_token %}
 

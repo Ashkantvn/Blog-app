@@ -25,6 +25,12 @@ class Blog(models.Model):
     def get_absolute_url(self):
         return reverse("blogs:details", kwargs={"blog_slug": self.blog_slug})
     
+    def get_edit_url(self):
+        return reverse("blogs:edit", kwargs={"blog_slug": self.blog_slug})
+    
+    def get_delete_url(self):
+        return reverse("blogs:delete", kwargs={"blog_slug": self.blog_slug})
+    
     def save(self, *args, **kwargs):
         if not self.blog_slug or self.blog_slug != slugify(self.title):
             self.blog_slug = slugify(self.title)

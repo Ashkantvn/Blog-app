@@ -1,0 +1,14 @@
+<div class="blogs">
+    {% for blog in blogs %}
+        <div class="blog-card">
+            <h3>{{blog.title}}</h3>
+            <p>{{blog.content|truncatewords:15}}</p>
+            <p>Is published: {{blog.is_published}}</p>
+            <p>Publishable: {{blog.publishable}}</p>
+            <p>Published date: {{blog.published_date}}</p>
+            <a class="profile-blog-url" href="{{blog.get_absolute_url}}">More</a>
+            <a class="profile-blog-url" href="{{blog.get_edit_url}}">Edit</a>
+            <a class="profile-blog-url" href="{{blog.get_delete_url}}">Delete</a>
+        </div>
+    {% endfor %}
+</div>
