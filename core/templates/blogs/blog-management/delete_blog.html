@@ -1,1 +1,30 @@
 {% extends "layout.html" %}
+{% load static %}
+
+{% block link %}
+  <link rel="stylesheet" href="{% static 'css/blogs.css' %}" />
+{% endblock link %}
+
+{% block title %}
+  Delete Blog
+{% endblock title %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert">
+            {{error}}
+        </div>
+    {% else %}
+        <section class="section hero">
+            <h2>Delete Blog: {{ data.title }}</h2>
+            <p>Are you sure you want to permanently delete this blog post?</p>
+        </section>
+        <section class="section blue-section">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="submit_button">Yes, Delete</button>
+            </form>
+            <p><a href="{{data.get_absolute_uxrl}}">Cancel</a><p>
+        </section>
+    {% endif %}
+{% endblock content %}

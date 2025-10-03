@@ -93,10 +93,11 @@ class BlogEdit(LoginRequiredMixin, AuthorRequiredMixin, View):
         # Update fields
         blog.title = title
         blog.content = content
+        if published_date:
+            blog.published_date=published_date
         if banner:
             blog.banner = banner
         blog.is_published = is_published
-        blog.published_date = published_date
         blog.save()
         # Handle tags
         handle_tags(blog, tags)
@@ -104,7 +105,8 @@ class BlogEdit(LoginRequiredMixin, AuthorRequiredMixin, View):
             request,
             'blogs/blog-management/edit_blog.html',
             {
-                "data": "Blog updated successfully!"
+                "data": blog,
+                "message":"Blog updated successfully!"
             },
             status=HTTPStatus.OK
         )
