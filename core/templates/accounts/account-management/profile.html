@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    {% if error %}
+        {{error}}
+    {% else %}
+        data.username
+    {% endif %}
+{% endblock title %}
 
 {% block content %}
     {% if error %}
