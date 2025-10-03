@@ -16,7 +16,7 @@ class BlogList(View):
         # Filter blogs by tag if provided
         if tag:
             blogs = blogs.filter(
-                tags__tag_name=tag,
+                tags__tag_slug=tag,
             )
         return render(
             request,
