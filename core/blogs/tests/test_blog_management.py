@@ -208,11 +208,17 @@ class TestBlogManagementViews:
             "response url is not started with login page"
         )
 
-    def test_POST_delete_blog_view_204(self, authenticated_user):
+    def test_POST_delete_blog_view_200(self, authenticated_user):
         blog = authenticated_user.blog
         url = reverse("blogs:delete", kwargs={"blog_slug": blog.blog_slug})
         response = authenticated_user.post(url)
-        assert response.status_code == HTTPStatus.NO_CONTENT
+        assert response.status_code == HTTPStatus.OK
+        assert "data" in response.context,(
+            "data field does not exist"
+        )
+        assert "blogs/blog-management/delete_blog.html" in [
+            template.name for template in response.templates
+        ]
         # Verify the blog was deleted
         is_exists = Blog.objects.filter(pk=blog.pk).exists()
         assert not is_exists, (
