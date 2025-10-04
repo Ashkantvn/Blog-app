@@ -10,7 +10,7 @@ class Blog(models.Model):
     content = models.TextField()
     banner = models.ImageField(upload_to='blogs/',default='blogs/default.png')
     views = models.PositiveIntegerField(default=0)
-    tags = models.ManyToManyField('Tag', related_name='blogs')
+    tags = models.ManyToManyField('Tag', related_name='blogs', through="BlogTags")
     is_published = models.BooleanField(default=False)
     publishable = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blogs')
