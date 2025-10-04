@@ -1,0 +1,23 @@
+.blog-banner{
+    width:100%;
+    border-radius:8px;
+    margin-bottom:1rem;
+}
+
+.tag{
+    background-color:#e0f7fa;
+    padding:0.3rem 0.6rem;
+    margin:0.2rem;
+    border-radius:4px;
+    display:inline-block;
+}
+
+.search-form{
+    margin-bottom: 2rem;
+}
+
+#content{
+    display: block;
+    width: 96%;
+    margin-bottom: 1em;
+}

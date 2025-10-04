@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from accounts.models import ConfirmCode
 from django.test import Client
 from blogs.models import Blog, Tag
+from django.utils.timezone import now
 
 User = get_user_model()
 
@@ -71,6 +72,9 @@ def authenticated_user():
         title="Test Blog Auth",
         content="This is a test blog content for authenticated user.",
         author=user_obj,
+        is_published=True,
+        publishable=True,
+        published_date=now().date()
     )
     client.force_login(user_obj)
     client.blog = blog_obj
@@ -80,7 +84,7 @@ def authenticated_user():
 
 # Blog fixture
 @pytest.fixture(autouse=True)
-def blog():
+def default_blog():
     user = User.objects.create_user(
         username="testuser4",
         email="test4@test.com",
@@ -96,6 +100,32 @@ def blog():
     )
     tag_obj = Tag.objects.create(
         tag_name="Test",
+    )
+    blog_obj.tags.add(tag_obj)
+    yield blog_obj
+    if user.pk:
+        user.delete()
+
+@pytest.fixture(autouse=True)
+def blog():
+    user = User.objects.create_user(
+        username="testuser5",
+        email="test5@test.com",
+        first_name="Test5",
+        last_name="User5",
+        password="testpassword123",
+        is_active=True,
+    )
+    blog_obj = Blog.objects.create(
+        title="Test Blog2",
+        content="This is a test blog content.",
+        author=user,
+        is_published=True,
+        publishable=True,
+        published_date=now().date(),
+    )
+    tag_obj = Tag.objects.create(
+        tag_name="Test2",
     )
     blog_obj.tags.add(tag_obj)
     yield blog_obj

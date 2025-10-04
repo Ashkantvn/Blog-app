@@ -1,0 +1,1 @@
+from .check_is_author import AuthorRequiredMixin

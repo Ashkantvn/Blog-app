@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/blogs.css' %}"/>
+{% endblock link %}
+
+{% block title %}
+    Blogs list
+{% endblock title %}
+
+{% block content %}
+<section class="section">
+  <h2>Latest Blogs</h2>
+
+  <form method="get" class="search-form">
+    <input
+      type="text"
+      name="q"
+      placeholder="Search blogs..."
+    />
+    <button type="submit" class="submit_button">Search</button>
+  </form>
+
+  <div class="blogs">
+    {% include "partial/blogs.html" with blogs=data %}
+  </div>
+
+  <p class="no-blogs">No more blogs to show.</p>
+</section>
+{% endblock content %}

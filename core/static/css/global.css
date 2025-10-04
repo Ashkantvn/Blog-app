@@ -177,3 +177,7 @@ input:focus{
     display: block;
     margin-inline: auto;
 }
+
+.profile-blog-url{
+    display: block;
+}

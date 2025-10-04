@@ -6,7 +6,8 @@ User = get_user_model()
 
 @pytest.mark.django_db
 class TestblogModel:
-    def test_blog_creation(self, blog):
+    def test_blog_creation(self, default_blog):
+        blog = default_blog
         assert blog.title == "Test Blog"
         assert blog.content == "This is a test blog content."
         assert blog.banner == "blogs/default.png"

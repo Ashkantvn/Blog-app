@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
 
+{% block title %}
+    {% if error %}
+        {{error}}
+    {% else %}
+        data.username
+    {% endif %}
+{% endblock title %}
 
 {% block content %}
     {% if error %}
@@ -15,6 +22,7 @@
         <section class="section blue-section">
             <img src="{{ data.profile_image.url }}" alt="Profile Image" class="profile-image">
             {% if user.is_authenticated %}
+                <a href='{% url "blogs:add" %}' class="block">Add new blog</a>
                 <a href='{% url "accounts:logout" %}' class="block">logout</a>
                 <a href='{% url "accounts:update" %}' class="block">update</a>
                 <a href='{% url "accounts:delete" %}' class="block">delete</a>
@@ -26,16 +34,9 @@
             <p>Explore articles written by {{ data.username }} on various topics. Dive into their thoughts, stories, and insights.</p>
         </section>
 
-        <section class="section">
-            {% for blog in data.blogs.all %}
-                <div class="blog-card">
-                    <h3>{{ blog.title }}</h3>
-                    <p>{{ blog.content|truncatewords:30 }}</p>
-                    <a href="{{ blog.get_absolute_url }}">Read more</a>
-                </div>
-            {% empty %}
-                <p class="no-blogs">No blogs published yet.</p>
-            {% endfor %}
+        <section class="section blogs">
+            {% include "partial/profile_blogs.html" with blogs=data.blogs.all %}
         </section>
+        <p class="no-blogs">No more blogs</p>
     {% endif %}
 {% endblock content %}

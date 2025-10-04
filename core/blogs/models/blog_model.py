@@ -10,7 +10,7 @@ class Blog(models.Model):
     content = models.TextField()
     banner = models.ImageField(upload_to='blogs/',default='blogs/default.png')
     views = models.PositiveIntegerField(default=0)
-    tags = models.ManyToManyField('Tag', related_name='blogs')
+    tags = models.ManyToManyField('Tag', related_name='blogs', through="BlogTags")
     is_published = models.BooleanField(default=False)
     publishable = models.BooleanField(default=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blogs')
@@ -25,11 +25,17 @@ class Blog(models.Model):
     def get_absolute_url(self):
         return reverse("blogs:details", kwargs={"blog_slug": self.blog_slug})
     
+    def get_edit_url(self):
+        return reverse("blogs:edit", kwargs={"blog_slug": self.blog_slug})
+    
+    def get_delete_url(self):
+        return reverse("blogs:delete", kwargs={"blog_slug": self.blog_slug})
+    
     def save(self, *args, **kwargs):
         if not self.blog_slug or self.blog_slug != slugify(self.title):
             self.blog_slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-created_date']
+        ordering = ['-published_date']
     
