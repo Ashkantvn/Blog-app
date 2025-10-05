@@ -22,8 +22,8 @@
     <h1>Blog App</h1>
     <nav>
       <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Posts</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'blogs:list' %}">Posts</a></li>
         {% if user.is_authenticated %}
             <li><a href="{{ user.get_absolute_url }}">{{user.username}}</a></li>
         {% else %}

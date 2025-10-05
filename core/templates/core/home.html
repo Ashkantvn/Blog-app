@@ -9,20 +9,22 @@
     
     <section class="section">
         <h2>Latest Blogs</h2>
-        {% include "partial/blogs_list.html" %}
-        <a href="#">Explore more</a>
+        {% include "partial/blogs.html" with blogs=data.latest_blogs %}
+        <a href="{% url 'blogs:list' %}">Explore more</a>
     </section>
 
     <section class="section">
-        <h2>Hot Blogs</h2>
-        {% include "partial/blogs_list.html" %}
-        <a href="#">Explore more</a>
+        <h2>Most view Blogs</h2>
+        {% include "partial/blogs.html" with blogs=data.most_view_blogs %}
+        <a href="{% url 'blogs:list' %}">Explore more</a>
     </section>
 
     <section class="section blue-section">
       <h2>Join the Community</h2>
       <p>Sign up to share your thoughts.</p>
-      <a href="#">Login</a>
-      <a href="#">Sign Up</a>
+      {% if not user.is_authenticated %}
+        <a href="{% url 'accounts:login' %}">Login</a>
+        <a href="{% url 'accounts:signup' %}">Sign Up</a>
+      {% endif %}
     </section>
 {% endblock content %}
