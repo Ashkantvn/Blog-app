@@ -2,34 +2,31 @@ services:
   django:
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:8000
-    # restart: unless-stopped # Uncomment this line if you are using Docker in production
-    volumes:
-      - ./core/:/app/
+      dockerfile: Dockerfile.prod
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    restart: unless-stopped
     env_file:
-      - ./.env.dev
-    ports:
-      - "8000:8000"
+      - ./.env.prod
     depends_on:
-      postgres:
-        condition: service_started
-      redis:
-        condition: service_started
-      celery:
-        condition: service_started
+      - postgres
+      - redis
 
   postgres:
     image: postgres:17
     restart: unless-stopped
     container_name: postgres
     env_file:
-      - ./.env.dev
+      - ./.env.prod
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   redis:
     image: redis:7.2
     container_name: redis
@@ -41,51 +38,57 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  
+
   celery:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     container_name: celery_worker
     restart: unless-stopped
     command: celery -A core.celery:app worker --loglevel=info
-    depends_on:
-      redis:
-        condition: service_healthy
     env_file:
-      - ./.env.dev
-    working_dir: /app
-    volumes:
-      - ./core/:/app/
-
+      - ./.env.prod
+    depends_on:
+      - redis
+      - postgres
 
   celery-beat:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
+    container_name: celery_beat
+    restart: unless-stopped
     command: celery -A core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    working_dir: /app
     env_file:
-      - ./.env.dev
-    volumes:
-      - ./core/:/app/
+      - ./.env.prod
     depends_on:
-      redis:
-        condition: service_healthy
-      django:
-        condition: service_started
+      - django
+      - redis
 
-    
+  nginx:
+    image: nginx:1.29.2
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./core/static:/static
+      - ./core/media:/media
+      - ./nginx/certs:/etc/nginx/certs:ro  # put SSL certs here if using HTTPS
+    depends_on:
+      - django
+
   smtp4dev:
     image: rnwood/smtp4dev:v3
-    restart: unless-stopped
     container_name: smtp4dev
+    restart: unless-stopped
     ports:
-      - "5000:80"
-      - "25:25"
-      - "143:143"
+      - "3000:3000"   # web UI
+      - "25:25"       # SMTP port (apps send to this)
     volumes:
-      - smtp4dev-data:/smtp4dev
+      - smtp4dev-data:/data
 
 volumes:
   postgres-data:

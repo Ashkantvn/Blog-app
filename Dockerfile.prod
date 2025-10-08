@@ -21,6 +21,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy project files
 COPY ./core /app/
 
+# Install Gunicorn for production
+RUN pip install gunicorn whitenoise
 
-# Run Django development server (adjust for production)
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Collect static files
+RUN python manage.py collectstatic --noinput
+
+# Use Gunicorn to serve the app
+CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
