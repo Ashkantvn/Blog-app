@@ -7,6 +7,7 @@ from django.utils.timezone import now
 
 User = get_user_model()
 
+
 # User fixture
 @pytest.fixture(autouse=True)
 def user():
@@ -22,6 +23,7 @@ def user():
     if user_obj.pk:
         user_obj.delete()
 
+
 # Inactive User fixture
 @pytest.fixture(autouse=True)
 def inactive_user():
@@ -36,6 +38,7 @@ def inactive_user():
     yield user_obj
     if user_obj.pk:
         user_obj.delete()
+
 
 # Confrm code fixture
 @pytest.fixture(autouse=True)
@@ -56,6 +59,7 @@ def confirm_code():
     if confirm_code_obj.pk:
         confirm_code_obj.delete()
 
+
 # Authenticated user fixture
 @pytest.fixture(autouse=True)
 def authenticated_user():
@@ -74,13 +78,14 @@ def authenticated_user():
         author=user_obj,
         is_published=True,
         publishable=True,
-        published_date=now().date()
+        published_date=now().date(),
     )
     client.force_login(user_obj)
     client.blog = blog_obj
     yield client
     if user_obj.pk:
         user_obj.delete()
+
 
 # Blog fixture
 @pytest.fixture(autouse=True)
@@ -105,6 +110,7 @@ def default_blog():
     yield blog_obj
     if user.pk:
         user.delete()
+
 
 @pytest.fixture(autouse=True)
 def blog():
@@ -131,6 +137,7 @@ def blog():
     yield blog_obj
     if user.pk:
         user.delete()
+
 
 # Tag fixture
 @pytest.fixture(autouse=True)

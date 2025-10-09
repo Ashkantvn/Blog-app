@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse, resolve
 from blogs import views
 
+
 @pytest.mark.django_db
 class TestBlogURLs:
     def test_blog_list_is_resolved(self):

@@ -4,6 +4,7 @@ from django.urls import reverse
 from http import HTTPStatus
 from accounts.models import ConfirmCode
 
+
 @pytest.mark.django_db
 class TestResetAndActivationViews:
     def setup_method(self):
@@ -19,11 +20,11 @@ class TestResetAndActivationViews:
             template.name for template in response.templates
         ]
 
-    def test_POST_password_reset_200(self,user):
+    def test_POST_password_reset_200(self, user):
         data = {
             "email": user.email,
         }
-        response = self.client.post(self.password_reset_url,data)
+        response = self.client.post(self.password_reset_url, data)
         # Asserts
         assert response.status_code == HTTPStatus.OK
         assert "accounts/reset-and-activation/password_reset.html" in [
@@ -34,7 +35,7 @@ class TestResetAndActivationViews:
         data = {
             "email": "someone@test.com",
         }
-        response = self.client.post(self.password_reset_url,data)
+        response = self.client.post(self.password_reset_url, data)
         # Asserts
         assert response.status_code == HTTPStatus.NOT_FOUND
         assert "error" in response.context
@@ -43,10 +44,10 @@ class TestResetAndActivationViews:
         ]
 
     def test_POST_password_reset_400(self):
-        data={
+        data = {
             "email": "sometihng",
         }
-        response = self.client.post(self.password_reset_url,data)
+        response = self.client.post(self.password_reset_url, data)
         # Asserts
         assert response.status_code == HTTPStatus.BAD_REQUEST
         assert "error" in response.context
@@ -56,16 +57,16 @@ class TestResetAndActivationViews:
 
     # Password reset confirm's tests
     def test_GET_password_reset_confirm_200(self, confirm_code):
-        url = reverse("accounts:reset-confirm",args=[confirm_code.code])
+        url = reverse("accounts:reset-confirm", args=[confirm_code.code])
         response = self.client.get(url)
         # Asserts
         assert response.status_code == HTTPStatus.OK
         assert "accounts/reset-and-activation/password_reset_confirm.html" in [
             template.name for template in response.templates
         ]
-    
+
     def test_GET_password_reset_confirm_404(self):
-        url = reverse("accounts:reset-confirm",args=["confirm_code.code"])
+        url = reverse("accounts:reset-confirm", args=["confirm_code.code"])
         response = self.client.get(url)
         # Asserts
         assert response.status_code == HTTPStatus.NOT_FOUND
@@ -75,12 +76,12 @@ class TestResetAndActivationViews:
         ]
 
     def test_POST_password_reset_confirm_200(self, confirm_code):
-        data= {
-            "password":"oajeocwmoiowjd@#$1345234",
-            "password_confirm":"oajeocwmoiowjd@#$1345234"
+        data = {
+            "password": "oajeocwmoiowjd@#$1345234",
+            "password_confirm": "oajeocwmoiowjd@#$1345234",
         }
-        url = reverse("accounts:reset-confirm",args=[confirm_code.code])
-        response = self.client.post(url,data)
+        url = reverse("accounts:reset-confirm", args=[confirm_code.code])
+        response = self.client.post(url, data)
         # Asserts
         assert response.status_code == HTTPStatus.OK
         assert "data" in response.context
@@ -89,26 +90,26 @@ class TestResetAndActivationViews:
         ]
 
     def test_POST_password_reset_confirm_404(self):
-        data= {
-            "password":"oajeocwmoiowjd@#$1345234",
-            "password_confirm":"oajeocwmoiowjd@#$1345234"
+        data = {
+            "password": "oajeocwmoiowjd@#$1345234",
+            "password_confirm": "oajeocwmoiowjd@#$1345234",
         }
-        url = reverse("accounts:reset-confirm",args=["confirm_code.code"])
-        response = self.client.post(url,data)
+        url = reverse("accounts:reset-confirm", args=["confirm_code.code"])
+        response = self.client.post(url, data)
         # Asserts
         assert response.status_code == HTTPStatus.NOT_FOUND
         assert "error" in response.context
         assert "accounts/reset-and-activation/password_reset_confirm.html" in [
             template.name for template in response.templates
         ]
-    
-    def test_POST_password_reset_confirm_400(self,confirm_code):
-        data= {
-            "password":"oajeocwmoiowjd@#$1345234",
-            "password_confirm":"oajeocwmoiowjd@#"
+
+    def test_POST_password_reset_confirm_400(self, confirm_code):
+        data = {
+            "password": "oajeocwmoiowjd@#$1345234",
+            "password_confirm": "oajeocwmoiowjd@#",
         }
-        url = reverse("accounts:reset-confirm",args=[confirm_code.code])
-        response = self.client.post(url,data)
+        url = reverse("accounts:reset-confirm", args=[confirm_code.code])
+        response = self.client.post(url, data)
         # Asserts
         assert response.status_code == HTTPStatus.BAD_REQUEST
         assert "error" in response.context
@@ -117,9 +118,9 @@ class TestResetAndActivationViews:
         ]
 
     # Account activation tests
-    def test_GET_activations_200(self,inactive_user):
-        url = reverse("accounts:activate",args=[inactive_user.user_slug])
-        response= self.client.get(url)
+    def test_GET_activations_200(self, inactive_user):
+        url = reverse("accounts:activate", args=[inactive_user.user_slug])
+        response = self.client.get(url)
         # Asserts
         assert response.status_code == HTTPStatus.OK
         assert "accounts/reset-and-activation/activation.html" in [
@@ -127,8 +128,8 @@ class TestResetAndActivationViews:
         ]
 
     def test_GET_activations_404(self):
-        url = reverse("accounts:activate",args=["inactive_user.user_slug"])
-        response= self.client.get(url)
+        url = reverse("accounts:activate", args=["inactive_user.user_slug"])
+        response = self.client.get(url)
         # Asserts
         assert response.status_code == HTTPStatus.NOT_FOUND
         assert "error" in response.context
@@ -136,17 +137,16 @@ class TestResetAndActivationViews:
             template.name for template in response.templates
         ]
 
-    def test_POST_activations_200(self,inactive_user):
-        url = reverse("accounts:activate",args=[inactive_user.user_slug])
+    def test_POST_activations_200(self, inactive_user):
+        url = reverse("accounts:activate", args=[inactive_user.user_slug])
         confirm_code = ConfirmCode.objects.create(
-            code = "lakjdofj2342",
-            user= inactive_user
+            code="lakjdofj2342", user=inactive_user
         )
-        data={
-            "code":confirm_code.code,
-            "password":"testpassword1230",
+        data = {
+            "code": confirm_code.code,
+            "password": "testpassword1230",
         }
-        response= self.client.post(url,data)
+        response = self.client.post(url, data)
         # Asserts
         assert response.status_code == HTTPStatus.OK
         assert "data" in response.context
@@ -154,13 +154,13 @@ class TestResetAndActivationViews:
             template.name for template in response.templates
         ]
 
-    def test_POST_activations_403(self,inactive_user,confirm_code):
-        url = reverse("accounts:activate",args=[inactive_user.user_slug])
-        data={
-            "code":confirm_code.code,
-            "password":"testpasrd123",
+    def test_POST_activations_403(self, inactive_user, confirm_code):
+        url = reverse("accounts:activate", args=[inactive_user.user_slug])
+        data = {
+            "code": confirm_code.code,
+            "password": "testpasrd123",
         }
-        response= self.client.post(url,data)
+        response = self.client.post(url, data)
         # Asserts
         assert response.status_code == HTTPStatus.FORBIDDEN
         assert "error" in response.context
@@ -169,12 +169,12 @@ class TestResetAndActivationViews:
         ]
 
     def test_POST_activations_404(self):
-        url = reverse("accounts:activate",args=["inactive_user.user_slug"])
-        data={
-            "code":"confirm_code.code",
-            "password":"testpasrd123",
+        url = reverse("accounts:activate", args=["inactive_user.user_slug"])
+        data = {
+            "code": "confirm_code.code",
+            "password": "testpasrd123",
         }
-        response= self.client.post(url,data)
+        response = self.client.post(url, data)
         # Asserts
         assert response.status_code == HTTPStatus.NOT_FOUND
         assert "error" in response.context

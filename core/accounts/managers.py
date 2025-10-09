@@ -1,7 +1,16 @@
 from django.contrib.auth.base_user import BaseUserManager
 
+
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, first_name, email, password=None,is_active=False, **extra_fields):
+    def create_user(
+        self,
+        username,
+        first_name,
+        email,
+        password=None,
+        is_active=False,
+        **extra_fields
+    ):
         if not username:
             raise ValueError("The Username must be set")
         if not first_name:
@@ -24,14 +33,22 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, first_name, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_staff', True)
+    def create_superuser(
+        self, username, first_name, email, password=None, **extra_fields
+    ):
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_staff", True)
 
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
 
-        return self.create_user(username, first_name, email, password,is_active=True,**extra_fields)
+        return self.create_user(
+            username,
+            first_name,
+            email,
+            password,
+            is_active=True,
+            **extra_fields
+        )
