@@ -14,6 +14,14 @@ urlpatterns = [
     path("delete/", views.DeleteAccount.as_view(), name="delete"),
     # Reset and activation
     path("password-reset/", views.PasswordReset.as_view(), name="reset"),
-    path("password-reset/<str:code>/", views.PasswordResetConfirm.as_view(), name="reset-confirm"),
-    path("activate/<str:user_slug>/", views.Activate.as_view(), name="activate"),
+    path(
+        "password-reset/<str:code>/",
+        views.PasswordResetConfirm.as_view(),
+        name="reset-confirm",
+    ),
+    path(
+        "activate/<str:user_slug>/",
+        views.Activate.as_view(),
+        name="activate"
+    ),
 ]

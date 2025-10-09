@@ -2,6 +2,7 @@ import pytest
 from django.urls import reverse, resolve
 from core.views import Home
 
+
 @pytest.mark.django_db
 class TestCoreUrls:
 
@@ -9,4 +10,3 @@ class TestCoreUrls:
         url = reverse("home")
         view_class = resolve(url).func.view_class
         assert view_class == Home
-        

@@ -1,0 +1,28 @@
+[flake8]
+
+# Files/dirs to skip entirely
+exclude =
+    .git,
+    __pycache__,
+    build,
+    dist,
+    .venv,
+    venv,
+    env,
+    node_modules,
+    static,
+    media,
+    */migrations/*,
+    */__init__.py,
+    */email_templates.py,
+    base.py,
+    dev.py,
+    prod.py,
+
+# Codes to ignore globally (optional)
+# ignore = E203,W503
+
+
+; per-file-ignores =
+    ; core/settings/base.py: F401
+    ; accounts/admin.py: F401,F811

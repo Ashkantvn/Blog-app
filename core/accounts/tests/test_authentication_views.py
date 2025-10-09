@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.test import Client
 from http import HTTPStatus
 
+
 @pytest.mark.django_db
 class TestAccountAuthenticationViews:
     def setup_method(self):
@@ -20,15 +21,11 @@ class TestAccountAuthenticationViews:
         ]
 
     def test_POST_login_status_200(self, user):
-        data = {
-            "email": user.email,
-            "password": "testpassword123"
-        }
-        response = self.client.post(self.login_url,data)
+        data = {"email": user.email, "password": "testpassword123"}
+        response = self.client.post(self.login_url, data)
         assert response.status_code == HTTPStatus.OK
-        assert response.wsgi_request.user.is_authenticated , (
-            "User is not authenticated"
-        )
+        is_authenticated = response.wsgi_request.user.is_authenticated
+        assert is_authenticated, "User is not authenticated"
         assert "data" in response.context
         assert "accounts/authentications/login.html" in [
             template.name for template in response.templates
@@ -39,7 +36,7 @@ class TestAccountAuthenticationViews:
             "email": "someone@email.com",
             "password": "soemogj@adoii2342@#$dlsjf"
         }
-        response = self.client.post(self.login_url,data)
+        response = self.client.post(self.login_url, data)
         assert response.status_code == HTTPStatus.NOT_FOUND
         assert "error" in response.context
         assert "accounts/authentications/login.html" in [
@@ -62,10 +59,9 @@ class TestAccountAuthenticationViews:
             "username": "testuser12345",
             "first_name": "Test",
         }
-        response = self.client.post(self.signup_url,data)
-        assert response.wsgi_request.user.is_authenticated , (
-            "User is not authenticated"
-        )
+        response = self.client.post(self.signup_url, data)
+        is_authenticated = response.wsgi_request.user.is_authenticated
+        assert is_authenticated, "User is not authenticated"
         assert response.status_code == HTTPStatus.CREATED
         assert "data" in response.context
         assert "accounts/authentications/signup.html" in [
@@ -80,7 +76,7 @@ class TestAccountAuthenticationViews:
             "username": "testuser12345",
             "first_name": "Test",
         }
-        response = self.client.post(self.signup_url,data)
+        response = self.client.post(self.signup_url, data)
         assert response.status_code == HTTPStatus.BAD_REQUEST
         assert "error" in response.context
         assert "accounts/authentications/signup.html" in [
@@ -95,14 +91,14 @@ class TestAccountAuthenticationViews:
             "username": "testuser12345",
             "first_name": "Test",
         }
-        response = self.client.post(self.signup_url,data)
+        response = self.client.post(self.signup_url, data)
         assert response.status_code == HTTPStatus.FORBIDDEN
         assert "error" in response.context
         assert "accounts/authentications/signup.html" in [
             template.name for template in response.templates
         ]
 
-    # Logout 
+    # Logout
     def test_GET_logout_200(self, authenticated_user):
         client = authenticated_user
         response = client.get(self.logout_url)
@@ -123,9 +119,9 @@ class TestAccountAuthenticationViews:
         client = authenticated_user
         response = client.post(self.logout_url)
         assert response.status_code == HTTPStatus.OK
-        assert not response.wsgi_request.user.is_authenticated , (
-            "User is still authenticated"
-        )
+        assert (
+            not response.wsgi_request.user.is_authenticated
+        ), "User is still authenticated"
         assert "data" in response.context
         assert "accounts/authentications/logout.html" in [
             template.name for template in response.templates
