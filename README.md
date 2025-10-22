@@ -35,3 +35,7 @@ It’s designed as a **portfolio-ready** project to showcase backend development
 
 
 ---
+
+## 🏁 License
+
+This project is licensed under the MIT License.
