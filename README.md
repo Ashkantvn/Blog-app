@@ -1,6 +1,6 @@
 # 📝 Django Blog App
 
-A blogging platform built with **Django 5.2.6**.  
+A blogging platform built with **Django**.  
 
 It’s designed as a **portfolio-ready** project to showcase backend development, task automation, and clean code practices.
 
