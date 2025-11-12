@@ -24,7 +24,7 @@ It’s designed as a **portfolio-ready** project to showcase backend development
 
 | Category | Tools Used |
 |-----------|-------------|
-| **Framework** | Django 5.2.6 |
+| **Framework** | Django |
 | **Database** | PostgreSQL |
 | **Task Queue** | Celery, Redis, django-celery-beat |
 | **Media Handling** | Pillow, django-cleanup |
