@@ -27,5 +27,7 @@ RUN pip install gunicorn whitenoise
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
+RUN mkdir -p /app/logs
+
 # Use Gunicorn to serve the app
 CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
