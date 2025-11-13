@@ -13,7 +13,7 @@ services:
     networks:
       - backend
     volumes:
-      - static_volume:/app/staticfiles
+      - static_volume:/app/static
       - media_volume:/app/media
 
   postgres:
