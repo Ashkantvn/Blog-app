@@ -15,8 +15,6 @@ services:
         condition: service_started
       redis:
         condition: service_started
-      celery:
-        condition: service_started
 
   postgres:
     image: postgres:17
@@ -40,40 +38,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  
-  celery:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    container_name: celery_worker
-    restart: unless-stopped
-    command: celery -A core.celery:app worker --loglevel=info
-    depends_on:
-      redis:
-        condition: service_healthy
-    env_file:
-      - ./.env.dev
-    working_dir: /app
-    volumes:
-      - ./core/:/app/
-
-
-  celery-beat:
-    build:
-      context: .
-      dockerfile: Dockerfile.dev
-    command: celery -A core beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    working_dir: /app
-    env_file:
-      - ./.env.dev
-    volumes:
-      - ./core/:/app/
-    depends_on:
-      redis:
-        condition: service_healthy
-      django:
-        condition: service_started
-
     
   smtp4dev:
     image: rnwood/smtp4dev:v3
