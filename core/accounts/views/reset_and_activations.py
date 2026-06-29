@@ -4,7 +4,6 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from http import HTTPStatus
 from django.contrib.auth import get_user_model
-from accounts.tasks import send_confirm_code_mail
 from accounts.models import ConfirmCode
 from django.contrib.auth.password_validation import validate_password
 

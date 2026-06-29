@@ -1,9 +1,10 @@
 # Django core
-django==5.2.8
+django==6.0.6
 
 # Test
 pytest
 pytest-django
+pytest-cov
 
 # env file
 python-decouple
@@ -14,10 +15,6 @@ flake8
 
 # PostgreSQL
 psycopg2-binary
-
-# celery
-celery
-django-celery-beat
 
 # Media handling
 pillow
