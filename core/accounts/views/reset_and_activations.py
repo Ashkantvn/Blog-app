@@ -1,11 +1,15 @@
+import secrets
+from http import HTTPStatus
+
+from django.contrib.auth import get_user_model
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
 from django.shortcuts import render
 from django.views import View
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
-from http import HTTPStatus
-from django.contrib.auth import get_user_model
+
 from accounts.models import ConfirmCode
-from django.contrib.auth.password_validation import validate_password
+from accounts.tasks import send_confirm_code_mail
 
 User = get_user_model()
 
@@ -41,8 +45,13 @@ class PasswordReset(View):
             )
         else:
             target_user = target_user.first()
-        # Send mail
-        send_confirm_code_mail.delay(target_user.email)
+
+        code = secrets.token_urlsafe(8)
+        ConfirmCode.objects.update_or_create(
+            user=target_user,
+            defaults={"code": code},
+        )
+        send_confirm_code_mail(target_user.email, code)
         return render(
             request,
             "accounts/reset-and-activation/password_reset.html",
@@ -132,8 +141,13 @@ class Activate(View):
             )
         else:
             user = user.first()
-        # Send email
-        send_confirm_code_mail.delay(user.email)
+
+        code = secrets.token_urlsafe(8)
+        ConfirmCode.objects.update_or_create(
+            user=user,
+            defaults={"code": code},
+        )
+        send_confirm_code_mail(user.email, code)
         return render(
             request,
             "accounts/reset-and-activation/activation.html",
