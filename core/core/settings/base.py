@@ -1,5 +1,6 @@
 from pathlib import Path
 from decouple import config
+from django.utils.csp import CSP
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -123,9 +124,21 @@ LOGIN_URL = "/accounts/login/"
 #         'QUEUES': ['default', 'emails'],
 #     }
 # }
+# TASKS = {
+#     "default": {
+#         "BACKEND": "django.tasks.backends.database.DatabaseBackend",
+#         "QUEUES": ["default", "emails"],
+#     }
+# }
 TASKS = {
     "default": {
-        "BACKEND": "django.tasks.backends.database.DatabaseBackend",
+        "BACKEND": "django.tasks.backends.immediate.ImmediateBackend",
         "QUEUES": ["default", "emails"],
     }
+}
+# Content security policy
+SECURE_CSP = {
+    "default-src": [CSP.SELF],
+    "script-src": [CSP.SELF, CSP.NONCE],
+    "img-src": [CSP.SELF, "https:"],
 }

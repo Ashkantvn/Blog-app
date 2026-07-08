@@ -51,7 +51,10 @@ class PasswordReset(View):
             user=target_user,
             defaults={"code": code},
         )
-        send_confirm_code_mail(target_user.email, code)
+        send_confirm_code_mail.using(queue_name="emails").enqueue(
+            target_user.email, 
+            code
+        )
         return render(
             request,
             "accounts/reset-and-activation/password_reset.html",
@@ -147,7 +150,10 @@ class Activate(View):
             user=user,
             defaults={"code": code},
         )
-        send_confirm_code_mail(user.email, code)
+        send_confirm_code_mail.using(queue_name="emails").enqueue(
+            user.email, 
+            code
+        )
         return render(
             request,
             "accounts/reset-and-activation/activation.html",
