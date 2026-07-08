@@ -18,6 +18,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost").split(",")
 INSTALLED_APPS = [
     "accounts",
     "blogs",
+    'django.tasks',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -111,3 +112,20 @@ AUTHENTICATION_BACKENDS = ["accounts.backends.EmailBackend"]
 
 # Login url
 LOGIN_URL = "/accounts/login/"
+
+# Background tasks
+# TASKS = {
+#     'default': {
+#         'BACKEND': 'django.tasks.backends.redis.RedisBackend',
+#         'OPTIONS': {
+#             'url': 'redis://redis:6379/0',
+#         },
+#         'QUEUES': ['default', 'emails'],
+#     }
+# }
+TASKS = {
+    "default": {
+        "BACKEND": "django.tasks.backends.database.DatabaseBackend",
+        "QUEUES": ["default", "emails"],
+    }
+}
