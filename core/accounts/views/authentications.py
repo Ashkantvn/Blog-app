@@ -1,11 +1,17 @@
+from django.utils import timezone
+from datetime import timedelta
+import secrets
+
 from django.views import View
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from http import HTTPStatus
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 from django.db.models import Q
+from accounts.models.confirm_code import ConfirmCode
+from accounts.tasks import send_confirm_code_mail
 from core.mixins import CustomLoginRequiredMixin
 
 User = get_user_model()
@@ -23,7 +29,8 @@ class Login(View):
         email = request.POST.get("email", "")
         password = request.POST.get("password", "")
         user = authenticate(request, username=email, password=password)
-        # Check if user is exists or not
+
+        # Check if user is authenticated or not
         if user is None:
             return render(
                 request,
@@ -31,16 +38,33 @@ class Login(View):
                 context={"error": "User not found."},
                 status=HTTPStatus.NOT_FOUND,
             )
-        # Login user
-        login(request, user)
-        return render(
-            request,
-            "accounts/authentications/login.html",
-            context={
-                "data": user,
-            },
-            status=HTTPStatus.OK,
-        )
+        else:        
+            if user.is_active:
+                # Login user
+                login(request, user)   
+                return render(
+                    request,
+                    "accounts/authentications/login.html",
+                    context={"data": user.username},
+                    status=HTTPStatus.OK,
+                )
+            else:
+                # Send activation email if user is not activated and redirect to activation page
+                confirm_code = ConfirmCode.objects.filter(user=user).first()
+                if confirm_code and timezone.now() - confirm_code.updated_date < timedelta(minutes=3):
+                    return redirect("accounts:activate", user_slug=user.user_slug)
+                else:
+                    code = secrets.token_urlsafe(8)
+                    ConfirmCode.objects.update_or_create(
+                        user=user,
+                        defaults={"code": code},
+                    )
+                    
+                    send_confirm_code_mail.using(queue_name="emails").enqueue(
+                        user.email, 
+                        code
+                    )
+                    return redirect("accounts:activate", user_slug=user.user_slug)
 
 
 class Logout(CustomLoginRequiredMixin, View):
@@ -125,11 +149,5 @@ class SignUp(View):
         }
         if profile_image:
             data["profile_image"] = profile_image
-        created_user = User.objects.create_user(**data)
-        login(request, created_user)
-        return render(
-            request,
-            "accounts/authentications/signup.html",
-            context={"data": created_user},
-            status=HTTPStatus.CREATED,
-        )
+        User.objects.create_user(**data)
+        return redirect("accounts:login")
