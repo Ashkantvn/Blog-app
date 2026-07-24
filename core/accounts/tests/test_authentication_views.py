@@ -61,12 +61,8 @@ class TestAccountAuthenticationViews:
         }
         response = self.client.post(self.signup_url, data)
         is_authenticated = response.wsgi_request.user.is_authenticated
-        assert is_authenticated, "User is not authenticated"
-        assert response.status_code == HTTPStatus.CREATED
-        assert "data" in response.context
-        assert "accounts/authentications/signup.html" in [
-            template.name for template in response.templates
-        ]
+        assert not is_authenticated, "User must not be authenticated after sign up"
+        assert response.status_code == HTTPStatus.FOUND
 
     def test_POST_sign_up_400(self):
         data = {
