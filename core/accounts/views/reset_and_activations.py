@@ -51,7 +51,10 @@ class PasswordReset(View):
             user=target_user,
             defaults={"code": code},
         )
-        send_confirm_code_mail(target_user.email, code)
+        send_confirm_code_mail.using(queue_name="emails").enqueue(
+            target_user.email, 
+            code
+        )
         return render(
             request,
             "accounts/reset-and-activation/password_reset.html",
@@ -119,7 +122,6 @@ class PasswordResetConfirm(View):
         user = User.objects.filter(email=email).first()
         user.set_password(password)
         user.save()
-        confirm_code.delete()
         return render(
             request,
             "accounts/reset-and-activation/password_reset_confirm.html",
@@ -142,12 +144,6 @@ class Activate(View):
         else:
             user = user.first()
 
-        code = secrets.token_urlsafe(8)
-        ConfirmCode.objects.update_or_create(
-            user=user,
-            defaults={"code": code},
-        )
-        send_confirm_code_mail(user.email, code)
         return render(
             request,
             "accounts/reset-and-activation/activation.html",
@@ -193,7 +189,6 @@ class Activate(View):
         # Activate user and delete activation code
         user.is_active = True
         user.save()
-        confirm_code.delete()
         return render(
             request,
             "accounts/reset-and-activation/activation.html",
